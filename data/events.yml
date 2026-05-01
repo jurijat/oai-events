@@ -1,0 +1,170 @@
+# Upcoming events
+- title: 'API Days Singapore'
+  slug: api-days-singapore
+  event_date: 'April 14 — 15, 2026'
+  location: 'Sands Expo & Convention Centre, Singapore'
+  type: 'Event'
+  status: 'upcoming'
+  image: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800'
+  time_start: '09:00'
+  time_end: '17:00'
+  description: 'API Days Singapore brings together API practitioners from across Asia-Pacific.'
+  permalink: '/events/api-days-singapore'
+  speakers:
+    - name: Frank Kilcommins
+      position: 'Head of Enterprise Architecture | Axtic'
+      photo: https://i.pravatar.cc/180?img=11
+  tags: [event]
+
+- title: 'OpenAPI Summit at DeveloperWeek'
+  slug: openapi-summit
+  event_date: 'May 19 — 20, 2026'
+  location: 'Javits Convention Center, New York, NY'
+  type: 'Conference'
+  status: 'active'
+  image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800'
+  time_start: '09:00'
+  time_end: '18:00'
+  description: 'Join us at the OpenAPI Summit at DeveloperWeek for two days of talks, workshops, and networking.'
+  permalink: '/events/openapi-summit'
+  speakers:
+    - name: Frank Kilcommins
+      position: 'Head of Enterprise Architecture | Axtic'
+      photo: https://i.pravatar.cc/180?img=11
+    - name: Naresh Jain
+      position: 'Staff Engineer at The New York Times'
+      photo: https://i.pravatar.cc/180?img=12
+  tags: [conference]
+
+- title: 'API Days Amsterdam'
+  slug: api-days-amsterdam
+  event_date: 'June 10 — 11, 2026'
+  location: 'Amsterdam RAI, Netherlands'
+  type: 'Masterclass'
+  status: 'upcoming'
+  image: 'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=800'
+  time_start: '09:00'
+  time_end: '17:00'
+  description: 'Join our masterclass sessions at API Days Amsterdam.'
+  permalink: '/events/api-days-amsterdam'
+  speakers:
+    - name: Marjukka Niinioja
+      position: 'Founding Partner | Osaango'
+      photo: https://i.pravatar.cc/180?img=5
+  tags: [masterclass]
+
+- title: 'OpenAPI Summit in New York'
+  slug: openapi-summit-ny
+  event_date: 'July 25 — 26, 2026'
+  location: 'Javits Convention Center, New York, NY'
+  type: 'Masterclass'
+  status: 'upcoming'
+  image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800'
+  time_start: '09:00'
+  time_end: '17:00'
+  description: 'OpenAPI Summit returns to New York with masterclass sessions and talks.'
+  permalink: '/events/openapi-summit-ny'
+  speakers:
+    - name: Dimitri van Hees
+      position: 'Government of the Netherlands'
+      photo: https://i.pravatar.cc/180?img=8
+  tags: [masterclass]
+
+# Past events
+- title: 'API Days Singapore 2025'
+  slug: api-days-singapore-2025
+  event_date: 'April 14 — 15, 2025'
+  location: 'Sands Expo & Convention Centre, Singapore'
+  type: 'Event'
+  status: 'finished'
+  image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600'
+  time_start: '09:00'
+  time_end: '17:00'
+  description: 'API Days Singapore brought together API practitioners from across Asia-Pacific.'
+  permalink: '/events/api-days-singapore-2025'
+  speakers: []
+  tags: [event]
+
+- title: 'API Days Amsterdam 2025'
+  slug: api-days-amsterdam-2025
+  event_date: 'June 10 — 11, 2025'
+  location: 'Amsterdam RAI, Netherlands'
+  type: 'Conference'
+  status: 'finished'
+  image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600'
+  time_start: '09:00'
+  time_end: '17:00'
+  description: 'Our annual conference in Amsterdam with workshops and networking.'
+  permalink: '/events/api-days-amsterdam-2025'
+  speakers: []
+  tags: [conference]
+
+- title: 'OpenAPI Summit NY 2025'
+  slug: openapi-summit-ny-2025
+  event_date: 'July 22 — 26, 2025'
+  location: 'Javits Convention Center, New York, NY'
+  type: 'Masterclass'
+  status: 'finished'
+  image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=600'
+  time_start: '09:00'
+  time_end: '18:00'
+  description: 'OpenAPI Summit returned to New York with masterclass sessions.'
+  permalink: '/events/openapi-summit-ny-2025'
+  speakers: []
+  tags: [masterclass]
+
+- title: 'API Days Singapore 2024'
+  slug: api-days-singapore-2024
+  event_date: 'April 14 — 18, 2024'
+  location: 'Sands Expo & Convention Centre, Singapore'
+  type: 'Event'
+  status: 'finished'
+  image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600'
+  time_start: '09:00'
+  time_end: '17:00'
+  description: 'API Days Singapore brought together API practitioners from across Asia-Pacific.'
+  permalink: '/events/api-days-singapore-2024'
+  speakers: []
+  tags: [event]
+
+- title: 'API Days Amsterdam 2024'
+  slug: api-days-amsterdam-2024
+  event_date: 'June 10 — 12, 2024'
+  location: 'Amsterdam RAI, Netherlands'
+  type: 'Masterclass'
+  status: 'finished'
+  image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600'
+  time_start: '09:00'
+  time_end: '17:00'
+  description: 'Masterclass sessions at API Days Amsterdam.'
+  permalink: '/events/api-days-amsterdam-2024'
+  speakers: []
+  tags: [masterclass]
+
+- title: 'OpenAPI Conference 2024'
+  slug: openapi-conf-2024
+  event_date: 'September 5 — 7, 2024'
+  location: 'San Francisco, CA'
+  type: 'Conference'
+  status: 'finished'
+  image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600'
+  time_start: '09:00'
+  time_end: '18:00'
+  description: 'The annual OpenAPI Conference in San Francisco.'
+  permalink: '/events/openapi-conf-2024'
+  speakers: []
+  tags: [conference]
+
+- title: 'API Integration Workshop 2024'
+  slug: api-workshop-2024
+  event_date: 'August 20 — 21, 2024'
+  location: 'London, UK'
+  type: 'Masterclass'
+  status: 'finished'
+  image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600'
+  time_start: '09:00'
+  time_end: '17:00'
+  description: 'Hands-on API integration workshop in London.'
+  permalink: '/events/api-workshop-2024'
+  speakers: []
+  tags: [masterclass]
