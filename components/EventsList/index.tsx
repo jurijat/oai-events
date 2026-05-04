@@ -187,7 +187,7 @@ export default function EventsList({ items }: EventsListProps) {
 
         {/* Featured Speakers Section */}
         {allSpeakers.length > 0 && (
-          <section id="speakers" className="overflow-hidden py-16 md:py-20">
+          <section id="speakers" className="relative z-10 overflow-hidden py-16 md:py-20">
             <div className="mx-auto mb-10 max-w-[1360px] px-6 md:px-20">
               <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
                 Featured Speakers
@@ -254,7 +254,7 @@ export default function EventsList({ items }: EventsListProps) {
         {/* Sponsor Section — uses background2.svg which contains concentric rings,
             "Sponsored by" label, boomi wordmark, and "Powering the Data Economy" tagline.
             Crop the square SVG to a 765px-tall band per Figma spec. */}
-        <section className="relative flex h-[600px] items-center justify-center overflow-hidden md:h-[765px]">
+        <section className="relative isolate flex h-[600px] items-center justify-center md:h-[765px]">
           <img
             src={asset('/img/background2.svg')}
             alt="Sponsored by Boomi — Powering the Data Economy"
@@ -267,8 +267,8 @@ export default function EventsList({ items }: EventsListProps) {
         </section>
 
         {/* Photos Section */}
-        <section id="photos" className="relative z-10 mx-auto max-w-[1360px] px-6 py-16 md:px-20 md:py-20">
-          <div className="mb-10">
+        <section id="photos" className="relative z-10 py-16 md:py-20">
+          <div className="mx-auto mb-10 max-w-[1360px] px-6 md:px-20">
             <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
               Photos
             </h2>
@@ -277,9 +277,8 @@ export default function EventsList({ items }: EventsListProps) {
             </p>
           </div>
 
-          {/* Photo gallery — mobile: 345/351/192/438 × 260, 8px gap, varied rounding;
-              desktop: 509.53/518/283.64/647 × 384, 24px gap */}
-          <div className="flex flex-row gap-2 overflow-x-auto pb-4 md:gap-6">
+          {/* Photo gallery — extends to right viewport edge */}
+          <div className="flex flex-row gap-2 overflow-x-auto pb-4 pl-6 md:gap-6 md:pl-20">
             {photos.map((src, i) => {
               const widths = [
                 'w-[345px] md:w-[509.53px]',
@@ -304,7 +303,7 @@ export default function EventsList({ items }: EventsListProps) {
           </div>
 
           {/* View gallery button */}
-          <div className="mt-12 md:pl-20">
+          <div className="mx-auto mt-12 max-w-[1200px] px-6 md:px-20">
             <button
               type="button"
               onClick={() => setGalleryOpen(true)}

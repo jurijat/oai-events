@@ -112,7 +112,7 @@ export default function EventDetail({
       </section>
 
       {/* Map Section (Placeholder) */}
-      <section className="mx-auto mb-12 max-w-[1360px] px-6 md:px-20">
+      <section className="relative z-10 mx-auto mb-12 max-w-[1360px] px-6 md:px-20">
         <div className="flex h-[227px] w-full items-center justify-center rounded-[40px] bg-brand-card-dark md:h-[400px]">
           <div className="text-center">
             <span
@@ -133,7 +133,7 @@ export default function EventDetail({
 
       {/* Agenda Section */}
       {agendaCategories.length > 0 && (
-        <section className="mx-auto mb-12 max-w-[1200px] px-6 md:px-20">
+        <section className="relative z-10 mx-auto mb-12 max-w-[1200px] px-6 md:px-20">
           <h2 className="m-0 mb-6 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
             Agenda
           </h2>
@@ -269,7 +269,7 @@ export default function EventDetail({
 
       {/* Sponsor Section — same boomi SVG band as the events index page. */}
       {sponsors.length > 0 && (
-        <section className="relative flex h-[600px] items-center justify-center overflow-hidden md:h-[765px]">
+        <section className="relative isolate flex h-[600px] items-center justify-center md:h-[765px]">
           <img
             src={asset('/img/background2.svg')}
             alt="Sponsored by Boomi — Powering the Data Economy"
@@ -283,8 +283,8 @@ export default function EventDetail({
       )}
 
       {/* Photos Section */}
-      <section id="photos" className="relative z-10 mx-auto max-w-[1200px] px-6 py-16 md:px-20 md:py-20">
-        <div className="mb-10">
+      <section id="photos" className="relative z-10 py-16 md:py-20">
+        <div className="mx-auto mb-10 max-w-[1200px] px-6 md:px-20">
           <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
             From Past Events
           </h2>
@@ -293,7 +293,7 @@ export default function EventDetail({
           </p>
         </div>
 
-        <div className="flex flex-row gap-2 overflow-x-auto pb-4 md:gap-6">
+        <div className="flex flex-row gap-2 overflow-x-auto pb-4 pl-6 md:gap-6 md:pl-20">
           {photos.map((src, i) => {
             const widths = [
               'w-[345px] md:w-[400px]',
@@ -317,7 +317,7 @@ export default function EventDetail({
           })}
         </div>
 
-        <div className="mt-12">
+        <div className="mx-auto mt-12 max-w-[1200px] px-6 md:px-20">
           <button
             type="button"
             onClick={() => setLightboxIndex(0)}
