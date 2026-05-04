@@ -3,9 +3,9 @@ import { asset } from '@/lib/basePath';
 
 export default function OaiFooter() {
   return (
-    <footer className="px-6 pb-0 md:px-20" style={{ backgroundColor: 'var(--brand-footer-bg)' }}>
+    <footer className="px-6 pb-0" style={{ backgroundColor: 'var(--brand-footer-bg)' }}>
       {/* Subscribe Section */}
-      <section className="mx-auto max-w-[1360px] py-16 md:py-20">
+      <section className="mx-auto max-w-[1200px] py-16 md:px-20 md:py-20">
         <div className="flex items-start">
           <div className="flex-1">
             {/* Email icon */}
@@ -41,10 +41,12 @@ export default function OaiFooter() {
       </section>
 
       {/* Separator */}
-      <div className="mx-auto h-px max-w-[1360px] bg-white/[0.04]" />
+      <div className="mx-auto max-w-[1200px] md:px-20">
+        <div className="h-px bg-white/[0.04]" />
+      </div>
 
       {/* Follow updates on social media */}
-      <section className="mx-auto max-w-[1360px] py-16 md:py-20">
+      <section className="mx-auto max-w-[1200px] py-16 md:px-20 md:py-20">
         <div className="flex items-start">
           <div className="flex-1">
             {/* Heart icon */}
@@ -98,7 +100,7 @@ export default function OaiFooter() {
 
       {/* Bottom footer bar */}
       <div className="border-t border-white/[0.04]">
-        <div className="mx-auto flex max-w-[1360px] flex-col items-start justify-between gap-4 py-6 md:flex-row md:items-center">
+        <div className="mx-auto flex max-w-[1200px] flex-col items-start justify-between gap-4 py-6 md:flex-row md:items-center md:px-20">
           <span className="font-onest text-base font-normal tracking-oai text-brand-muted md:text-lg">
             For any questions about the OAI Track, please contact{' '}
             <a

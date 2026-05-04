@@ -3,6 +3,7 @@ import { Onest } from 'next/font/google';
 import { Providers } from './providers';
 import Navbar from '@/components/Navbar';
 import { asset } from '@/lib/basePath';
+import { buildSearchIndex } from '@/lib/searchIndex';
 import './globals.css';
 
 const onest = Onest({
@@ -22,6 +23,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const searchItems = buildSearchIndex();
   return (
     <html
       lang="en"
@@ -31,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body>
         <Providers>
-          <Navbar />
+          <Navbar searchItems={searchItems} />
           {children}
         </Providers>
       </body>

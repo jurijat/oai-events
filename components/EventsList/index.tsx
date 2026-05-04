@@ -258,12 +258,16 @@ export default function EventsList({ items }: EventsListProps) {
           <img
             src={asset('/img/background2.svg')}
             alt="Sponsored by Boomi — Powering the Data Economy"
-            className="boomi-bg pointer-events-none absolute left-1/2 block h-auto w-full max-w-[1728px] -translate-x-1/2 select-none"
+            className="boomi-bg pointer-events-none absolute left-1/2 top-1/2 block h-auto w-full max-w-[1728px] -translate-x-1/2 -translate-y-[59.3%] select-none"
           />
+          {/* Orange dot overlay — not affected by dark-mode invert */}
+          <svg aria-hidden viewBox="0 0 1728 1728" className="pointer-events-none absolute left-1/2 top-1/2 block h-auto w-full max-w-[1728px] -translate-x-1/2 -translate-y-[59.3%] select-none">
+            <circle cx="978.403" cy="1016.8" r="5.43" fill="#ff7c66" />
+          </svg>
         </section>
 
         {/* Photos Section */}
-        <section id="photos" className="mx-auto max-w-[1360px] px-6 py-16 md:px-20 md:py-20">
+        <section id="photos" className="relative z-10 mx-auto max-w-[1360px] px-6 py-16 md:px-20 md:py-20">
           <div className="mb-10">
             <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
               Photos
@@ -300,7 +304,7 @@ export default function EventsList({ items }: EventsListProps) {
           </div>
 
           {/* View gallery button */}
-          <div className="mt-12">
+          <div className="mt-12 md:pl-20">
             <button
               type="button"
               onClick={() => setGalleryOpen(true)}
