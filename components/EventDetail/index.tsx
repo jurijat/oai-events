@@ -92,10 +92,11 @@ export default function EventDetail({
   );
 
   return (
-    <main className="min-h-screen bg-brand-bg">
+    <>
+    <main className="relative min-h-screen overflow-hidden bg-brand-bg">
       {/* Hero Section with Event Card */}
       <section className="relative overflow-hidden pb-1 pt-16 md:pb-1.5 md:pt-24">
-        <div className="mx-auto max-w-[1360px] px-6 md:px-20">
+        <div className="mx-auto max-w-[1360px] md:px-20">
           <div className="mb-8">
             <EventCard
               title={title}
@@ -112,7 +113,7 @@ export default function EventDetail({
       </section>
 
       {/* Map Section (Placeholder) */}
-      <section className="relative z-10 mx-auto mb-12 max-w-[1360px] px-6 md:px-20">
+      <section className="relative z-10 mx-auto mb-12 max-w-[1360px] md:px-20">
         <div className="flex h-[227px] w-full items-center justify-center rounded-[40px] bg-brand-card-dark md:h-[400px]">
           <div className="text-center">
             <span
@@ -133,14 +134,14 @@ export default function EventDetail({
 
       {/* Agenda Section */}
       {agendaCategories.length > 0 && (
-        <section className="relative z-10 mx-auto mb-12 max-w-[1200px] px-6 md:px-20">
-          <h2 className="m-0 mb-6 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
+        <section className="relative z-10 mx-auto mb-12 max-w-[1360px] md:px-20">
+          <h2 className="m-0 mb-6 px-6 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:px-0 md:text-[48px]">
             Agenda
           </h2>
 
           {/* Date Filter Buttons */}
           {agendaDates.length > 1 && (
-            <div className="mb-10 inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)] p-0">
+            <div className="mb-10 ml-6 inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)] p-0 [[data-theme=dark]_&]:bg-[#1f2326] md:ml-0">
               {agendaDates.map((agendaDate) => {
                 const isActive = selectedDate === agendaDate;
                 return (
@@ -150,7 +151,7 @@ export default function EventDetail({
                     className={`flex h-[32px] cursor-pointer items-center justify-center rounded-[20px] border-none px-3 py-5 font-onest text-[12px] font-semibold tracking-[-0.48px] transition-colors ${
                       isActive
                         ? 'bg-brand-green text-[#15191c]'
-                        : 'bg-transparent text-[rgba(21,25,28,0.64)] hover:text-[#15191c]'
+                        : 'bg-transparent text-[rgba(21,25,28,0.64)] hover:text-[#15191c] [[data-theme=dark]_&]:text-white [[data-theme=dark]_&]:hover:text-white'
                     }`}
                   >
                     {agendaDate}
@@ -163,7 +164,7 @@ export default function EventDetail({
           <div className="space-y-12 md:space-y-20">
             {agendaCategories.map((category) => (
               <div key={category}>
-                <h3 className="m-0 mb-6 font-onest text-[32px] font-bold leading-[1.1] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-3xl">
+                <h3 className="m-0 mb-6 px-6 font-onest text-[32px] font-bold leading-[1.1] tracking-oai text-[color:var(--ifm-font-color-base)] md:px-0 md:text-3xl">
                   {category}
                 </h3>
                 <div className="space-y-2">
@@ -269,14 +270,14 @@ export default function EventDetail({
 
       {/* Sponsor Section — same boomi SVG band as the events index page. */}
       {sponsors.length > 0 && (
-        <section className="relative isolate flex h-[600px] items-center justify-center md:h-[765px]">
+        <section className="relative isolate flex h-[300px] items-center justify-center md:h-[765px]">
           <img
             src={asset('/img/background2.svg')}
             alt="Sponsored by Boomi — Powering the Data Economy"
-            className="boomi-bg pointer-events-none absolute left-1/2 top-1/2 block h-auto w-full max-w-[1728px] -translate-x-1/2 -translate-y-[59.3%] select-none"
+            className="boomi-bg pointer-events-none absolute left-1/2 top-1/2 block h-auto w-full min-w-[1280px] max-w-[1728px] -translate-x-1/2 -translate-y-[59.3%] select-none"
           />
           {/* Orange dot overlay — not affected by dark-mode invert */}
-          <svg aria-hidden viewBox="0 0 1728 1728" className="pointer-events-none absolute left-1/2 top-1/2 block h-auto w-full max-w-[1728px] -translate-x-1/2 -translate-y-[59.3%] select-none">
+          <svg aria-hidden viewBox="0 0 1728 1728" className="pointer-events-none absolute left-1/2 top-1/2 block h-auto w-full min-w-[1280px] max-w-[1728px] -translate-x-1/2 -translate-y-[59.3%] select-none">
             <circle cx="978.403" cy="1016.8" r="5.43" fill="#ff7c66" />
           </svg>
         </section>
@@ -284,7 +285,7 @@ export default function EventDetail({
 
       {/* Photos Section */}
       <section id="photos" className="relative z-10 py-16 md:py-20">
-        <div className="mx-auto mb-10 max-w-[1200px] px-6 md:px-20">
+        <div className="mx-auto mb-10 max-w-[1360px] px-6 md:px-20">
           <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
             From Past Events
           </h2>
@@ -293,13 +294,13 @@ export default function EventDetail({
           </p>
         </div>
 
-        <div className="flex flex-row gap-2 overflow-x-auto pb-4 pl-6 md:gap-6 md:pl-20">
+        <div className="flex flex-row gap-0.5 overflow-x-auto pb-4 md:gap-6 md:pl-20">
           {photos.map((src, i) => {
             const widths = [
-              'w-[345px] md:w-[400px]',
-              'w-[345px] md:w-[400px]',
-              'w-[192px] md:w-[400px]',
-              'w-[438px] md:w-[400px]',
+              'w-screen md:w-[400px]',
+              'w-screen md:w-[400px]',
+              'w-screen md:w-[400px]',
+              'w-screen md:w-[400px]',
             ];
             const rounded = [
               'rounded-[40px]',
@@ -341,13 +342,6 @@ export default function EventDetail({
       {/* Footer */}
       <OaiFooter />
 
-      {lightboxIndex !== null && (
-        <PhotoLightbox
-          photos={photos}
-          startIndex={lightboxIndex}
-          onClose={() => setLightboxIndex(null)}
-        />
-      )}
 
       {/* Talk Detail Modal — matches Figma desktop "Description Layer" (568:23259) */}
       {selectedSession &&
@@ -513,5 +507,14 @@ export default function EventDetail({
           );
         })()}
     </main>
+
+    {lightboxIndex !== null && (
+      <PhotoLightbox
+        photos={photos}
+        startIndex={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+      />
+    )}
+    </>
   );
 }

@@ -147,17 +147,11 @@ export default function EventsList({ items }: EventsListProps) {
               ))}
 
               {/* "New events soon" placeholder */}
-              <div className="flex h-[340px] flex-col items-center justify-center rounded-[20px] bg-[rgba(21,25,28,0.08)] md:h-[375px]">
-                <span
-                  className="mb-2 text-2xl"
-                  style={{ color: '#15191c', opacity: 0.08 }}
-                >
+              <div className="flex h-[340px] flex-col items-center justify-center rounded-[20px] bg-[rgba(21,25,28,0.08)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.08)] md:h-[375px]">
+                <span className="mb-2 text-2xl text-[#15191c]/[0.08] [[data-theme=dark]_&]:text-white/[0.16]">
                   &#x2726;
                 </span>
-                <span
-                  className="text-center font-onest text-[36px] font-bold tracking-oai"
-                  style={{ color: '#15191c', opacity: 0.08 }}
-                >
+                <span className="text-center font-onest text-[36px] font-bold tracking-oai text-[#15191c]/[0.08] [[data-theme=dark]_&]:text-white/[0.16]">
                   New events soon
                 </span>
               </div>
@@ -165,7 +159,7 @@ export default function EventsList({ items }: EventsListProps) {
           )}
 
           {/* Past events button — sits below the events grid, left-aligned with content */}
-          <div className="mt-10 px-6 md:px-20">
+          <div className="mt-6 px-6 md:mt-10 md:px-20">
             <Link
               href="/past-events"
               className="inline-flex h-[56px] w-full items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green/90 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none md:h-[64px] md:w-[159px] md:justify-center"
@@ -223,7 +217,7 @@ export default function EventsList({ items }: EventsListProps) {
             </div>
 
             {/* Mobile: Vertical speaker list */}
-            <div className="mb-10 grid grid-cols-1 gap-2.5 px-6 md:hidden">
+            <div className="mb-10 grid grid-cols-1 gap-2.5 md:hidden">
               {allSpeakers.map((s) => (
                 <div key={s.name}>
                   <SpeakerCard variant="dark" {...s} />
@@ -254,14 +248,14 @@ export default function EventsList({ items }: EventsListProps) {
         {/* Sponsor Section — uses background2.svg which contains concentric rings,
             "Sponsored by" label, boomi wordmark, and "Powering the Data Economy" tagline.
             Crop the square SVG to a 765px-tall band per Figma spec. */}
-        <section className="relative isolate flex h-[600px] items-center justify-center md:h-[765px]">
+        <section className="relative isolate flex h-[300px] items-center justify-center md:h-[765px]">
           <img
             src={asset('/img/background2.svg')}
             alt="Sponsored by Boomi — Powering the Data Economy"
-            className="boomi-bg pointer-events-none absolute left-1/2 top-1/2 block h-auto w-full max-w-[1728px] -translate-x-1/2 -translate-y-[59.3%] select-none"
+            className="boomi-bg pointer-events-none absolute left-1/2 top-1/2 block h-auto w-full min-w-[1280px] max-w-[1728px] -translate-x-1/2 -translate-y-[59.3%] select-none"
           />
           {/* Orange dot overlay — not affected by dark-mode invert */}
-          <svg aria-hidden viewBox="0 0 1728 1728" className="pointer-events-none absolute left-1/2 top-1/2 block h-auto w-full max-w-[1728px] -translate-x-1/2 -translate-y-[59.3%] select-none">
+          <svg aria-hidden viewBox="0 0 1728 1728" className="pointer-events-none absolute left-1/2 top-1/2 block h-auto w-full min-w-[1280px] max-w-[1728px] -translate-x-1/2 -translate-y-[59.3%] select-none">
             <circle cx="978.403" cy="1016.8" r="5.43" fill="#ff7c66" />
           </svg>
         </section>
@@ -278,13 +272,13 @@ export default function EventsList({ items }: EventsListProps) {
           </div>
 
           {/* Photo gallery — extends to right viewport edge */}
-          <div className="flex flex-row gap-2 overflow-x-auto pb-4 pl-6 md:gap-6 md:pl-20">
+          <div className="flex flex-row gap-0.5 overflow-x-auto pb-4 md:gap-6 md:pl-20">
             {photos.map((src, i) => {
               const widths = [
-                'w-[345px] md:w-[509.53px]',
-                'w-[345px] md:w-[518px]',
-                'w-[192px] md:w-[283.64px]',
-                'w-[438px] md:w-[647px]',
+                'w-screen md:w-[509.53px]',
+                'w-screen md:w-[518px]',
+                'w-screen md:w-[283.64px]',
+                'w-screen md:w-[647px]',
               ];
               const rounded = [
                 'rounded-[40px]',

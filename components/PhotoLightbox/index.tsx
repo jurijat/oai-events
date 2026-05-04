@@ -49,23 +49,25 @@ export default function PhotoLightbox({ photos, startIndex, onClose }: PhotoLigh
           e.stopPropagation();
           onClose();
         }}
-        className="absolute right-4 top-4 z-20 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-white/10 text-xl text-white transition-colors hover:bg-white/20 md:right-6 md:top-6"
+        className="absolute right-4 top-4 z-20 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-white text-[#15191c] transition-colors hover:bg-white/90 md:right-6 md:top-6"
         aria-label="Close"
       >
-        ×
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
       </button>
 
       {/* Main photo area */}
       <div
-        className="relative flex w-full flex-1 items-center justify-center px-4 py-4 md:px-16"
+        className="relative flex w-full flex-1 items-center justify-center px-6 py-6 md:px-16 md:py-4"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Prev */}
+        {/* Prev — desktop only */}
         {photos.length > 1 && (
           <button
             type="button"
             onClick={goPrev}
-            className="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-none bg-white/10 text-white transition-colors hover:bg-white/20 md:left-6 md:h-12 md:w-12"
+            className="absolute left-2 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-none bg-white/10 text-white transition-colors hover:bg-white/20 md:left-6 md:flex md:h-12 md:w-12"
             aria-label="Previous photo"
           >
             ‹
@@ -75,15 +77,15 @@ export default function PhotoLightbox({ photos, startIndex, onClose }: PhotoLigh
         <img
           src={photos[index]}
           alt={`Photo ${index + 1} of ${photos.length}`}
-          className="max-h-[75vh] max-w-full rounded-2xl object-contain"
+          className="max-h-[70vh] max-w-full rounded-[24px] object-contain md:rounded-2xl"
         />
 
-        {/* Next */}
+        {/* Next — desktop only */}
         {photos.length > 1 && (
           <button
             type="button"
             onClick={goNext}
-            className="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-none bg-white/10 text-white transition-colors hover:bg-white/20 md:right-6 md:h-12 md:w-12"
+            className="absolute right-2 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-none bg-white/10 text-white transition-colors hover:bg-white/20 md:right-6 md:flex md:h-12 md:w-12"
             aria-label="Next photo"
           >
             ›
@@ -100,10 +102,10 @@ export default function PhotoLightbox({ photos, startIndex, onClose }: PhotoLigh
                 key={i}
                 type="button"
                 onClick={() => setIndex(i)}
-                className={`h-14 w-20 flex-shrink-0 cursor-pointer rounded-lg border-2 bg-cover bg-center transition-all md:h-20 md:w-28 ${
+                className={`relative flex-shrink-0 cursor-pointer rounded-lg border-none bg-cover bg-center p-0 transition-all ${
                   i === index
-                    ? 'border-brand-green opacity-100'
-                    : 'border-transparent opacity-60 hover:opacity-100'
+                    ? 'h-16 w-20 opacity-100 after:absolute after:bottom-[-8px] after:left-1/2 after:h-[3px] after:w-8 after:-translate-x-1/2 after:rounded-full after:bg-brand-green after:content-[""] md:h-20 md:w-28'
+                    : 'h-16 w-20 opacity-60 hover:opacity-100 md:h-20 md:w-28'
                 }`}
                 style={{ backgroundImage: `url(${src})` }}
                 aria-label={`View photo ${i + 1}`}
