@@ -27,9 +27,12 @@ interface EventItem {
 
 interface EventsListProps {
   items: EventItem[];
+  pastItems?: EventItem[];
 }
 
-export default function EventsList({ items }: EventsListProps) {
+export default function EventsList({ items, pastItems = [] }: EventsListProps) {
+  const [showPast, setShowPast] = useState(false);
+
   // Separate featured (active) from other events
   const featured = items.find((i) => i.status === 'active') || items[0];
   const otherEvents = items.filter((i) => i !== featured);
@@ -160,11 +163,23 @@ export default function EventsList({ items }: EventsListProps) {
 
           {/* Past events button — sits below the events grid, left-aligned with content */}
           <div className="mt-6 px-6 md:mt-10 md:px-20">
+            {/* Mobile: link to /past-events */}
             <Link
               href="/past-events"
-              className="inline-flex h-[56px] w-full items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green/90 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none md:h-[64px] md:w-[159px] md:justify-center"
+              className="inline-flex h-[56px] w-full items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green/90 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none md:hidden"
             >
               Past events
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M6 3l5 5-5 5" />
+              </svg>
+            </Link>
+            {/* Desktop: toggle inline */}
+            <button
+              type="button"
+              onClick={() => setShowPast((v) => !v)}
+              className="hidden h-[64px] w-[159px] cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green/90 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none md:inline-flex"
+            >
+              {showPast ? 'Hide past' : 'Past events'}
               <svg
                 width="16"
                 height="16"
@@ -172,11 +187,30 @@ export default function EventsList({ items }: EventsListProps) {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
+                className={`transition-transform ${showPast ? 'rotate-90' : ''}`}
               >
                 <path d="M6 3l5 5-5 5" />
               </svg>
-            </Link>
+            </button>
           </div>
+
+          {/* Inline past events — desktop only */}
+          {showPast && pastItems.length > 0 && (
+            <div className="mt-10 hidden grid-cols-1 gap-6 md:grid md:grid-cols-2 md:px-20">
+              {pastItems.map((item) => (
+                <EventCard
+                  key={`past-${item.permalink}`}
+                  title={item.title}
+                  date={item.date}
+                  location={item.location}
+                  image={item.image}
+                  type={item.type}
+                  permalink={item.permalink}
+                  status={item.status as 'active' | 'upcoming' | 'finished'}
+                />
+              ))}
+            </div>
+          )}
         </section>
 
         {/* Featured Speakers Section */}

@@ -13,12 +13,30 @@ const onest = Onest({
   display: 'swap',
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://events.openapis.org';
+const OG_IMAGE = asset('/img/docusaurus-social-card.jpg');
+
 export const metadata: Metadata = {
-  title: 'OpenAPI Initiative',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'OpenAPI Events',
+    template: '%s | OpenAPI Events',
+  },
   description: 'OpenAPI events and conferences',
   icons: { icon: asset('/img/favicon.ico') },
   openGraph: {
-    images: [asset('/img/docusaurus-social-card.jpg')],
+    title: 'OpenAPI Events',
+    description: 'OpenAPI events and conferences',
+    siteName: 'OpenAPI Initiative',
+    type: 'website',
+    url: '/',
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: 'OpenAPI Events' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'OpenAPI Events',
+    description: 'OpenAPI events and conferences',
+    images: [OG_IMAGE],
   },
 };
 

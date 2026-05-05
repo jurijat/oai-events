@@ -15,9 +15,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const talk = getTalk(slug);
   if (!talk) return { title: 'Talk not found' };
+  const title = talk.metaTitle ?? talk.title;
+  const description = talk.description;
+  const url = `/events/talks/${slug}`;
   return {
-    title: talk.metaTitle ?? talk.title,
-    description: talk.description,
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      url,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
   };
 }
 

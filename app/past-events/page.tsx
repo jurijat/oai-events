@@ -5,6 +5,18 @@ import { pastEvents } from '@/data/pastEvents';
 export const metadata: Metadata = {
   title: 'Past Events',
   description: 'OpenAPI past events and conferences',
+  alternates: { canonical: '/past-events' },
+  openGraph: {
+    title: 'Past Events',
+    description: 'OpenAPI past events and conferences',
+    type: 'website',
+    url: '/past-events',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Past Events',
+    description: 'OpenAPI past events and conferences',
+  },
 };
 
 export default function PastEventsPage() {

@@ -8,18 +8,22 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
+  const mapEvent = (event: (typeof events)[number]) => ({
+    title: event.title,
+    permalink: event.permalink,
+    date: event.event_date,
+    location: event.location,
+    type: event.type,
+    status: event.status,
+    image: event.image,
+    speakers: event.speakers,
+  });
+
   const eventItems = events
     .filter((event) => event.status === 'active' || event.status === 'upcoming')
-    .map((event) => ({
-      title: event.title,
-      permalink: event.permalink,
-      date: event.event_date,
-      location: event.location,
-      type: event.type,
-      status: event.status,
-      image: event.image,
-      speakers: event.speakers,
-    }));
+    .map(mapEvent);
 
-  return <EventsList items={eventItems} />;
+  const pastItems = events.filter((event) => event.status === 'finished').map(mapEvent);
+
+  return <EventsList items={eventItems} pastItems={pastItems} />;
 }

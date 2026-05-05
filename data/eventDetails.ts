@@ -133,6 +133,26 @@ export const eventDetails: Record<string, EventDetailData> = {
                 photo:
                   'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop',
               },
+              {
+                name: 'Lisa Müller',
+                position: 'Head of Platform / Dutch Gov',
+                photo:
+                  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop',
+              },
+            ],
+          },
+          {
+            title: 'OpenAPI 3.2: What\'s New and What\'s Next',
+            time: '10:00 — 10:25',
+            permalink: '/events/talks/summit-openapi-32',
+            speakers: [
+              {
+                name: 'Darrel Miller',
+                position: 'Principal API Architect / Microsoft',
+                photo:
+                  'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop',
+                tag: 'OAI',
+              },
             ],
           },
         ],
@@ -148,6 +168,72 @@ export const eventDetails: Record<string, EventDetailData> = {
                 position: 'Staff Engineer / Stripe',
                 photo:
                   'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=200&h=200&fit=crop',
+              },
+              {
+                name: 'David Park',
+                position: 'Senior Developer / Stripe',
+                photo:
+                  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop',
+              },
+            ],
+          },
+          {
+            title: 'Designing API-First Microservices at Scale',
+            time: '11:30 — 11:55',
+            permalink: '/events/talks/summit-microservices-scale',
+            speakers: [
+              {
+                name: 'Priya Sharma',
+                position: 'Principal Engineer / Netflix',
+                photo:
+                  'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200&h=200&fit=crop',
+              },
+            ],
+          },
+          {
+            title: 'GraphQL vs OpenAPI: Picking the Right Tool',
+            time: '13:00 — 13:25',
+            permalink: '/events/talks/summit-graphql-openapi',
+            speakers: [
+              {
+                name: 'Ahmed Hassan',
+                position: 'Tech Lead / Shopify',
+                photo:
+                  'https://images.unsplash.com/photo-1463453091185-61582044d556?w=200&h=200&fit=crop',
+              },
+            ],
+          },
+        ],
+        Tooling: [
+          {
+            title: 'Code Generation: From Spec to Production',
+            time: '14:00 — 14:25',
+            permalink: '/events/talks/summit-code-gen',
+            speakers: [
+              {
+                name: 'Tomáš Novák',
+                position: 'Lead Developer / Apicurio',
+                photo:
+                  'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop',
+              },
+            ],
+          },
+          {
+            title: 'Testing Your APIs: Contract-Driven Development',
+            time: '14:30 — 14:55',
+            permalink: '/events/talks/summit-contract-testing',
+            speakers: [
+              {
+                name: 'Olivia Brown',
+                position: 'Test Architect / Pact',
+                photo:
+                  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop',
+              },
+              {
+                name: 'James Liu',
+                position: 'QA Lead / Pact',
+                photo:
+                  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop',
               },
             ],
           },
@@ -171,7 +257,7 @@ export const eventDetails: Record<string, EventDetailData> = {
           },
           {
             title: "APIs Weren't Built for AI, Now What?",
-            time: '10:00 — 10:25',
+            time: '09:30 — 09:55',
             permalink: '/events/talks/summit-api-ai',
             speakers: [
               {
@@ -182,11 +268,30 @@ export const eventDetails: Record<string, EventDetailData> = {
               },
             ],
           },
+          {
+            title: 'API Versioning Strategies That Actually Work',
+            time: '10:00 — 10:25',
+            permalink: '/events/talks/summit-versioning',
+            speakers: [
+              {
+                name: 'Carlos Méndez',
+                position: 'Staff Engineer / GitHub',
+                photo:
+                  'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=200&h=200&fit=crop',
+              },
+              {
+                name: 'Yuki Tanaka',
+                position: 'Senior Engineer / GitHub',
+                photo:
+                  'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&h=200&fit=crop',
+              },
+            ],
+          },
         ],
         Design: [
           {
             title: 'API Security Best Practices',
-            time: '13:00 — 13:25',
+            time: '11:00 — 11:25',
             permalink: '/events/talks/summit-security',
             speakers: [
               {
@@ -194,6 +299,55 @@ export const eventDetails: Record<string, EventDetailData> = {
                 position: 'Staff Engineer / Stripe',
                 photo:
                   'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=200&h=200&fit=crop',
+              },
+            ],
+          },
+          {
+            title: 'Idempotency, Retries, and Resilient APIs',
+            time: '11:30 — 11:55',
+            permalink: '/events/talks/summit-idempotency',
+            speakers: [
+              {
+                name: 'Rohan Gupta',
+                position: 'Senior Engineer / AWS',
+                photo:
+                  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop',
+              },
+            ],
+          },
+        ],
+        'AI & Future': [
+          {
+            title: 'AI Agents and the OpenAPI Toolchain',
+            time: '13:00 — 13:25',
+            permalink: '/events/talks/summit-ai-agents',
+            speakers: [
+              {
+                name: 'Marcus Webb',
+                position: 'Research Engineer / Anthropic',
+                photo:
+                  'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop',
+              },
+              {
+                name: 'Aisha Patel',
+                position: 'Product Lead / OpenAI',
+                photo:
+                  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop',
+                tag: 'OAI',
+              },
+            ],
+          },
+          {
+            title: 'Closing Keynote: The Next Decade of OpenAPI',
+            time: '14:00 — 14:25',
+            permalink: '/events/talks/summit-closing',
+            speakers: [
+              {
+                name: 'Frank Kilcommins',
+                position: 'Head of Enterprise Architecture / Jentic',
+                photo:
+                  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop',
+                tag: 'OAI',
               },
             ],
           },
@@ -358,10 +512,182 @@ export const eventDetails: Record<string, EventDetailData> = {
   },
 };
 
+function buildFallbackAgenda(): AgendaByDate {
+  return {
+    'Day 1': {
+      'Opening and keynote': [
+        {
+          title: 'Welcome and State of OpenAPI',
+          time: '09:00 — 09:25',
+          speakers: [
+            {
+              name: 'Frank Kilcommins',
+              position: 'Head of Enterprise Architecture / Jentic',
+              photo:
+                'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop',
+              tag: 'OAI',
+            },
+          ],
+        },
+        {
+          title: 'API-First in Practice: Lessons from the Field',
+          time: '09:30 — 09:55',
+          speakers: [
+            {
+              name: 'Sarah Chen',
+              position: 'Staff Engineer / Stripe',
+              photo:
+                'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=200&h=200&fit=crop',
+            },
+          ],
+        },
+      ],
+      Design: [
+        {
+          title: 'Designing Resilient APIs at Scale',
+          time: '11:00 — 11:25',
+          speakers: [
+            {
+              name: 'Priya Sharma',
+              position: 'Principal Engineer / Netflix',
+              photo:
+                'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200&h=200&fit=crop',
+            },
+            {
+              name: 'David Park',
+              position: 'Senior Developer / Netflix',
+              photo:
+                'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop',
+            },
+          ],
+        },
+        {
+          title: 'OpenAPI and AsyncAPI Together',
+          time: '13:00 — 13:25',
+          speakers: [
+            {
+              name: 'Ahmed Hassan',
+              position: 'Tech Lead / Shopify',
+              photo:
+                'https://images.unsplash.com/photo-1463453091185-61582044d556?w=200&h=200&fit=crop',
+            },
+          ],
+        },
+      ],
+      Tooling: [
+        {
+          title: 'Code Generation: From Spec to Production',
+          time: '14:00 — 14:25',
+          speakers: [
+            {
+              name: 'Tomáš Novák',
+              position: 'Lead Developer / Apicurio',
+              photo:
+                'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop',
+            },
+          ],
+        },
+      ],
+    },
+    'Day 2': {
+      Governance: [
+        {
+          title: 'Versioning Strategies That Survive Production',
+          time: '09:00 — 09:25',
+          speakers: [
+            {
+              name: 'Carlos Méndez',
+              position: 'Staff Engineer / GitHub',
+              photo:
+                'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=200&h=200&fit=crop',
+            },
+            {
+              name: 'Yuki Tanaka',
+              position: 'Senior Engineer / GitHub',
+              photo:
+                'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&h=200&fit=crop',
+            },
+          ],
+        },
+        {
+          title: 'Contract Testing for Microservices',
+          time: '10:00 — 10:25',
+          speakers: [
+            {
+              name: 'Olivia Brown',
+              position: 'Test Architect / Pact',
+              photo:
+                'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop',
+            },
+          ],
+        },
+      ],
+      'AI & Future': [
+        {
+          title: 'AI Agents and the OpenAPI Toolchain',
+          time: '13:00 — 13:25',
+          speakers: [
+            {
+              name: 'Marcus Webb',
+              position: 'Research Engineer / Anthropic',
+              photo:
+                'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop',
+            },
+            {
+              name: 'Aisha Patel',
+              position: 'Product Lead / OpenAI',
+              photo:
+                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop',
+              tag: 'OAI',
+            },
+          ],
+        },
+        {
+          title: 'Closing Keynote: Where OpenAPI Goes Next',
+          time: '14:00 — 14:25',
+          speakers: [
+            {
+              name: 'Frank Kilcommins',
+              position: 'Head of Enterprise Architecture / Jentic',
+              photo:
+                'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop',
+              tag: 'OAI',
+            },
+          ],
+        },
+      ],
+    },
+  };
+}
+
 export function getEventDetail(slug: string): EventDetailData | undefined {
-  return eventDetails[slug];
+  if (eventDetails[slug]) return eventDetails[slug];
+
+  // Fall back to basic event info from events.yml for any slug we don't have
+  // a custom detail for (mostly past events).
+  // Lazy require to avoid circular import at module init time.
+
+  const { events } = require('./events') as typeof import('./events');
+  const event = events.find((e) => e.slug === slug);
+  if (!event) return undefined;
+  return {
+    title: event.title,
+    date: event.event_date,
+    location: event.location,
+    image: event.image,
+    type: event.type,
+    status: event.status,
+    description: event.description,
+    agenda: buildFallbackAgenda(),
+    sponsors: [{ name: 'boomi' }],
+  };
 }
 
 export function getAllEventSlugs(): string[] {
-  return Object.keys(eventDetails);
+  const customSlugs = Object.keys(eventDetails);
+  // Lazy require for the same reason as above.
+
+  const { events } = require('./events') as typeof import('./events');
+  const yamlSlugs = events.map((e) => e.slug);
+  return Array.from(new Set([...customSlugs, ...yamlSlugs]));
 }

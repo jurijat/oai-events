@@ -59,7 +59,7 @@ export default function PastEventsList({ items }: PastEventsListProps) {
       </section>
 
       {/* Events Grid Section */}
-      <section className="mx-auto mb-12 max-w-[1200px] px-6 md:px-20">
+      <section className="mx-auto mb-12 max-w-[1200px] md:px-20">
         {displayedEvents.length > 0 && (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {displayedEvents.map((item) => (
@@ -79,7 +79,7 @@ export default function PastEventsList({ items }: PastEventsListProps) {
 
         {/* Load More Button */}
         {hasMore && (
-          <div className="mt-12 flex justify-center">
+          <div className="mt-12 flex justify-center px-6 md:px-0">
             <button
               onClick={handleLoadMore}
               className="inline-flex cursor-pointer items-center rounded-[20px] border-2 border-none border-brand-green bg-transparent px-6 py-4 font-onest text-lg font-bold tracking-oai text-brand-green no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green hover:text-brand-bg hover:shadow-[0_8px_24px_rgba(101,209,0,0.35)] active:translate-y-0 active:border-brand-green-dark active:bg-brand-green-dark active:shadow-none disabled:pointer-events-none disabled:opacity-50"

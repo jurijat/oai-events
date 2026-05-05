@@ -65,7 +65,9 @@ export default function OaiFooter() {
             <div className="flex flex-row items-center gap-10">
               {/* LinkedIn */}
               <a
-                href="#"
+                href="https://www.linkedin.com/company/open-api-initiative/"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="LinkedIn"
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-[color:var(--ifm-font-color-base)] text-[color:var(--brand-bg)] transition-colors hover:bg-brand-green hover:text-brand-bg"
               >
@@ -75,7 +77,9 @@ export default function OaiFooter() {
               </a>
               {/* YouTube */}
               <a
-                href="#"
+                href="https://www.youtube.com/@OpenApi"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="YouTube"
                 className="flex h-10 w-10 items-center justify-center rounded-lg bg-[color:var(--ifm-font-color-base)] text-[color:var(--brand-bg)] transition-colors hover:bg-brand-green hover:text-brand-bg"
               >
@@ -85,7 +89,9 @@ export default function OaiFooter() {
               </a>
               {/* Bluesky */}
               <a
-                href="#"
+                href="https://bsky.app/profile/openapis.org"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Bluesky"
                 className="text-[color:var(--ifm-font-color-base)] transition-colors hover:text-brand-green"
               >
@@ -118,7 +124,9 @@ export default function OaiFooter() {
               openapis.org
             </a>
             <a
-              href="#"
+              href="https://github.com/OAI/.github/blob/main/.github/CODE_OF_CONDUCT.md"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2 font-onest text-base font-normal tracking-oai text-brand-green no-underline hover:underline md:text-lg"
             >
               <svg

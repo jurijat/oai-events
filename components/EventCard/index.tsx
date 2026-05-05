@@ -125,11 +125,10 @@ export default function EventCard({
             </button>
             {countdown && (
               <div className="flex flex-row items-end gap-2 font-onest font-bold tabular-nums tracking-oai text-black [[data-theme=dark]_&]:text-white">
-                <span className="text-[20px] leading-none md:text-[28px]">
+                <span className="mr-4 text-[20px] leading-none md:text-[28px]">
                   {countdown.d}
                   <span className="ml-0.5 align-super text-xs">d</span>
                 </span>
-                <span className="text-[20px] leading-none opacity-60 md:text-[28px]">:</span>
                 <span className="text-[20px] leading-none md:text-[28px]">{pad(countdown.h)}</span>
                 <span className="text-[20px] leading-none opacity-60 md:text-[28px]">:</span>
                 <span className="text-[20px] leading-none md:text-[28px]">{pad(countdown.m)}</span>

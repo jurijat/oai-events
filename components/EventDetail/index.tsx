@@ -422,26 +422,26 @@ export default function EventDetail({
               {/* Desktop close button */}
               <button
                 onClick={() => setSelectedSession(null)}
-                className="absolute right-6 top-6 z-10 hidden h-16 w-16 cursor-pointer items-center justify-center gap-2.5 rounded-[20px] border-none bg-transparent p-5 text-[#15191c] transition-colors hover:bg-black/5 md:flex"
+                className="absolute right-6 top-6 z-10 hidden h-9 w-9 cursor-pointer items-center justify-center rounded-full border-none bg-[#15191c] text-white transition-colors hover:bg-[#15191c]/80 [[data-theme=dark]_&]:bg-white [[data-theme=dark]_&]:text-[#15191c] [[data-theme=dark]_&]:hover:bg-white/80 md:flex"
                 aria-label="Close"
               >
                 <svg
-                  width="32"
-                  height="32"
+                  width="22"
+                  height="22"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="1.5"
-                  className="flex-shrink-0"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 >
                   <path d="M18 6L6 18M6 6l12 12" />
                 </svg>
               </button>
 
-              <div className="my-0 flex w-full max-w-[1360px] flex-col items-center gap-3 md:my-auto">
+              <div className="my-0 flex w-full max-w-[1360px] flex-1 flex-col items-stretch gap-3 md:my-0 md:mt-20 md:flex-none md:items-center">
                 {/* White content card */}
                 <div
-                  className="w-full rounded-[40px] bg-white px-6 py-8 [[data-theme=dark]_&]:bg-[#353535] md:px-20 md:py-12"
+                  className="h-[80%] w-full overflow-y-auto rounded-[40px] bg-white px-6 py-8 [[data-theme=dark]_&]:bg-[#353535] md:h-auto md:overflow-visible md:px-20 md:py-12"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="flex max-w-[800px] flex-col gap-6">
@@ -520,16 +520,29 @@ export default function EventDetail({
                       </div>
                     )}
 
-                    {/* View slides button */}
-                    <div className="pt-3">
+                    {/* View slides button — inside card on desktop */}
+                    <div className="hidden pt-3 md:block">
                       <button
                         type="button"
-                        className="inline-flex h-[56px] w-full cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none disabled:pointer-events-none disabled:opacity-50 md:h-[64px] md:w-auto md:px-6 md:text-lg"
+                        className="inline-flex h-[64px] w-auto cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-lg font-bold tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none disabled:pointer-events-none disabled:opacity-50"
                       >
                         View slides
                       </button>
                     </div>
                   </div>
+                </div>
+
+                {/* View slides button — outside the card, sits at bottom of modal (mobile only) */}
+                <div
+                  className="mt-auto w-full px-4 pb-12 md:hidden"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    type="button"
+                    className="inline-flex h-[56px] w-full cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none disabled:pointer-events-none disabled:opacity-50"
+                  >
+                    View slides
+                  </button>
                 </div>
 
                 {/* Timeline pills below the card — desktop only */}
@@ -538,7 +551,7 @@ export default function EventDetail({
                     className="hidden w-full items-center justify-center overflow-x-auto pt-3 md:flex"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <div className="inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)]">
+                    <div className="inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)] [[data-theme=dark]_&]:bg-[#1f2326]">
                       {allSessions.map((session) => {
                         const sessionTime = session.time?.split(/\s*[—-]\s*/)[0] || '';
                         const isActive =
@@ -550,7 +563,7 @@ export default function EventDetail({
                             className={`flex h-10 flex-shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-[20px] border-none px-5 py-2 font-onest text-base font-semibold tracking-oai transition-colors ${
                               isActive
                                 ? 'bg-brand-green text-[#15191c]'
-                                : 'bg-transparent text-[rgba(21,25,28,0.64)] hover:text-[#15191c]'
+                                : 'bg-transparent text-[rgba(21,25,28,0.64)] hover:text-[#15191c] [[data-theme=dark]_&]:text-white'
                             }`}
                           >
                             {sessionTime}
