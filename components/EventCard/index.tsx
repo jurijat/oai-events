@@ -124,7 +124,7 @@ export default function EventCard({
               Get a free ticket
             </button>
             {countdown && (
-              <div className="flex flex-row items-end gap-2 font-onest font-bold tabular-nums tracking-oai text-black">
+              <div className="flex flex-row items-end gap-2 font-onest font-bold tabular-nums tracking-oai text-black [[data-theme=dark]_&]:text-white">
                 <span className="text-[20px] leading-none md:text-[28px]">
                   {countdown.d}
                   <span className="ml-0.5 align-super text-xs">d</span>

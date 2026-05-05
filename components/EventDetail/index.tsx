@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import EventCard from '../EventCard';
 import OaiFooter from '../OaiFooter';
 import PhotoLightbox from '../PhotoLightbox';
@@ -81,6 +81,8 @@ export default function EventDetail({
       document.body.style.overflow = '';
     };
   }, [selectedSession]);
+
+  const touchStartX = useRef<number | null>(null);
 
   // Get current-day sessions for timeline navigation, deduped by start time.
   const currentDaySessions = Object.values(agenda[selectedDate] || {})
@@ -185,11 +187,11 @@ export default function EventDetail({
                         {session.time && (
                           <div className="flex max-w-[240px] items-center gap-5">
                             <div className="h-[10px] w-[5px] flex-shrink-0 rounded-[10px] bg-brand-green" />
-                            <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c]">
+                            <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
                               {startTime}
                             </span>
-                            <div className="h-px flex-1 bg-[rgba(21,25,28,0.12)]" />
-                            <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c]">
+                            <div className="h-px flex-1 bg-[rgba(21,25,28,0.12)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.16)]" />
+                            <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
                               {endTime}
                             </span>
                           </div>
@@ -197,7 +199,7 @@ export default function EventDetail({
 
                         {/* Main */}
                         <div className="flex max-w-[800px] flex-col gap-6">
-                          <h4 className="m-0 font-onest text-[24px] font-bold leading-[1.2] tracking-[-0.96px] text-[#15191c]">
+                          <h4 className="m-0 font-onest text-[24px] font-bold leading-[1.2] tracking-[-0.96px] text-[#15191c] [[data-theme=dark]_&]:text-white">
                             {session.title}
                           </h4>
 
@@ -218,7 +220,7 @@ export default function EventDetail({
                                     )}
                                     <div className="min-w-0 flex-1">
                                       <div className="flex items-center gap-1">
-                                        <span className="font-onest text-base font-bold leading-[1.2] tracking-oai text-[#15191c]">
+                                        <span className="font-onest text-base font-bold leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
                                           {sp.name}
                                         </span>
                                         {sp.tag && (
@@ -228,7 +230,7 @@ export default function EventDetail({
                                         )}
                                       </div>
                                       {sp.position && (
-                                        <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c]">
+                                        <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
                                           {sp.position}
                                         </span>
                                       )}
@@ -248,11 +250,11 @@ export default function EventDetail({
                       ? {
                           onClick: () => setSelectedSession(session),
                           className:
-                            'block w-full text-left p-6 md:p-8 rounded-[40px] bg-white hover:bg-white/90 transition-colors cursor-pointer relative border-none',
+                            'block w-full text-left p-6 md:p-8 rounded-[40px] bg-white hover:bg-white/90 [[data-theme=dark]_&]:bg-[#353535] [[data-theme=dark]_&]:hover:bg-[#353535]/90 transition-colors cursor-pointer relative border-none',
                         }
                       : {
                           className:
-                            'p-6 md:p-8 rounded-[40px] bg-white relative',
+                            'p-6 md:p-8 rounded-[40px] bg-white [[data-theme=dark]_&]:bg-[#353535] relative',
                         };
 
                     return (
@@ -358,13 +360,69 @@ export default function EventDetail({
 
           return (
             <div
-              className="fixed inset-0 z-50 flex flex-col items-center overflow-y-auto bg-[rgba(0,0,0,0.12)] px-4 py-6 md:px-12 md:py-6"
+              className="fixed inset-0 z-50 flex flex-col items-stretch overflow-y-auto bg-[color:var(--brand-bg)] px-0 py-0 md:items-center md:px-12 md:py-6"
               onClick={() => setSelectedSession(null)}
+              onTouchStart={(e) => {
+                touchStartX.current = e.changedTouches[0].clientX;
+              }}
+              onTouchEnd={(e) => {
+                if (touchStartX.current === null) return;
+                const delta = e.changedTouches[0].clientX - touchStartX.current;
+                touchStartX.current = null;
+                if (Math.abs(delta) < 50) return;
+                const idx = allSessions.findIndex((s) => s === selectedSession);
+                if (idx === -1) return;
+                if (delta > 0 && idx > 0) setSelectedSession(allSessions[idx - 1]);
+                else if (delta < 0 && idx < allSessions.length - 1)
+                  setSelectedSession(allSessions[idx + 1]);
+              }}
             >
-              {/* Close button — Figma 568:23271: 64×64, p-[20px], gap-[10px], rounded-[20px], bg transparent, top:24 right:24 */}
+              {/* Mobile top bar: pills + X */}
+              <div
+                className="sticky top-0 z-10 flex items-center gap-3 bg-[color:var(--brand-bg)] px-4 py-3 md:hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {allSessions.length > 0 && selectedSession.time ? (
+                  <div className="flex-1 overflow-x-auto">
+                    <div className="inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)] [[data-theme=dark]_&]:bg-[#1f2326]">
+                      {allSessions.map((session) => {
+                        const sessionTime = session.time?.split(/\s*[—-]\s*/)[0] || '';
+                        const isActive =
+                          sessionTime === selectedSession.time?.split(/\s*[—-]\s*/)[0];
+                        return (
+                          <button
+                            key={`m-${session.time}-${session.title}`}
+                            onClick={() => setSelectedSession(session)}
+                            className={`flex h-9 flex-shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-[20px] border-none px-4 font-onest text-sm font-semibold tracking-oai transition-colors ${
+                              isActive
+                                ? 'bg-brand-green text-[#15191c]'
+                                : 'bg-transparent text-[rgba(21,25,28,0.64)] [[data-theme=dark]_&]:text-white'
+                            }`}
+                          >
+                            {sessionTime}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex-1" />
+                )}
+                <button
+                  onClick={() => setSelectedSession(null)}
+                  aria-label="Close"
+                  className="flex h-9 w-9 flex-shrink-0 cursor-pointer items-center justify-center rounded-full border-none bg-[rgba(21,25,28,0.08)] text-[#15191c] transition-colors hover:bg-black/10 [[data-theme=dark]_&]:bg-[#1f2326] [[data-theme=dark]_&]:text-white"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Desktop close button */}
               <button
                 onClick={() => setSelectedSession(null)}
-                className="absolute right-6 top-6 z-10 flex h-16 w-16 cursor-pointer items-center justify-center gap-2.5 rounded-[20px] border-none bg-transparent p-5 text-[#15191c] transition-colors hover:bg-black/5"
+                className="absolute right-6 top-6 z-10 hidden h-16 w-16 cursor-pointer items-center justify-center gap-2.5 rounded-[20px] border-none bg-transparent p-5 text-[#15191c] transition-colors hover:bg-black/5 md:flex"
                 aria-label="Close"
               >
                 <svg
@@ -380,10 +438,10 @@ export default function EventDetail({
                 </svg>
               </button>
 
-              <div className="my-auto flex w-full max-w-[1360px] flex-col items-center gap-3">
+              <div className="my-0 flex w-full max-w-[1360px] flex-col items-center gap-3 md:my-auto">
                 {/* White content card */}
                 <div
-                  className="w-full rounded-[40px] bg-white px-6 py-8 md:px-20 md:py-12"
+                  className="w-full rounded-[40px] bg-white px-6 py-8 [[data-theme=dark]_&]:bg-[#353535] md:px-20 md:py-12"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="flex max-w-[800px] flex-col gap-6">
@@ -392,23 +450,23 @@ export default function EventDetail({
                       {selectedSession.time && (
                         <div className="flex max-w-[240px] items-center gap-6 py-2">
                           <div className="h-[10px] w-[5px] flex-shrink-0 rounded-[10px] bg-brand-green" />
-                          <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] md:text-lg">
+                          <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-lg">
                             {startTime}
                           </span>
-                          <div className="h-px flex-1 bg-[rgba(21,25,28,0.12)]" />
-                          <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] md:text-lg">
+                          <div className="h-px flex-1 bg-[rgba(21,25,28,0.12)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.16)]" />
+                          <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-lg">
                             {endTime}
                           </span>
                         </div>
                       )}
 
-                      <h2 className="m-0 font-onest text-[32px] font-bold leading-[1.1] tracking-oai text-[#15191c] md:text-[48px] md:tracking-[-1.92px]">
+                      <h2 className="m-0 font-onest text-[32px] font-bold leading-[1.1] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-[48px] md:tracking-[-1.92px]">
                         {selectedSession.title}
                       </h2>
                     </div>
 
                     {/* Description */}
-                    <p className="m-0 font-onest text-base font-normal leading-[1.4] tracking-oai text-[#15191c] md:text-lg">
+                    <p className="m-0 font-onest text-base font-normal leading-[1.4] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-lg">
                       Join us for this session at {title}.
                     </p>
 
@@ -434,11 +492,11 @@ export default function EventDetail({
                                     <div className="h-16 w-16 flex-shrink-0 rounded-bl-[8px] rounded-br-[32px] rounded-tl-[8px] rounded-tr-[32px] bg-[#d9d9d9]" />
                                   )}
                                   <div className="flex min-w-0 flex-col gap-1">
-                                    <span className="font-onest text-base font-bold leading-[1.2] tracking-oai text-[#15191c]">
+                                    <span className="font-onest text-base font-bold leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
                                       {sp.name}
                                     </span>
                                     {sp.position && (
-                                      <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c]">
+                                      <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
                                         {sp.position}
                                       </span>
                                     )}
@@ -448,7 +506,7 @@ export default function EventDetail({
                                   href={`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(sp.name)}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="flex h-12 w-12 flex-shrink-0 items-center justify-center text-[#15191c] transition-colors hover:text-brand-green"
+                                  className="flex h-12 w-12 flex-shrink-0 items-center justify-center text-[#15191c] [[data-theme=dark]_&]:text-white transition-colors hover:text-brand-green"
                                   aria-label={`LinkedIn — ${sp.name}`}
                                 >
                                   <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -474,10 +532,10 @@ export default function EventDetail({
                   </div>
                 </div>
 
-                {/* Timeline pills below the card */}
+                {/* Timeline pills below the card — desktop only */}
                 {allSessions.length > 0 && selectedSession.time && (
                   <div
-                    className="flex w-full items-center justify-center overflow-x-auto pt-3"
+                    className="hidden w-full items-center justify-center overflow-x-auto pt-3 md:flex"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)]">
