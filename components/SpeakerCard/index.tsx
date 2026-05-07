@@ -10,7 +10,7 @@ interface SpeakerCardProps {
 
 export default function SpeakerCard({ name, position, photo, tags = [] }: SpeakerCardProps) {
   return (
-    <div className="flex h-[180px] w-full flex-row items-center overflow-hidden rounded-[40px] bg-white [[data-theme=dark]_&]:bg-[#353535] md:w-[428px]">
+    <div className="tile-press flex h-[180px] w-full flex-row items-center overflow-hidden rounded-[40px] bg-white [[data-theme=dark]_&]:bg-[#353535] md:w-[428px]">
       {/* Text side — 248px × 180px, padding 16px 24px, gap 8px */}
       <div className="flex h-[180px] flex-1 flex-col items-start justify-center gap-2 px-6 py-4 md:w-[248px] md:flex-none">
         {/* Name container — flex-row, gap 8px */}

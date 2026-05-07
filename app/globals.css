@@ -90,6 +90,21 @@ article {
   opacity: 0.7;
 }
 
+/* Mobile-only press effect for tile-like elements: shrink 4% + 12% darken.
+   Implemented with filter:brightness(0.88) which is visually equivalent to a
+   12% black overlay without needing a positioned ::after on every tile. */
+@media (max-width: 1023px) {
+  .tile-press {
+    transition:
+      transform 0.15s ease,
+      filter 0.15s ease;
+  }
+  .tile-press:active {
+    transform: scale(0.96);
+    filter: brightness(0.88);
+  }
+}
+
 /* Custom scrollbar for photo gallery */
 .overflow-x-auto::-webkit-scrollbar {
   height: 4px;

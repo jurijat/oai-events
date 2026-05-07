@@ -1,7 +1,21 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { asset } from '@/lib/basePath';
 
 export default function OaiFooter() {
+  const [email, setEmail] = useState('');
+
+  const openSubscribe = () => {
+    // Append the typed email as a query param so openapis.org can pick it up
+    // if their form reads it. The hash keeps the user scrolled to the footer
+    // form on arrival.
+    const url = email
+      ? `https://www.openapis.org/?email=${encodeURIComponent(email)}#footer-outer`
+      : 'https://www.openapis.org/#footer-outer';
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <footer className="px-6 pb-0" style={{ backgroundColor: 'var(--brand-footer-bg)' }}>
       {/* Subscribe Section */}
@@ -26,16 +40,27 @@ export default function OaiFooter() {
               Receive notifications about all new events, registration openings and closings, and
               personal invitations
             </p>
-            <div className="flex w-full max-w-[612px] flex-col items-start gap-2 sm:flex-row">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                openSubscribe();
+              }}
+              className="flex w-full max-w-[612px] flex-col items-start gap-2 sm:flex-row"
+            >
               <input
                 type="email"
                 placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="placeholder:text-[color:var(--ifm-font-color-base)]/48 h-[56px] w-full rounded-[20px] border border-white/10 bg-brand-bg px-4 font-onest text-base font-normal tracking-oai text-[color:var(--ifm-font-color-base)] outline-none sm:w-[480px] md:h-[64px] md:px-6 md:text-lg"
               />
-              <button className="h-[56px] w-[124px] flex-shrink-0 cursor-pointer rounded-[20px] border-none bg-brand-green font-onest text-base font-semibold tracking-oai text-black transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none disabled:pointer-events-none disabled:opacity-50 md:h-[64px] md:text-lg">
+              <button
+                type="submit"
+                className="h-[56px] w-[124px] flex-shrink-0 cursor-pointer rounded-[20px] border-none bg-brand-green font-onest text-base font-semibold tracking-oai text-black transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none disabled:pointer-events-none disabled:opacity-50 md:h-[64px] md:text-lg"
+              >
                 Subscribe
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </section>

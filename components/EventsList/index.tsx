@@ -54,7 +54,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
     'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=1600',
     'https://images.unsplash.com/photo-1528901166007-3784c7dd3653?w=1600',
   ];
-  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   // Scroll-driven hero expansion
   const heroRef = useRef<HTMLDivElement>(null);
@@ -321,9 +321,12 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
                 'rounded-[20px] md:rounded-[40px]',
               ];
               return (
-                <div
+                <button
+                  type="button"
                   key={i}
-                  className={`flex-shrink-0 ${widths[i] ?? 'w-[300px] md:w-[400px]'} ${rounded[i] ?? 'rounded-[40px]'} h-[260px] bg-brand-card-dark bg-cover bg-center md:h-[384px]`}
+                  onClick={() => setLightboxIndex(i)}
+                  aria-label={`Open photo ${i + 1}`}
+                  className={`tile-press flex-shrink-0 cursor-pointer border-none p-0 ${widths[i] ?? 'w-[300px] md:w-[400px]'} ${rounded[i] ?? 'rounded-[40px]'} h-[260px] bg-brand-card-dark bg-cover bg-center md:h-[384px]`}
                   style={{ backgroundImage: `url(${src})` }}
                 />
               );
@@ -334,7 +337,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
           <div className="mx-auto mt-12 max-w-[1200px] px-6 md:px-20">
             <button
               type="button"
-              onClick={() => setGalleryOpen(true)}
+              onClick={() => setLightboxIndex(0)}
               className="inline-flex h-[56px] w-full cursor-pointer items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none disabled:pointer-events-none disabled:opacity-50 md:h-[64px] md:w-[164px] md:justify-center md:text-lg"
             >
               View gallery
@@ -355,8 +358,8 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
         {/* Footer with Subscribe + Social + Bottom bar */}
         <OaiFooter />
 
-        {galleryOpen && (
-          <PhotoLightbox photos={photos} startIndex={0} onClose={() => setGalleryOpen(false)} />
+        {lightboxIndex !== null && (
+          <PhotoLightbox photos={photos} startIndex={lightboxIndex} onClose={() => setLightboxIndex(null)} />
         )}
       </main>
     </>

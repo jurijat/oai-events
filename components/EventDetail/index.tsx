@@ -246,21 +246,18 @@ export default function EventDetail({
                     );
 
                     // Make clickable if it has a permalink (opens modal)
-                    const Wrapper = session.permalink ? 'button' : 'div';
+                    const Wrapper = 'button';
                     /* iOS/dark-mode: use --brand-card-dark CSS var instead of a
                        literal hex so all event pages render the agenda tile
                        with the same dark-mode background regardless of which
-                       agenda data shape (custom vs fallback) renders the row. */
-                    const wrapperProps = session.permalink
-                      ? {
-                          onClick: () => setSelectedSession(session),
-                          className:
-                            'block w-full text-left p-6 md:p-8 rounded-[40px] bg-white hover:bg-white/90 [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)] [[data-theme=dark]_&]:hover:bg-[color:var(--brand-card-dark)]/90 transition-colors cursor-pointer relative border-none',
-                        }
-                      : {
-                          className:
-                            'p-6 md:p-8 rounded-[40px] bg-white [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)] relative',
-                        };
+                       agenda data shape (custom vs fallback) renders the row.
+                       Every session tile opens the modal — permalink is no
+                       longer required for clickability. */
+                    const wrapperProps = {
+                      onClick: () => setSelectedSession(session),
+                      className:
+                        'tile-press block w-full text-left p-6 md:p-8 rounded-[40px] bg-white hover:bg-white/90 [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)] [[data-theme=dark]_&]:hover:bg-[color:var(--brand-card-dark)]/90 transition-colors cursor-pointer relative border-none',
+                    };
 
                     return (
                       <Wrapper key={i} {...wrapperProps}>
@@ -316,9 +313,12 @@ export default function EventDetail({
               'rounded-[20px] md:rounded-[40px]',
             ];
             return (
-              <div
+              <button
+                type="button"
                 key={i}
-                className={`flex-shrink-0 ${widths[i] ?? 'w-[280px] md:w-[400px]'} ${rounded[i] ?? 'rounded-[40px]'} h-[260px] bg-brand-card-dark bg-cover bg-center md:h-[384px]`}
+                onClick={() => setLightboxIndex(i)}
+                aria-label={`Open photo ${i + 1}`}
+                className={`tile-press flex-shrink-0 cursor-pointer border-none p-0 ${widths[i] ?? 'w-[280px] md:w-[400px]'} ${rounded[i] ?? 'rounded-[40px]'} h-[260px] bg-brand-card-dark bg-cover bg-center md:h-[384px]`}
                 style={{ backgroundImage: `url(${src})` }}
               />
             );

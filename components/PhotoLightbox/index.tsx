@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 
 interface PhotoLightboxProps {
   photos: string[];
@@ -10,6 +10,7 @@ interface PhotoLightboxProps {
 
 export default function PhotoLightbox({ photos, startIndex, onClose }: PhotoLightboxProps) {
   const [index, setIndex] = useState(startIndex);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
 
   const goPrev = useCallback(() => {
     setIndex((i) => (i - 1 + photos.length) % photos.length);
@@ -18,6 +19,34 @@ export default function PhotoLightbox({ photos, startIndex, onClose }: PhotoLigh
   const goNext = useCallback(() => {
     setIndex((i) => (i + 1) % photos.length);
   }, [photos.length]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const t = e.changedTouches[0];
+    touchStart.current = { x: t.clientX, y: t.clientY };
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStart.current) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStart.current.x;
+    const dy = t.clientY - touchStart.current.y;
+    touchStart.current = null;
+
+    const absX = Math.abs(dx);
+    const absY = Math.abs(dy);
+
+    // Vertical swipe down to dismiss (only when downward motion dominates).
+    if (dy > 80 && absY > absX) {
+      onClose();
+      return;
+    }
+
+    // Horizontal swipe to navigate prev/next (>50px and dominant axis).
+    if (absX > 50 && absX > absY) {
+      if (dx < 0) goNext();
+      else goPrev();
+    }
+  };
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -42,6 +71,8 @@ export default function PhotoLightbox({ photos, startIndex, onClose }: PhotoLigh
       style={{ height: '100dvh' }}
       className="fixed inset-0 z-[1000] flex flex-col items-center justify-center bg-black/90"
       onClick={onClose}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       role="dialog"
       aria-modal="true"
       aria-label="Photo viewer"

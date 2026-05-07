@@ -64,7 +64,7 @@ export default function EventCard({
 
   const card = (
     <div
-      className={`relative w-full ${cardHeight} group overflow-hidden rounded-4xl bg-brand-card-dark`}
+      className={`relative w-full ${cardHeight} group tile-press overflow-hidden rounded-4xl bg-brand-card-dark`}
     >
       {/* Full-width background image */}
       {image && (
