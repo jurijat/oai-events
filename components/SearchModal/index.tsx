@@ -57,7 +57,10 @@ export default function SearchModal({ items, open, onClose }: SearchModalProps) 
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[640px] rounded-[24px] bg-[color:var(--brand-bg)] p-2 shadow-[0_24px_64px_rgba(0,0,0,0.35)]"
+        /* iOS dark-mode visibility: previous bg matched --brand-bg (the page
+           background), so the modal "disappeared" against the page. Use white
+           in light mode and --brand-card-dark in dark mode for clear contrast. */
+        className="w-full max-w-[640px] rounded-[24px] bg-white p-2 shadow-[0_24px_64px_rgba(0,0,0,0.35)] [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-2 rounded-[20px] bg-white px-4 py-3 [[data-theme=dark]_&]:bg-[#15191C]">

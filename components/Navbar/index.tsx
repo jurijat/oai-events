@@ -28,10 +28,14 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
 
   return (
     <>
+      {/* iOS: switched from `position: sticky` → `fixed` because sticky is
+          unreliable on iOS Safari when the URL bar collapses/expands.
+          env(safe-area-inset-top) keeps the bar below the notch / Dynamic Island. */}
       <nav
         data-navbar
         data-scrolled={scrolled ? 'true' : 'false'}
-        className={`sticky top-0 z-30 flex items-center justify-between px-2 transition-[height,background-color,box-shadow] duration-200 ease-out md:px-10 ${
+        style={{ paddingTop: 'env(safe-area-inset-top)' }}
+        className={`fixed inset-x-0 top-0 z-30 flex items-center justify-between px-2 transition-[height,background-color,box-shadow] duration-200 ease-out md:px-10 ${
           scrolled
             ? 'h-12 bg-[color:var(--brand-bg)] shadow-[0_1px_0_var(--brand-separator)]'
             : 'h-16 bg-transparent shadow-none'
@@ -90,8 +94,16 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
         </button>
       </nav>
 
+      {/* Spacer reserves the navbar's height in the document flow so the
+          fixed-positioned navbar doesn't overlap page content.
+          iOS: include safe-area-inset-top in the height — the navbar adds
+          that as padding so the bar clears the notch / Dynamic Island. */}
+      <div
+        aria-hidden
+        style={{ height: 'calc(4rem + env(safe-area-inset-top))' }}
+      />
       {menuOpen && (
-        <div className="sticky top-12 z-20 flex flex-col gap-1 border-b border-[color:var(--brand-separator)] bg-[color:var(--brand-bg)] px-4 py-3 md:hidden">
+        <div className="fixed inset-x-0 top-16 z-20 flex flex-col gap-1 border-b border-[color:var(--brand-separator)] bg-[color:var(--brand-bg)] px-4 py-3 md:hidden">
           {!isHome && (
             <Link
               href="/"

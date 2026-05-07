@@ -26,6 +26,7 @@ interface AgendaSession {
   time?: string;
   date?: string;
   permalink?: string;
+  slidesUrl?: string;
 }
 
 interface EventDetailProps {
@@ -246,15 +247,19 @@ export default function EventDetail({
 
                     // Make clickable if it has a permalink (opens modal)
                     const Wrapper = session.permalink ? 'button' : 'div';
+                    /* iOS/dark-mode: use --brand-card-dark CSS var instead of a
+                       literal hex so all event pages render the agenda tile
+                       with the same dark-mode background regardless of which
+                       agenda data shape (custom vs fallback) renders the row. */
                     const wrapperProps = session.permalink
                       ? {
                           onClick: () => setSelectedSession(session),
                           className:
-                            'block w-full text-left p-6 md:p-8 rounded-[40px] bg-white hover:bg-white/90 [[data-theme=dark]_&]:bg-[#353535] [[data-theme=dark]_&]:hover:bg-[#353535]/90 transition-colors cursor-pointer relative border-none',
+                            'block w-full text-left p-6 md:p-8 rounded-[40px] bg-white hover:bg-white/90 [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)] [[data-theme=dark]_&]:hover:bg-[color:var(--brand-card-dark)]/90 transition-colors cursor-pointer relative border-none',
                         }
                       : {
                           className:
-                            'p-6 md:p-8 rounded-[40px] bg-white [[data-theme=dark]_&]:bg-[#353535] relative',
+                            'p-6 md:p-8 rounded-[40px] bg-white [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)] relative',
                         };
 
                     return (
@@ -360,6 +365,11 @@ export default function EventDetail({
 
           return (
             <div
+              /* iOS: use 100dvh (dynamic viewport height) so the modal fills
+                 the visible area when the URL bar collapses, instead of leaving
+                 a strip of page bleeding through at the bottom. inset-0 still
+                 works on browsers without dvh support. */
+              style={{ height: '100dvh' }}
               className="fixed inset-0 z-50 flex flex-col items-stretch overflow-y-auto bg-[color:var(--brand-bg)] px-0 py-0 md:items-center md:px-12 md:py-6"
               onClick={() => setSelectedSession(null)}
               onTouchStart={(e) => {
@@ -441,7 +451,11 @@ export default function EventDetail({
               <div className="my-0 flex w-full max-w-[1360px] flex-1 flex-col items-stretch gap-3 md:my-0 md:mt-20 md:flex-none md:items-center">
                 {/* White content card */}
                 <div
-                  className="h-[80%] w-full overflow-y-auto rounded-[40px] bg-white px-6 py-8 [[data-theme=dark]_&]:bg-[#353535] md:h-auto md:overflow-visible md:px-20 md:py-12"
+                  /* iOS: bg switches via CSS var (--brand-card-dark) so the
+                     dark-mode color is applied at the same layer as the page
+                     theme, avoiding cases where a Tailwind data-theme arbitrary
+                     variant didn't match (seen on some event pages). */
+                  className="h-[80%] w-full overflow-y-auto rounded-[40px] bg-white px-6 py-8 [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)] md:h-auto md:overflow-visible md:px-20 md:py-12"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="flex max-w-[800px] flex-col gap-6">
@@ -522,12 +536,26 @@ export default function EventDetail({
 
                     {/* View slides button — inside card on desktop */}
                     <div className="hidden pt-3 md:block">
-                      <button
-                        type="button"
-                        className="inline-flex h-[64px] w-auto cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-lg font-bold tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none disabled:pointer-events-none disabled:opacity-50"
-                      >
-                        View slides
-                      </button>
+                      {selectedSession.slidesUrl ? (
+                        <a
+                          href={selectedSession.slidesUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex h-[64px] w-auto cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-lg font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none"
+                        >
+                          View slides
+                        </a>
+                      ) : (
+                        <button
+                          type="button"
+                          disabled
+                          aria-disabled="true"
+                          title="Slides not available"
+                          className="inline-flex h-[64px] w-auto cursor-not-allowed items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-[rgba(21,25,28,0.12)] px-6 py-1.5 font-onest text-lg font-bold tracking-oai text-[rgba(21,25,28,0.4)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.08)] [[data-theme=dark]_&]:text-[rgba(255,255,255,0.4)]"
+                        >
+                          View slides
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -537,12 +565,25 @@ export default function EventDetail({
                   className="mt-auto w-full px-4 pb-12 md:hidden"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <button
-                    type="button"
-                    className="inline-flex h-[56px] w-full cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none disabled:pointer-events-none disabled:opacity-50"
-                  >
-                    View slides
-                  </button>
+                  {selectedSession.slidesUrl ? (
+                    <a
+                      href={selectedSession.slidesUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-[56px] w-full cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none"
+                    >
+                      View slides
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled
+                      aria-disabled="true"
+                      className="inline-flex h-[56px] w-full cursor-not-allowed items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-[rgba(21,25,28,0.12)] px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[rgba(21,25,28,0.4)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.08)] [[data-theme=dark]_&]:text-[rgba(255,255,255,0.4)]"
+                    >
+                      View slides
+                    </button>
+                  )}
                 </div>
 
                 {/* Timeline pills below the card — desktop only */}

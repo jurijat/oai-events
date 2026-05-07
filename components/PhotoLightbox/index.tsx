@@ -36,6 +36,10 @@ export default function PhotoLightbox({ photos, startIndex, onClose }: PhotoLigh
 
   return (
     <div
+      /* iOS: 100dvh keeps the lightbox the size of the visible viewport when
+         the URL bar collapses; otherwise the bottom of the photo can hide
+         under the URL bar on iPhones. */
+      style={{ height: '100dvh' }}
       className="fixed inset-0 z-[1000] flex flex-col items-center justify-center bg-black/90"
       onClick={onClose}
       role="dialog"

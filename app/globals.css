@@ -50,6 +50,9 @@ body {
   background-repeat: no-repeat;
   background-position: top left;
   background-attachment: scroll;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 [data-theme='dark'] body {
@@ -64,17 +67,22 @@ article {
   background-color: transparent !important;
 }
 
-/* Boomi sponsor section — invert in dark mode */
+/* Boomi sponsor section — invert in dark mode.
+   iOS: prefixed -webkit-filter for older iOS Safari (≤ iOS 12) where the
+   un-prefixed filter on <img> inversion is unreliable. */
 [data-theme='dark'] img.boomi-bg {
+  -webkit-filter: invert(1);
   filter: invert(1);
 }
 
-/* Logo invert in dark mode */
+/* Logo invert in dark mode (same iOS reasoning) */
 [data-theme='dark'] .navbar-logo-img {
+  -webkit-filter: invert(1);
   filter: invert(1);
 }
 
 [data-theme='dark'] .navbar-theme-toggle {
+  -webkit-filter: invert(1);
   filter: invert(1);
 }
 

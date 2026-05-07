@@ -12,6 +12,7 @@ export interface AgendaSession {
   time?: string;
   date?: string;
   permalink?: string;
+  slidesUrl?: string;
 }
 
 export type AgendaByDate = {
