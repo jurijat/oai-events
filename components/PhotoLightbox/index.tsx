@@ -84,6 +84,10 @@ export default function PhotoLightbox({ photos, startIndex, onClose }: PhotoLigh
           e.stopPropagation();
           onClose();
         }}
+        // marginTop adds the safe-area inset on top of the top-4/md:top-6
+        // offset so the button clears the notch / Dynamic Island under
+        // viewport-fit=cover (inset is 0 on desktop, so md:top-6 is unaffected).
+        style={{ marginTop: 'env(safe-area-inset-top)' }}
         className="absolute right-4 top-4 z-20 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-white text-[#15191c] transition-colors hover:bg-white/90 md:right-6 md:top-6"
         aria-label="Close"
       >

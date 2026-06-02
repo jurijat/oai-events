@@ -68,11 +68,18 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
       <nav
         data-navbar
         data-scrolled={scrolled ? 'true' : 'false'}
-        style={{ paddingTop: 'env(safe-area-inset-top)' }}
+        style={{
+          // Height includes the safe-area inset so the bar's border-box grows to
+          // clear the notch / Dynamic Island. paddingTop reserves that inset at
+          // the top, leaving exactly the bar height (3rem/4rem) for the logo —
+          // so the padding never overflows a clamped height (the iOS 26 bug).
+          paddingTop: 'env(safe-area-inset-top)',
+          height: `calc(${scrolled ? '3rem' : '4rem'} + env(safe-area-inset-top))`,
+        }}
         className={`fixed inset-x-0 top-0 z-30 flex items-center justify-between px-2 transition-[height,background-color,box-shadow] duration-200 ease-out md:px-10 ${
           scrolled
-            ? 'h-12 bg-[color:var(--brand-bg)] shadow-[0_1px_0_var(--brand-separator)]'
-            : 'h-16 bg-transparent shadow-none'
+            ? 'bg-[color:var(--brand-bg)] shadow-[0_1px_0_var(--brand-separator)]'
+            : 'bg-transparent shadow-none'
         }`}
       >
         <div className="flex items-center gap-2">
@@ -137,8 +144,11 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
       />
       {menuOpen && (
         <div
-          style={{ paddingTop: 'env(safe-area-inset-top)' }}
-          className="fixed inset-x-0 top-0 z-40 flex h-16 items-center justify-between bg-white px-6 [[data-theme=dark]_&]:bg-[#15191c] md:hidden"
+          style={{
+            paddingTop: 'env(safe-area-inset-top)',
+            height: 'calc(4rem + env(safe-area-inset-top))',
+          }}
+          className="fixed inset-x-0 top-0 z-40 flex items-center justify-between bg-white px-6 [[data-theme=dark]_&]:bg-[#15191c] md:hidden"
         >
           <div className="flex items-center gap-6 text-[#15191c] [[data-theme=dark]_&]:text-white">
             <button
@@ -198,6 +208,9 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
       <div
         aria-live="polite"
         role="status"
+        // Lift above the home indicator under viewport-fit=cover (inset is 0 on
+        // devices without one, so bottom-6 is unchanged there).
+        style={{ marginBottom: 'env(safe-area-inset-bottom)' }}
         className={`pointer-events-none fixed bottom-6 left-1/2 z-[1100] -translate-x-1/2 rounded-full bg-[#15191c] px-5 py-3 font-onest text-sm font-semibold text-white shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-opacity duration-300 [[data-theme=dark]_&]:bg-white [[data-theme=dark]_&]:text-[#15191c] ${
           toastVisible ? 'opacity-100' : 'opacity-0'
         }`}

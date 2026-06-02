@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Onest } from 'next/font/google';
 import { Providers } from './providers';
 import Navbar from '@/components/Navbar';
@@ -38,6 +38,17 @@ export const metadata: Metadata = {
     description: 'OpenAPI events and conferences',
     images: [OG_IMAGE],
   },
+};
+
+// viewport-fit=cover makes env(safe-area-inset-*) report real values on
+// notch / Dynamic Island devices (iPhone 17 Pro Max, iOS 26). Without it the
+// insets behave inconsistently across iOS versions, which broke the fixed
+// navbar layout. The navbar and other top/bottom-anchored overlays account
+// for the insets explicitly.
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

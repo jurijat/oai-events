@@ -389,6 +389,10 @@ export default function EventDetail({
             >
               {/* Mobile top bar: pills + X */}
               <div
+                // Under viewport-fit=cover the sticky bar pins to the physical
+                // top edge (under the Dynamic Island), so fold the safe-area
+                // inset into the top padding to push the pills/close below it.
+                style={{ paddingTop: 'calc(0.75rem + env(safe-area-inset-top))' }}
                 className="sticky top-0 z-10 flex items-center gap-3 bg-[color:var(--brand-bg)] px-4 py-3 md:hidden"
                 onClick={(e) => e.stopPropagation()}
               >
