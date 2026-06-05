@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import type { SearchItem } from '@/lib/searchIndex';
+import { lockScroll } from '@/lib/scrollLock';
 
 interface SearchModalProps {
   items: SearchItem[];
@@ -17,10 +18,10 @@ export default function SearchModal({ items, open, onClose }: SearchModalProps) 
   useEffect(() => {
     if (!open) return;
     const t = setTimeout(() => inputRef.current?.focus(), 0);
-    document.body.style.overflow = 'hidden';
+    const unlock = lockScroll();
     return () => {
       clearTimeout(t);
-      document.body.style.overflow = '';
+      unlock();
     };
   }, [open]);
 

@@ -17,14 +17,22 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
   const isHome = pathname === '/';
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    // The page scrolls inside #scroll-root, not the window (see app/layout.tsx).
+    const scroller = document.getElementById('scroll-root');
+    const target: HTMLElement | Window = scroller ?? window;
+    const onScroll = () =>
+      setScrolled((scroller ? scroller.scrollTop : window.scrollY) > 8);
     onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    target.addEventListener('scroll', onScroll, { passive: true });
+    return () => target.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
     setMenuOpen(false);
+    // Reset the scroll container to the top on navigation (the window no longer
+    // scrolls, so Next.js's default scroll-to-top doesn't apply here).
+    const scroller = document.getElementById('scroll-root');
+    if (scroller) scroller.scrollTop = 0;
   }, [pathname]);
 
   const handleShare = async () => {
@@ -134,14 +142,8 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
         </button>
       </nav>
 
-      {/* Spacer reserves the navbar's height in the document flow so the
-          fixed-positioned navbar doesn't overlap page content.
-          iOS: include safe-area-inset-top in the height — the navbar adds
-          that as padding so the bar clears the notch / Dynamic Island. */}
-      <div
-        aria-hidden
-        style={{ height: 'calc(4rem + env(safe-area-inset-top))' }}
-      />
+      {/* The navbar offset is reserved by #scroll-root's padding-top
+          (see globals.css), so no in-flow spacer is needed here. */}
       {menuOpen && (
         <div
           style={{

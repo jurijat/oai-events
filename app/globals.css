@@ -34,11 +34,34 @@
 
 html,
 body {
+  height: 100%;
   color: var(--ifm-font-color-base);
   font-family: var(--font-onest), 'Onest', sans-serif;
   letter-spacing: -0.04em;
   margin: 0;
   padding: 0;
+}
+
+/* The page scrolls inside #scroll-root instead of the document body. iOS in-app
+   browsers (e.g. Telegram) fail to keep a position:fixed navbar pinned while
+   the body scrolls — the bar drops into the page. Scrolling inside a container
+   means the body never scrolls, so the bar has nothing to come loose from.
+   position: absolute (not fixed) keeps #scroll-root from forming a stacking
+   context, so the fixed full-screen modals inside it still layer above the
+   navbar. */
+body {
+  position: relative;
+  overflow: hidden;
+}
+
+#scroll-root {
+  position: absolute;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Clear the fixed navbar (matches its calc(4rem + safe-area) height). */
+  padding-top: calc(4rem + env(safe-area-inset-top));
 }
 
 /* Top-left concentric arcs decoration. Painted on <body>, scrolls with the

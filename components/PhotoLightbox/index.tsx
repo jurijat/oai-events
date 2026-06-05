@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { lockScroll } from '@/lib/scrollLock';
 
 interface PhotoLightboxProps {
   photos: string[];
@@ -55,11 +56,10 @@ export default function PhotoLightbox({ photos, startIndex, onClose }: PhotoLigh
       else if (e.key === 'ArrowRight') goNext();
     };
     window.addEventListener('keydown', onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    const unlock = lockScroll();
     return () => {
       window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = prevOverflow;
+      unlock();
     };
   }, [onClose, goPrev, goNext]);
 

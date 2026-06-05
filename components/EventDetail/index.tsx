@@ -5,6 +5,7 @@ import EventCard from '../EventCard';
 import OaiFooter from '../OaiFooter';
 import PhotoLightbox from '../PhotoLightbox';
 import { asset } from '@/lib/basePath';
+import { lockScroll } from '@/lib/scrollLock';
 
 interface Speaker {
   name: string;
@@ -71,16 +72,11 @@ export default function EventDetail({
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [selectedSession, setSelectedSession] = useState<AgendaSession | null>(null);
 
-  // Body scroll lock when modal is open
+  // Lock background scrolling while the session modal is open.
   useEffect(() => {
-    if (selectedSession) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
+    if (!selectedSession) return;
+    const unlock = lockScroll();
+    return unlock;
   }, [selectedSession]);
 
   const touchStartX = useRef<number | null>(null);

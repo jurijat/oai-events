@@ -69,10 +69,11 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
       initialHeightRef.current = hero.offsetHeight;
     }
 
+    const scroller = document.getElementById('scroll-root');
     let rafId: number;
     let lastScrollY = -1;
     const tick = () => {
-      const scrollY = document.documentElement.scrollTop;
+      const scrollY = scroller ? scroller.scrollTop : document.documentElement.scrollTop;
       if (scrollY !== lastScrollY) {
         lastScrollY = scrollY;
         const extra = Math.min(scrollY * 0.3, 300);
