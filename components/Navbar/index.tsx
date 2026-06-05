@@ -75,6 +75,14 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
           // so the padding never overflows a clamped height (the iOS 26 bug).
           paddingTop: 'env(safe-area-inset-top)',
           height: `calc(${scrolled ? '3rem' : '4rem'} + env(safe-area-inset-top))`,
+          // iOS in-app browsers (e.g. Telegram/WKWebView) don't repaint a
+          // body-fixed bar on every frame during momentum scrolling, so it
+          // drifts off the top before snapping back. Promote the bar to its own
+          // GPU compositor layer so the async scroll thread keeps it locked to
+          // the viewport during the flick.
+          transform: 'translateZ(0)',
+          WebkitBackfaceVisibility: 'hidden',
+          backfaceVisibility: 'hidden',
         }}
         className={`fixed inset-x-0 top-0 z-30 flex items-center justify-between px-2 transition-[height,background-color,box-shadow] duration-200 ease-out md:px-10 ${
           scrolled
