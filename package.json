@@ -12,6 +12,10 @@
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test",
+    "cf:build": "opennextjs-cloudflare build",
+    "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf:typegen": "wrangler types",
     "preview:webkit": "playwright open --browser=webkit http://localhost:3000",
     "preview:iphone": "playwright open --device=\"iPhone 14 Pro\" http://localhost:3000",
     "preview:iphone17": "playwright open --browser=webkit --viewport-size=440,956 --user-agent=\"Mozilla/5.0 (iPhone; CPU iPhone OS 26_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Mobile/15E148 Safari/604.1\" http://localhost:3000",
@@ -27,6 +31,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
+    "@opennextjs/cloudflare": "^1.19.11",
     "@playwright/test": "^1.59.1",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.0.0",
@@ -40,7 +45,8 @@
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.7.3",
     "tailwindcss": "^3.4.19",
-    "typescript": "^5.6.0"
+    "typescript": "^5.6.0",
+    "wrangler": "^4.100.0"
   },
   "engines": {
     "node": ">=20.0"

@@ -6,6 +6,11 @@
 /out/
 next-env.d.ts.bak
 
+# Cloudflare (OpenNext adapter) build output + local state
+/.open-next/
+/.wrangler/
+cloudflare-env.d.ts
+
 # TypeScript
 *.tsbuildinfo
 
