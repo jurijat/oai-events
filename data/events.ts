@@ -1,6 +1,7 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import yaml from 'js-yaml';
+// Bundled as a raw string by the webpack asset/source rule (next.config.ts) —
+// the Cloudflare Workers runtime has no fs, so the YAML must ship in the bundle.
+import rawEvents from './events.yml';
 
 export interface Speaker {
   name: string;
@@ -24,10 +25,7 @@ export interface EventItem {
   tags: string[];
 }
 
-const yamlPath = path.join(process.cwd(), 'data', 'events.yml');
-const raw = fs.readFileSync(yamlPath, 'utf8');
-
-export const events = yaml.load(raw) as EventItem[];
+export const events = yaml.load(rawEvents) as EventItem[];
 
 export function getEventBySlug(slug: string): EventItem | undefined {
   return events.find((e) => e.slug === slug);

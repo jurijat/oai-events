@@ -7,6 +7,13 @@ import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
 const nextConfig: NextConfig = {
   images: { unoptimized: true },
   trailingSlash: true,
+  webpack: (config) => {
+    // Inline YAML files as raw strings at build time. The Cloudflare Workers
+    // runtime has no filesystem, so data files must be bundled, not read with
+    // fs at runtime (see data/events.ts).
+    config.module.rules.push({ test: /\.ya?ml$/, type: 'asset/source' });
+    return config;
+  },
 };
 
 export default nextConfig;
