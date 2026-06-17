@@ -1,0 +1,41 @@
+title: OpenAPI Summit in New York
+slug: openapi-summit-ny
+event_date: July 25 — 26, 2026
+location: Javits Convention Center, New York, NY
+type: Masterclass
+status: upcoming
+image: https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800
+time_start: '09:00'
+time_end: '17:00'
+description: OpenAPI Summit returns to New York with masterclass sessions and talks.
+permalink: /events/openapi-summit-ny
+speakers:
+  - name: Dimitri van Hees
+    position: Government of the Netherlands
+    photo: https://i.pravatar.cc/180?img=8
+tags:
+  - masterclass
+metaDescription: Join us at OpenAPI Summit in New York
+sponsors:
+  - name: boomi
+agenda:
+  July 25:
+    Opening and keynote:
+      - title: 'From Zero to Spec: Here: Eliminating Lean Wastes When Adopting OpenAPI'
+        speaker: Dimitri van Hees
+        time: 09:00 — 09:45
+    Design:
+      - title: 'From REST to Events: API Workflow Testing and Modeling with a Single Arazzo Spec'
+        speaker: David Park
+        time: 10:00 — 10:45
+      - title: Brunch
+        time: 12:00 — 13:00
+  July 26:
+    Governance:
+      - title: APIs Weren't Built for AI, Now What?
+        speaker: Dimitri van Hees
+        time: 09:00 — 09:45
+    Design:
+      - title: Building Scalable APIs
+        speaker: David Park
+        time: 10:00 — 10:45

@@ -1,0 +1,11 @@
+# Optional manual ordering for event listings — the PRIMARY order source.
+#
+# List event slugs (the data/<slug>/ folder name) in the order you want them to
+# appear. Any event NOT listed here falls back to date order (upcoming: soonest
+# first; past: most recent first). Leave empty to order everything by date.
+#
+# Example:
+#   - openapi-summit
+#   - api-days-singapore
+
+[]

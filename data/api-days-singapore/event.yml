@@ -1,0 +1,279 @@
+title: API Days Singapore
+slug: api-days-singapore
+event_date: April 14 — 15, 2026
+location: Sands Expo & Convention Centre, Singapore
+type: Event
+status: upcoming
+image: https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800
+time_start: '09:00'
+time_end: '17:00'
+description: API Days Singapore brings together API practitioners from across Asia-Pacific.
+permalink: /events/api-days-singapore
+speakers:
+  - name: Frank Kilcommins
+    position: Head of Enterprise Architecture | Axtic
+    photo: https://i.pravatar.cc/180?img=11
+tags:
+  - event
+metaDescription: Join us at API Days Singapore
+sponsors:
+  - name: boomi
+agenda:
+  April 14:
+    Opening and keynote:
+      - title: 'From Zero to Spec: Here: Eliminating Lean Wastes When Adopting OpenAPI'
+        speaker: Frank Kilcommins
+        time: 09:00 — 09:45
+        permalink: /events/talks/singapore-zero-to-spec
+    Design:
+      - title: 'From REST to Events: API Workflow Testing and Modeling with a Single Arazzo Spec'
+        speaker: Nina Patel
+        time: 10:00 — 10:45
+        permalink: /events/talks/singapore-api-workflow
+    Governance:
+      - title: 'Bridging SDMs, OpenAPI, and AI: Unified Schemas for AI-to-API Chaining'
+        speaker: Alex Kumar
+        time: 13:00 — 13:45
+        permalink: /events/talks/singapore-sdms-openapi-ai
+  April 15:
+    Opening and keynote:
+      - title: Advanced API Design Patterns
+        speaker: Frank Kilcommins
+        time: 09:00 — 09:45
+        permalink: /events/talks/singapore-advanced-patterns
+    Design:
+      - title: Building Developer-First APIs
+        speaker: Nina Patel
+        time: 10:00 — 10:45
+        permalink: /events/talks/singapore-developer-first
+talks:
+  - slug: singapore-zero-to-spec
+    title: 'From Zero to Spec: Here: Eliminating Lean Wastes When Adopting OpenAPI'
+    description: Adopting OpenAPI can be challenging, but with the right approach, organizations can eliminate lean wastes and accelerate their API development lifecycle. This talk explores proven strategies for implementing OpenAPI in enterprise environments, focusing on eliminating unnecessary complexity and streamlining the specification process. Learn how to implement OpenAPI across teams and organizations effectively.
+    time: April 14, 09:00 — 09:45
+    category: Opening and keynote
+    speakers:
+      - name: Frank Kilcommins
+        position: Head of Enterprise Architecture | Axtic
+        photo: https://i.pravatar.cc/180?img=11
+    schedule:
+      - time: '09:00'
+        title: From Zero to Spec
+        permalink: /events/talks/singapore-zero-to-spec
+      - time: '09:30'
+        title: From Zero to Spec
+        permalink: /events/talks/singapore-zero-to-spec
+      - time: '10:00'
+        title: From REST to Events
+        permalink: /events/talks/singapore-api-workflow
+      - time: '10:30'
+        title: From REST to Events
+        permalink: /events/talks/singapore-api-workflow
+      - time: '11:00'
+        title: Workshop
+        permalink: '#'
+      - time: '11:30'
+        title: Workshop
+        permalink: '#'
+      - time: '12:00'
+        title: Lunch
+        permalink: '#'
+      - time: '12:30'
+        title: Lunch
+        permalink: '#'
+      - time: '13:00'
+        title: SDMs, OpenAPI & AI
+        permalink: /events/talks/singapore-sdms-openapi-ai
+      - time: '14:00'
+        title: Q&A Panel
+        permalink: '#'
+      - time: '14:30'
+        title: Networking
+        permalink: '#'
+      - time: '16:00'
+        title: Closing
+        permalink: '#'
+  - slug: singapore-api-workflow
+    title: 'From REST to Events: API Workflow Testing and Modeling with a Single Arazzo Spec'
+    description: Arazzo is a new specification designed to describe and model API workflows and interactions. In this talk, discover how Arazzo complements OpenAPI to provide a comprehensive view of multi-step API interactions, event-driven architectures, and complex workflows. Learn how to use a single Arazzo spec to test, validate, and document your entire API workflow.
+    time: April 14, 10:00 — 10:45
+    category: Design
+    speakers:
+      - name: Nina Patel
+        position: API Architect | Tech Innovations
+        photo: https://i.pravatar.cc/180?img=6
+    schedule:
+      - time: '09:00'
+        title: From Zero to Spec
+        permalink: /events/talks/singapore-zero-to-spec
+      - time: '09:30'
+        title: From Zero to Spec
+        permalink: /events/talks/singapore-zero-to-spec
+      - time: '10:00'
+        title: From REST to Events
+        permalink: /events/talks/singapore-api-workflow
+      - time: '10:30'
+        title: From REST to Events
+        permalink: /events/talks/singapore-api-workflow
+      - time: '11:00'
+        title: Workshop
+        permalink: '#'
+      - time: '11:30'
+        title: Workshop
+        permalink: '#'
+      - time: '12:00'
+        title: Lunch
+        permalink: '#'
+      - time: '12:30'
+        title: Lunch
+        permalink: '#'
+      - time: '13:00'
+        title: SDMs, OpenAPI & AI
+        permalink: /events/talks/singapore-sdms-openapi-ai
+      - time: '14:00'
+        title: Q&A Panel
+        permalink: '#'
+      - time: '14:30'
+        title: Networking
+        permalink: '#'
+      - time: '16:00'
+        title: Closing
+        permalink: '#'
+  - slug: singapore-sdms-openapi-ai
+    title: 'Bridging SDMs, OpenAPI, and AI: Unified Schemas for AI-to-API Chaining'
+    description: The convergence of AI, API management, and schema-driven development creates new opportunities for building intelligent API systems. This session explores how to bridge Service Data Models (SDMs), OpenAPI specifications, and AI technologies to create unified schemas that enable seamless AI-to-API chaining. Discover how organizations are leveraging these technologies together to build next-generation API ecosystems.
+    time: April 14, 13:00 — 13:45
+    category: Governance
+    speakers:
+      - name: Alex Kumar
+        position: Principal Engineer | Cloud Systems
+        photo: https://i.pravatar.cc/180?img=9
+    schedule:
+      - time: '09:00'
+        title: From Zero to Spec
+        permalink: /events/talks/singapore-zero-to-spec
+      - time: '09:30'
+        title: From Zero to Spec
+        permalink: /events/talks/singapore-zero-to-spec
+      - time: '10:00'
+        title: From REST to Events
+        permalink: /events/talks/singapore-api-workflow
+      - time: '10:30'
+        title: From REST to Events
+        permalink: /events/talks/singapore-api-workflow
+      - time: '11:00'
+        title: Workshop
+        permalink: '#'
+      - time: '11:30'
+        title: Workshop
+        permalink: '#'
+      - time: '12:00'
+        title: Lunch
+        permalink: '#'
+      - time: '12:30'
+        title: Lunch
+        permalink: '#'
+      - time: '13:00'
+        title: SDMs, OpenAPI & AI
+        permalink: /events/talks/singapore-sdms-openapi-ai
+      - time: '14:00'
+        title: Q&A Panel
+        permalink: '#'
+      - time: '14:30'
+        title: Networking
+        permalink: '#'
+      - time: '16:00'
+        title: Closing
+        permalink: '#'
+  - slug: singapore-advanced-patterns
+    title: Advanced API Design Patterns
+    description: Building on the fundamentals, this advanced session dives deep into sophisticated API design patterns used by leading organizations. Learn about versioning strategies, pagination approaches, error handling best practices, and security patterns that scale. Discover how to design APIs that are resilient, maintainable, and developer-friendly at enterprise scale.
+    time: April 15, 09:00 — 09:45
+    category: Opening and keynote
+    speakers:
+      - name: Frank Kilcommins
+        position: Head of Enterprise Architecture | Axtic
+        photo: https://i.pravatar.cc/180?img=11
+    schedule:
+      - time: '09:00'
+        title: Advanced Patterns
+        permalink: /events/talks/singapore-advanced-patterns
+      - time: '09:30'
+        title: Advanced Patterns
+        permalink: /events/talks/singapore-advanced-patterns
+      - time: '10:00'
+        title: Developer-First APIs
+        permalink: /events/talks/singapore-developer-first
+      - time: '10:30'
+        title: Developer-First APIs
+        permalink: /events/talks/singapore-developer-first
+      - time: '11:00'
+        title: Workshop
+        permalink: '#'
+      - time: '11:30'
+        title: Workshop
+        permalink: '#'
+      - time: '12:00'
+        title: Lunch
+        permalink: '#'
+      - time: '12:30'
+        title: Lunch
+        permalink: '#'
+      - time: '13:00'
+        title: Deep Dive Session
+        permalink: '#'
+      - time: '14:00'
+        title: Q&A Panel
+        permalink: '#'
+      - time: '14:30'
+        title: Networking
+        permalink: '#'
+      - time: '16:00'
+        title: Closing
+        permalink: '#'
+  - slug: singapore-developer-first
+    title: Building Developer-First APIs
+    description: Developer experience is the new competitive advantage. This talk explores how to design APIs that developers love to use, maintain, and integrate with. Learn about documentation best practices, sandbox environments, SDK generation, API versioning, and how to gather and act on developer feedback. Discover how companies like Stripe and Twilio prioritize DX in their API design.
+    time: April 15, 10:00 — 10:45
+    category: Design
+    speakers:
+      - name: Nina Patel
+        position: API Architect | Tech Innovations
+        photo: https://i.pravatar.cc/180?img=6
+    schedule:
+      - time: '09:00'
+        title: Advanced Patterns
+        permalink: /events/talks/singapore-advanced-patterns
+      - time: '09:30'
+        title: Advanced Patterns
+        permalink: /events/talks/singapore-advanced-patterns
+      - time: '10:00'
+        title: Developer-First APIs
+        permalink: /events/talks/singapore-developer-first
+      - time: '10:30'
+        title: Developer-First APIs
+        permalink: /events/talks/singapore-developer-first
+      - time: '11:00'
+        title: Workshop
+        permalink: '#'
+      - time: '11:30'
+        title: Workshop
+        permalink: '#'
+      - time: '12:00'
+        title: Lunch
+        permalink: '#'
+      - time: '12:30'
+        title: Lunch
+        permalink: '#'
+      - time: '13:00'
+        title: Deep Dive Session
+        permalink: '#'
+      - time: '14:00'
+        title: Q&A Panel
+        permalink: '#'
+      - time: '14:30'
+        title: Networking
+        permalink: '#'
+      - time: '16:00'
+        title: Closing
+        permalink: '#'

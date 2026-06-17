@@ -1,0 +1,269 @@
+title: OpenAPI Summit at DeveloperWeek
+slug: openapi-summit
+event_date: May 19 — 20, 2026
+location: Javits Convention Center, New York, NY
+type: Conference
+status: active
+image: https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800
+time_start: '09:00'
+time_end: '18:00'
+description: Join us at the OpenAPI Summit at DeveloperWeek for two days of talks, workshops, and networking.
+permalink: /events/openapi-summit
+speakers:
+  - name: Frank Kilcommins
+    position: Head of Enterprise Architecture | Axtic
+    photo: https://i.pravatar.cc/180?img=11
+  - name: Naresh Jain
+    position: Staff Engineer at The New York Times
+    photo: https://i.pravatar.cc/180?img=12
+tags:
+  - conference
+metaDescription: Join us at the OpenAPI Summit
+sponsors:
+  - name: boomi
+agenda:
+  May 19:
+    Opening and keynote:
+      - title: 'From Zero to Spec-Hero: Eliminating Lean Wastes When Adopting OpenAPI'
+        time: 09:00 — 09:25
+        permalink: /events/talks/summit-zero-to-spec
+        speakers:
+          - name: Frank Kilcommins
+            position: Head of Enterprise Architecture / Jentic
+            photo: https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop
+            tag: OAI
+      - title: How the Dutch Government Uses an OpenAPI-First Approach to Leverage Developer Experience
+        time: 09:30 — 09:55
+        permalink: /events/talks/summit-dutch-gov
+        speakers:
+          - name: Naresh Jain
+            position: CEO / ConfEngine
+            photo: https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop
+          - name: Lisa Müller
+            position: Head of Platform / Dutch Gov
+            photo: https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop
+      - title: "OpenAPI 3.2: What's New and What's Next"
+        time: 10:00 — 10:25
+        permalink: /events/talks/summit-openapi-32
+        speakers:
+          - name: Darrel Miller
+            position: Principal API Architect / Microsoft
+            photo: https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop
+            tag: OAI
+    Design:
+      - title: 'From REST to Events: API Workflow Testing and Mocking with a Single Arazzo Spec'
+        time: 11:00 — 11:25
+        permalink: /events/talks/summit-rest-to-events
+        speakers:
+          - name: Sarah Chen
+            position: Staff Engineer / Stripe
+            photo: https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=200&h=200&fit=crop
+          - name: David Park
+            position: Senior Developer / Stripe
+            photo: https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop
+      - title: Designing API-First Microservices at Scale
+        time: 11:30 — 11:55
+        permalink: /events/talks/summit-microservices-scale
+        speakers:
+          - name: Priya Sharma
+            position: Principal Engineer / Netflix
+            photo: https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200&h=200&fit=crop
+      - title: 'GraphQL vs OpenAPI: Picking the Right Tool'
+        time: 13:00 — 13:25
+        permalink: /events/talks/summit-graphql-openapi
+        speakers:
+          - name: Ahmed Hassan
+            position: Tech Lead / Shopify
+            photo: https://images.unsplash.com/photo-1463453091185-61582044d556?w=200&h=200&fit=crop
+    Tooling:
+      - title: 'Code Generation: From Spec to Production'
+        time: 14:00 — 14:25
+        permalink: /events/talks/summit-code-gen
+        speakers:
+          - name: Tomáš Novák
+            position: Lead Developer / Apicurio
+            photo: https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop
+      - title: 'Testing Your APIs: Contract-Driven Development'
+        time: 14:30 — 14:55
+        permalink: /events/talks/summit-contract-testing
+        speakers:
+          - name: Olivia Brown
+            position: Test Architect / Pact
+            photo: https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop
+          - name: James Liu
+            position: QA Lead / Pact
+            photo: https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop
+  May 20:
+    Governance:
+      - title: 'Bridging SDKs, OpenAPI, and AI: Unified Schemas for AI-to-API Chaining'
+        time: 09:00 — 09:25
+        permalink: /events/talks/summit-sdks-ai
+        speakers:
+          - name: Michael Rodriguez
+            position: Director of DX / Okta
+            photo: https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop
+            tag: OAI
+      - title: APIs Weren't Built for AI, Now What?
+        time: 09:30 — 09:55
+        permalink: /events/talks/summit-api-ai
+        speakers:
+          - name: Emma Watson
+            position: Principal Engineer / Acme
+            photo: https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop
+      - title: API Versioning Strategies That Actually Work
+        time: 10:00 — 10:25
+        permalink: /events/talks/summit-versioning
+        speakers:
+          - name: Carlos Méndez
+            position: Staff Engineer / GitHub
+            photo: https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=200&h=200&fit=crop
+          - name: Yuki Tanaka
+            position: Senior Engineer / GitHub
+            photo: https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&h=200&fit=crop
+    Design:
+      - title: API Security Best Practices
+        time: 11:00 — 11:25
+        permalink: /events/talks/summit-security
+        speakers:
+          - name: Sarah Chen
+            position: Staff Engineer / Stripe
+            photo: https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=200&h=200&fit=crop
+      - title: Idempotency, Retries, and Resilient APIs
+        time: 11:30 — 11:55
+        permalink: /events/talks/summit-idempotency
+        speakers:
+          - name: Rohan Gupta
+            position: Senior Engineer / AWS
+            photo: https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop
+    AI & Future:
+      - title: AI Agents and the OpenAPI Toolchain
+        time: 13:00 — 13:25
+        permalink: /events/talks/summit-ai-agents
+        speakers:
+          - name: Marcus Webb
+            position: Research Engineer / Anthropic
+            photo: https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop
+          - name: Aisha Patel
+            position: Product Lead / OpenAI
+            photo: https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop
+            tag: OAI
+      - title: 'Closing Keynote: The Next Decade of OpenAPI'
+        time: 14:00 — 14:25
+        permalink: /events/talks/summit-closing
+        speakers:
+          - name: Frank Kilcommins
+            position: Head of Enterprise Architecture / Jentic
+            photo: https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop
+            tag: OAI
+talks:
+  - slug: summit-zero-to-spec
+    title: 'From Zero to Spec-Hero: Eliminating Lean Wastes When Adopting OpenAPI'
+    description: Adopting OpenAPI can be challenging, but with the right approach, organizations can eliminate lean wastes and accelerate their API development lifecycle. This talk explores proven strategies for implementing OpenAPI in enterprise environments, focusing on eliminating unnecessary complexity and streamlining the specification process.
+    time: 09:00 — 09:25
+    speakers:
+      - name: Frank Kilcommins
+        position: Head of Enterprise Architecture / Jentic
+        photo: https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop
+    schedule:
+      - time: '09:00'
+        title: From Zero to Spec-Hero
+        permalink: /events/talks/summit-zero-to-spec
+      - time: '09:30'
+        title: Dutch Government OpenAPI
+        permalink: /events/talks/summit-dutch-gov
+      - time: '11:00'
+        title: REST to Events
+        permalink: /events/talks/summit-rest-to-events
+  - slug: summit-dutch-gov
+    title: How the Dutch Government Uses an OpenAPI-First Approach to Leverage Developer Experience
+    description: The Dutch government has pioneered an OpenAPI-first approach to building digital services that prioritizes developer experience. Learn how they've standardized API design across government agencies, improved collaboration between teams, and created a framework that encourages innovation while maintaining consistency.
+    time: 09:30 — 09:55
+    speakers:
+      - name: Naresh Jain
+        position: CEO / ConfEngine
+        photo: https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop
+    schedule:
+      - time: '09:00'
+        title: From Zero to Spec-Hero
+        permalink: /events/talks/summit-zero-to-spec
+      - time: '09:30'
+        title: Dutch Government OpenAPI
+        permalink: /events/talks/summit-dutch-gov
+      - time: '11:00'
+        title: REST to Events
+        permalink: /events/talks/summit-rest-to-events
+    metaTitle: How the Dutch Government Uses an OpenAPI-First Approach
+  - slug: summit-rest-to-events
+    title: 'From REST to Events: API Workflow Testing and Mocking with a Single Arazzo Spec'
+    description: Explore how Arazzo specification extends OpenAPI to describe API workflows across multiple HTTP calls. Learn practical techniques for testing complex API sequences, generating realistic mocks, and validating end-to-end scenarios.
+    time: 11:00 — 11:25
+    speakers:
+      - name: Sarah Chen
+        position: Staff Engineer / Stripe
+        photo: https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=200&h=200&fit=crop
+    schedule:
+      - time: '09:00'
+        title: From Zero to Spec-Hero
+        permalink: /events/talks/summit-zero-to-spec
+      - time: '09:30'
+        title: Dutch Government OpenAPI
+        permalink: /events/talks/summit-dutch-gov
+      - time: '11:00'
+        title: REST to Events
+        permalink: /events/talks/summit-rest-to-events
+    metaTitle: 'From REST to Events: API Workflow Testing'
+  - slug: summit-sdks-ai
+    title: 'Bridging SDKs, OpenAPI, and AI: Unified Schemas for AI-to-API Chaining'
+    description: Learn how to bridge the gap between AI systems and your APIs using OpenAPI specifications as the universal language. This session covers techniques for generating SDKs from specs, enabling LLMs to call your APIs reliably, and creating unified schemas that work across both traditional clients and AI agents.
+    time: 09:00 — 09:25
+    speakers:
+      - name: Michael Rodriguez
+        position: Director of DX / Okta
+        photo: https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop
+    schedule:
+      - time: '09:00'
+        title: SDKs and AI
+        permalink: /events/talks/summit-sdks-ai
+      - time: '10:00'
+        title: APIs and AI
+        permalink: /events/talks/summit-api-ai
+      - time: '13:00'
+        title: Security Best Practices
+        permalink: /events/talks/summit-security
+    metaTitle: Bridging SDKs, OpenAPI, and AI
+  - slug: summit-api-ai
+    title: APIs Weren't Built for AI, Now What?
+    description: Most existing APIs were designed for human developers or traditional applications, not AI agents. This talk examines the gaps between current API design patterns and AI requirements, then proposes practical adaptations to make your APIs AI-ready without breaking existing clients.
+    time: 10:00 — 10:25
+    speakers:
+      - name: Emma Watson
+        position: Principal Engineer / Acme
+        photo: https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop
+    schedule:
+      - time: '09:00'
+        title: SDKs and AI
+        permalink: /events/talks/summit-sdks-ai
+      - time: '10:00'
+        title: APIs and AI
+        permalink: /events/talks/summit-api-ai
+      - time: '13:00'
+        title: Security Best Practices
+        permalink: /events/talks/summit-security
+  - slug: summit-security
+    title: API Security Best Practices
+    description: Security is critical for any API. Learn the latest best practices for securing your OpenAPI-defined APIs, including authentication flows, rate limiting, input validation, and how to document security requirements in your OpenAPI spec.
+    time: 13:00 — 13:25
+    speakers:
+      - name: Sarah Chen
+        position: Staff Engineer / Stripe
+        photo: https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=200&h=200&fit=crop
+    schedule:
+      - time: '09:00'
+        title: SDKs and AI
+        permalink: /events/talks/summit-sdks-ai
+      - time: '10:00'
+        title: APIs and AI
+        permalink: /events/talks/summit-api-ai
+      - time: '13:00'
+        title: Security Best Practices
+        permalink: /events/talks/summit-security

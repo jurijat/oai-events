@@ -1,0 +1,128 @@
+title: API Days Amsterdam
+slug: api-days-amsterdam
+event_date: June 10 — 11, 2026
+location: Amsterdam RAI, Netherlands
+type: Masterclass
+status: upcoming
+image: https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=800
+time_start: '09:00'
+time_end: '17:00'
+description: Join our masterclass sessions at API Days Amsterdam.
+permalink: /events/api-days-amsterdam
+speakers:
+  - name: Marjukka Niinioja
+    position: Founding Partner | Osaango
+    photo: https://i.pravatar.cc/180?img=5
+tags:
+  - masterclass
+metaDescription: Join us at API Days Amsterdam
+sponsors:
+  - name: boomi
+agenda:
+  June 10:
+    Opening and keynote:
+      - title: 'From Zero to Spec-Hero: Eliminating Lean Wastes When Adopting OpenAPI'
+        time: 09:00 — 09:25
+        permalink: /events/talks/amsterdam-zero-to-spec
+        speakers:
+          - name: Marjukka Niinioja
+            position: Founding Partner / Osaango
+            photo: https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop
+          - name: Erik Wilde
+            position: HDI Global SE
+            photo: https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop
+            tag: OAI
+      - title: How the Dutch Government Uses an OpenAPI-First Approach to Leverage Developer Experience
+        time: 09:30 — 09:55
+        permalink: /events/talks/amsterdam-dutch-government
+        speakers:
+          - name: Dimitri van Hees
+            position: Government of the Netherlands
+            photo: https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop
+      - title: 'From REST to Events: API Workflow Testing and Mocking with a Single Arazzo Spec'
+        time: 10:00 — 10:25
+        speakers:
+          - name: Frank Kilcommins
+            position: Head of Enterprise Architecture / Jentic
+            photo: https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop
+            tag: OAI
+      - title: You may have OpenAPI, but is it AI-Ready?
+        time: 10:30 — 10:55
+        speakers:
+          - name: Frank Kilcommins
+            position: Head of Enterprise Architecture / Jentic
+            photo: https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop
+  June 11:
+    Governance:
+      - title: APIs Weren't Built for AI, Now What?
+        time: 09:00 — 09:45
+        speakers:
+          - name: Emma Watson
+            position: Principal Engineer / Acme
+            photo: https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop
+      - title: Advanced Microservices with OpenAPI
+        time: 10:00 — 10:45
+        speakers:
+          - name: Sarah Chen
+            position: Staff Engineer / Stripe
+            photo: https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=200&h=200&fit=crop
+talks:
+  - slug: amsterdam-zero-to-spec
+    title: 'From Zero to Spec-Hero: Eliminating Lean Wastes When Adopting OpenAPI'
+    description: Adopting OpenAPI can be challenging, but with the right approach, organizations can eliminate lean wastes and accelerate their API development lifecycle. This talk explores proven strategies for implementing OpenAPI in enterprise environments, focusing on eliminating unnecessary complexity and streamlining the specification process.
+    time: 09:00 — 09:25
+    category: Opening and keynote
+    speakers:
+      - name: Marjukka Niinioja
+        position: Founding Partner | Osaango
+        photo: https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop
+      - name: Erik Wilde
+        position: HDI Global SE
+        photo: https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop
+    schedule:
+      - time: '09:00'
+        title: From Zero to Spec-Hero
+        permalink: /events/talks/amsterdam-zero-to-spec
+      - time: '09:30'
+        title: Dutch Government OpenAPI
+        permalink: /events/talks/amsterdam-dutch-government
+      - time: '10:00'
+        title: REST to Events
+        permalink: '#'
+      - time: '10:30'
+        title: AI-Ready OpenAPI
+        permalink: '#'
+      - time: '11:00'
+        title: Coffee Break
+        permalink: '#'
+      - time: '11:30'
+        title: Workshop Session
+        permalink: '#'
+  - slug: amsterdam-dutch-government
+    title: How the Dutch Government Uses an OpenAPI-First Approach to Leverage Developer Experience
+    description: The Dutch government has pioneered an OpenAPI-first approach to building digital services that prioritizes developer experience. Learn how they've standardized API design across government agencies, improved collaboration between teams, and created a framework that encourages innovation while maintaining consistency.
+    time: 09:30 — 09:55
+    category: Opening and keynote
+    speakers:
+      - name: Dimitri van Hees
+        position: Government of the Netherlands
+        photo: https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop
+    schedule:
+      - time: '09:00'
+        title: From Zero to Spec-Hero
+        permalink: /events/talks/amsterdam-zero-to-spec
+      - time: '09:30'
+        title: Dutch Government OpenAPI
+        permalink: /events/talks/amsterdam-dutch-government
+      - time: '10:00'
+        title: REST to Events
+        permalink: '#'
+      - time: '10:30'
+        title: AI-Ready OpenAPI
+        permalink: '#'
+      - time: '11:00'
+        title: Coffee Break
+        permalink: '#'
+      - time: '11:30'
+        title: Workshop Session
+        permalink: '#'

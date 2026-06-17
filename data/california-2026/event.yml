@@ -1,0 +1,47 @@
+title: API Days California
+slug: california-2026
+event_date: September 5, 2026
+location: Los Angeles Convention Center, CA
+type: Event
+status: upcoming
+image: /img/backgrounds/developerWeekSummit_background.jpg
+time_start: '09:00'
+time_end: '17:00'
+description: API Days California brings the OpenAPI community together for a day of talks and networking.
+permalink: /events/california-2026
+speakers:
+  - name: Jenny Tolds
+    position: Developer Advocate | OpenAPI Initiative
+    photo: /img/events/california-2026/speakers/jenny-tolds.webp
+  - name: Sandra Martin
+    position: API Platform Lead | West Coast Labs
+    photo: /img/events/california-2026/speakers/sandra-martin.webp
+  - name: Frank Buckard
+    position: Principal Engineer | Pacific APIs
+    photo: /img/events/california-2026/speakers/frank-buckard.webp
+tags:
+  - event
+agenda:
+  September 5:
+    Opening and keynote:
+      - title: Welcome and the State of OpenAPI on the West Coast
+        time: 09:00 — 09:30
+        speakers:
+          - name: Jenny Tolds
+            position: Developer Advocate | OpenAPI Initiative
+            photo: /img/events/california-2026/speakers/jenny-tolds.webp
+            tag: OAI
+    Design:
+      - title: Scaling API Platforms Without the Pain
+        time: 10:00 — 10:30
+        speakers:
+          - name: Sandra Martin
+            position: API Platform Lead | West Coast Labs
+            photo: /img/events/california-2026/speakers/sandra-martin.webp
+    AI & Future:
+      - title: 'From Spec to Agent: Making APIs AI-Ready'
+        time: 13:00 — 13:30
+        speakers:
+          - name: Frank Buckard
+            position: Principal Engineer | Pacific APIs
+            photo: /img/events/california-2026/speakers/frank-buckard.webp

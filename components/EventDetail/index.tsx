@@ -1,0 +1,632 @@
+'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
+import EventCard from '../EventCard';
+import OaiFooter from '../OaiFooter';
+import PhotoLightbox from '../PhotoLightbox';
+import { asset } from '@/lib/basePath';
+import { lockScroll } from '@/lib/scrollLock';
+
+interface Speaker {
+  name: string;
+  position: string;
+  photo: string;
+}
+
+interface AgendaSpeaker {
+  name: string;
+  position?: string;
+  photo?: string;
+  tag?: string;
+}
+
+interface AgendaSession {
+  title: string;
+  speaker?: string;
+  speakers?: AgendaSpeaker[];
+  time?: string;
+  date?: string;
+  permalink?: string;
+  slidesUrl?: string;
+}
+
+interface EventDetailProps {
+  title: string;
+  date: string;
+  location: string;
+  image: string;
+  type: string;
+  status: 'active' | 'upcoming' | 'finished';
+  description?: string;
+  agenda?: {
+    [date: string]: {
+      [category: string]: AgendaSession[];
+    };
+  };
+  speakers?: Speaker[];
+  sponsors?: { name: string; logo?: string }[];
+}
+
+export default function EventDetail({
+  title,
+  date,
+  location,
+  image,
+  type,
+  status,
+  description,
+  agenda = {},
+  speakers = [],
+  sponsors = [],
+}: EventDetailProps) {
+  const agendaDates = Object.keys(agenda);
+  const [selectedDate, setSelectedDate] = useState(agendaDates[0] || '');
+  const currentAgenda = agenda[selectedDate] || {};
+  const agendaCategories = Object.keys(currentAgenda);
+  const photos = [
+    'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600',
+    'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1600',
+    'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=1600',
+    'https://images.unsplash.com/photo-1528901166007-3784c7dd3653?w=1600',
+  ];
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [selectedSession, setSelectedSession] = useState<AgendaSession | null>(null);
+
+  // Lock background scrolling while the session modal is open.
+  useEffect(() => {
+    if (!selectedSession) return;
+    const unlock = lockScroll();
+    return unlock;
+  }, [selectedSession]);
+
+  const touchStartX = useRef<number | null>(null);
+
+  // Get current-day sessions for timeline navigation, deduped by start time.
+  const currentDaySessions = Object.values(agenda[selectedDate] || {})
+    .flat()
+    .filter((s) => s.time);
+  const allSessions = currentDaySessions.filter(
+    (s, i, arr) =>
+      i === arr.findIndex((x) => (x.time?.split(/\s*[—-]\s*/)[0] || '') === (s.time?.split(/\s*[—-]\s*/)[0] || ''))
+  );
+
+  return (
+    <>
+    <main className="relative min-h-screen overflow-hidden bg-brand-bg">
+      {/* Hero Section with Event Card */}
+      <section className="relative overflow-hidden pb-1 pt-16 md:pb-1.5 md:pt-24">
+        <div className="mx-auto max-w-[1360px] md:px-20">
+          <div className="mb-8">
+            <EventCard
+              title={title}
+              date={date}
+              location={location}
+              image={image}
+              type={type}
+              permalink=""
+              status={status}
+              featured
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Map Section (Placeholder) */}
+      <section className="relative z-10 mx-auto mb-12 max-w-[1360px] md:px-20">
+        <div className="flex h-[227px] w-full items-center justify-center rounded-[40px] bg-brand-card-dark md:h-[400px]">
+          <div className="text-center">
+            <span
+              className="mb-4 block text-4xl"
+              style={{ color: 'var(--ifm-font-color-base)', opacity: 0.2 }}
+            >
+              📍
+            </span>
+            <span
+              className="font-onest text-lg font-semibold tracking-oai"
+              style={{ color: 'var(--ifm-font-color-base)', opacity: 0.2 }}
+            >
+              Venue Map
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* Agenda Section */}
+      {agendaCategories.length > 0 && (
+        <section className="relative z-10 mx-auto mb-12 max-w-[1360px] md:px-20">
+          <h2 className="m-0 mb-6 px-6 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:px-0 md:text-[48px]">
+            Agenda
+          </h2>
+
+          {/* Date Filter Buttons */}
+          {agendaDates.length > 1 && (
+            <div className="mb-10 ml-6 inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)] p-0 [[data-theme=dark]_&]:bg-[#1f2326] md:ml-0">
+              {agendaDates.map((agendaDate) => {
+                const isActive = selectedDate === agendaDate;
+                return (
+                  <button
+                    key={agendaDate}
+                    onClick={() => setSelectedDate(agendaDate)}
+                    className={`flex h-[32px] cursor-pointer items-center justify-center rounded-[20px] border-none px-3 py-5 font-onest text-[12px] font-semibold tracking-[-0.48px] transition-colors ${
+                      isActive
+                        ? 'bg-brand-green text-[#15191c]'
+                        : 'bg-transparent text-[rgba(21,25,28,0.64)] hover:text-[#15191c] [[data-theme=dark]_&]:text-white [[data-theme=dark]_&]:hover:text-white'
+                    }`}
+                  >
+                    {agendaDate}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          <div className="space-y-12 md:space-y-20">
+            {agendaCategories.map((category) => (
+              <div key={category}>
+                <h3 className="m-0 mb-6 px-6 font-onest text-[32px] font-bold leading-[1.1] tracking-oai text-[color:var(--ifm-font-color-base)] md:px-0 md:text-3xl">
+                  {category}
+                </h3>
+                <div className="space-y-2">
+                  {currentAgenda[category].map((session, i) => {
+                    const sessionSpeakers: AgendaSpeaker[] =
+                      session.speakers && session.speakers.length > 0
+                        ? session.speakers
+                        : session.speaker
+                          ? [{ name: session.speaker }]
+                          : [];
+                    const [startTime, endTime] = session.time
+                      ? session.time.split(/\s*[—-]\s*/)
+                      : ['', ''];
+
+                    const sessionContent = (
+                      <div className="flex flex-col gap-6">
+                        {/* Time row */}
+                        {session.time && (
+                          <div className="flex max-w-[240px] items-center gap-5">
+                            <div className="h-[10px] w-[5px] flex-shrink-0 rounded-[10px] bg-brand-green" />
+                            <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
+                              {startTime}
+                            </span>
+                            <div className="h-px flex-1 bg-[rgba(21,25,28,0.12)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.16)]" />
+                            <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
+                              {endTime}
+                            </span>
+                          </div>
+                        )}
+
+                        {/* Main */}
+                        <div className="flex max-w-[800px] flex-col gap-6">
+                          <h4 className="m-0 font-onest text-[24px] font-bold leading-[1.2] tracking-[-0.96px] text-[#15191c] [[data-theme=dark]_&]:text-white">
+                            {session.title}
+                          </h4>
+
+                          {sessionSpeakers.length > 0 && (
+                            <div className="flex items-center gap-5">
+                              <div className="h-6 w-[5px] flex-shrink-0 self-stretch rounded-[10px] bg-brand-green" />
+                              <div className="flex flex-1 flex-col gap-2">
+                                {sessionSpeakers.map((sp, idx) => (
+                                  <div key={`${sp.name}-${idx}`} className="flex items-center gap-3">
+                                    {sp.photo ? (
+                                      <img
+                                        src={asset(sp.photo)}
+                                        alt={sp.name}
+                                        className="h-16 w-16 flex-shrink-0 rounded-bl-[8px] rounded-br-[32px] rounded-tl-[8px] rounded-tr-[32px] object-cover"
+                                      />
+                                    ) : (
+                                      <div className="h-16 w-16 flex-shrink-0 rounded-bl-[8px] rounded-br-[32px] rounded-tl-[8px] rounded-tr-[32px] bg-[#d9d9d9]" />
+                                    )}
+                                    <div className="min-w-0 flex-1">
+                                      <div className="flex items-center gap-1">
+                                        <span className="font-onest text-base font-bold leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
+                                          {sp.name}
+                                        </span>
+                                        {sp.tag && (
+                                          <span className="inline-flex items-center rounded-bl-[10px] rounded-br-[2px] rounded-tl-[10px] rounded-tr-[2px] bg-brand-green px-1 py-[2px] font-onest text-[11px] font-bold leading-[1.2] tracking-oai text-white">
+                                            {sp.tag}
+                                          </span>
+                                        )}
+                                      </div>
+                                      {sp.position && (
+                                        <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
+                                          {sp.position}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+
+                    // Make clickable if it has a permalink (opens modal)
+                    const Wrapper = 'button';
+                    /* iOS/dark-mode: use --brand-card-dark CSS var instead of a
+                       literal hex so all event pages render the agenda tile
+                       with the same dark-mode background regardless of which
+                       agenda data shape (custom vs fallback) renders the row.
+                       Every session tile opens the modal — permalink is no
+                       longer required for clickability. */
+                    const wrapperProps = {
+                      onClick: () => setSelectedSession(session),
+                      className:
+                        'tile-press block w-full text-left p-6 md:p-8 rounded-[40px] bg-white hover:bg-white/90 [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)] [[data-theme=dark]_&]:hover:bg-[color:var(--brand-card-dark)]/90 transition-colors cursor-pointer relative border-none',
+                    };
+
+                    return (
+                      <Wrapper key={i} {...wrapperProps}>
+                        {sessionContent}
+                      </Wrapper>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Sponsor Section — same boomi SVG band as the events index page. */}
+      {sponsors.length > 0 && (
+        <section className="relative isolate flex h-[300px] items-center justify-center md:h-[765px]">
+          <img
+            src={asset('/img/background2.svg')}
+            alt="Sponsored by Boomi — Powering the Data Economy"
+            className="boomi-bg pointer-events-none absolute left-1/2 top-1/2 block h-auto w-full min-w-[1280px] max-w-[1728px] -translate-x-1/2 -translate-y-[59.3%] select-none"
+          />
+          {/* Orange dot overlay — not affected by dark-mode invert */}
+          <svg aria-hidden viewBox="0 0 1728 1728" className="pointer-events-none absolute left-1/2 top-1/2 block h-auto w-full min-w-[1280px] max-w-[1728px] -translate-x-1/2 -translate-y-[59.3%] select-none">
+            <circle cx="978.403" cy="1016.8" r="5.43" fill="#ff7c66" />
+          </svg>
+        </section>
+      )}
+
+      {/* Photos Section */}
+      <section id="photos" className="relative z-10 py-16 md:py-20">
+        <div className="mx-auto mb-10 max-w-[1360px] px-6 md:px-20">
+          <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
+            From Past Events
+          </h2>
+          <p className="m-0 mt-2 font-onest text-[24px] font-medium leading-[120%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[32px] md:font-normal">
+            Highlights from events over the years
+          </p>
+        </div>
+
+        <div className="flex flex-row gap-0.5 overflow-x-auto pb-4 md:gap-6 md:pl-20">
+          {photos.map((src, i) => {
+            const widths = [
+              'w-screen md:w-[400px]',
+              'w-screen md:w-[400px]',
+              'w-screen md:w-[400px]',
+              'w-screen md:w-[400px]',
+            ];
+            const rounded = [
+              'rounded-[40px]',
+              'rounded-[40px]',
+              'rounded-[20px] md:rounded-[40px]',
+              'rounded-[20px] md:rounded-[40px]',
+            ];
+            return (
+              <button
+                type="button"
+                key={i}
+                onClick={() => setLightboxIndex(i)}
+                aria-label={`Open photo ${i + 1}`}
+                className={`tile-press flex-shrink-0 cursor-pointer border-none p-0 ${widths[i] ?? 'w-[280px] md:w-[400px]'} ${rounded[i] ?? 'rounded-[40px]'} h-[260px] bg-brand-card-dark bg-cover bg-center md:h-[384px]`}
+                style={{ backgroundImage: `url(${asset(src)})` }}
+              />
+            );
+          })}
+        </div>
+
+        <div className="mx-auto mt-12 max-w-[1200px] px-6 md:px-20">
+          <button
+            type="button"
+            onClick={() => setLightboxIndex(0)}
+            className="inline-flex h-[56px] w-full cursor-pointer items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none disabled:pointer-events-none disabled:opacity-50 md:h-[64px] md:w-[164px] md:justify-center md:text-lg"
+          >
+            View gallery
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="#15191C"
+              strokeWidth="2"
+            >
+              <path d="M6 3l5 5-5 5" />
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <OaiFooter />
+
+
+      {/* Talk Detail Modal — matches Figma desktop "Description Layer" (568:23259) */}
+      {selectedSession &&
+        (() => {
+          const [startTime, endTime] = selectedSession.time
+            ? selectedSession.time.split(/\s*[—-]\s*/)
+            : ['', ''];
+          const sessionSpeakers =
+            selectedSession.speakers && selectedSession.speakers.length > 0
+              ? selectedSession.speakers
+              : selectedSession.speaker
+                ? [{ name: selectedSession.speaker }]
+                : [];
+
+          return (
+            <div
+              /* iOS: use 100dvh (dynamic viewport height) so the modal fills
+                 the visible area when the URL bar collapses, instead of leaving
+                 a strip of page bleeding through at the bottom. inset-0 still
+                 works on browsers without dvh support. */
+              style={{ height: '100dvh' }}
+              className="fixed inset-0 z-50 flex flex-col items-stretch overflow-y-auto bg-[color:var(--brand-bg)] px-0 py-0 md:items-center md:px-12 md:py-6"
+              onClick={() => setSelectedSession(null)}
+              onTouchStart={(e) => {
+                touchStartX.current = e.changedTouches[0].clientX;
+              }}
+              onTouchEnd={(e) => {
+                if (touchStartX.current === null) return;
+                const delta = e.changedTouches[0].clientX - touchStartX.current;
+                touchStartX.current = null;
+                if (Math.abs(delta) < 50) return;
+                const idx = allSessions.findIndex((s) => s === selectedSession);
+                if (idx === -1) return;
+                if (delta > 0 && idx > 0) setSelectedSession(allSessions[idx - 1]);
+                else if (delta < 0 && idx < allSessions.length - 1)
+                  setSelectedSession(allSessions[idx + 1]);
+              }}
+            >
+              {/* Mobile top bar: pills + X */}
+              <div
+                // Under viewport-fit=cover the sticky bar pins to the physical
+                // top edge (under the Dynamic Island), so fold the safe-area
+                // inset into the top padding to push the pills/close below it.
+                style={{ paddingTop: 'calc(0.75rem + env(safe-area-inset-top))' }}
+                className="sticky top-0 z-10 flex items-center gap-3 bg-[color:var(--brand-bg)] px-4 py-3 md:hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {allSessions.length > 0 && selectedSession.time ? (
+                  <div className="flex-1 overflow-x-auto">
+                    <div className="inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)] [[data-theme=dark]_&]:bg-[#1f2326]">
+                      {allSessions.map((session) => {
+                        const sessionTime = session.time?.split(/\s*[—-]\s*/)[0] || '';
+                        const isActive =
+                          sessionTime === selectedSession.time?.split(/\s*[—-]\s*/)[0];
+                        return (
+                          <button
+                            key={`m-${session.time}-${session.title}`}
+                            onClick={() => setSelectedSession(session)}
+                            className={`flex h-9 flex-shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-[20px] border-none px-4 font-onest text-sm font-semibold tracking-oai transition-colors ${
+                              isActive
+                                ? 'bg-brand-green text-[#15191c]'
+                                : 'bg-transparent text-[rgba(21,25,28,0.64)] [[data-theme=dark]_&]:text-white'
+                            }`}
+                          >
+                            {sessionTime}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex-1" />
+                )}
+                <button
+                  onClick={() => setSelectedSession(null)}
+                  aria-label="Close"
+                  className="flex h-9 w-9 flex-shrink-0 cursor-pointer items-center justify-center rounded-full border-none bg-[rgba(21,25,28,0.08)] text-[#15191c] transition-colors hover:bg-black/10 [[data-theme=dark]_&]:bg-[#1f2326] [[data-theme=dark]_&]:text-white"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Desktop close button */}
+              <button
+                onClick={() => setSelectedSession(null)}
+                className="absolute right-6 top-6 z-10 hidden h-9 w-9 cursor-pointer items-center justify-center rounded-full border-none bg-[#15191c] text-white transition-colors hover:bg-[#15191c]/80 [[data-theme=dark]_&]:bg-white [[data-theme=dark]_&]:text-[#15191c] [[data-theme=dark]_&]:hover:bg-white/80 md:flex"
+                aria-label="Close"
+              >
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                >
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+
+              <div className="my-0 flex w-full max-w-[1360px] flex-1 flex-col items-stretch gap-3 md:my-0 md:mt-20 md:flex-none md:items-center">
+                {/* White content card */}
+                <div
+                  /* iOS: bg switches via CSS var (--brand-card-dark) so the
+                     dark-mode color is applied at the same layer as the page
+                     theme, avoiding cases where a Tailwind data-theme arbitrary
+                     variant didn't match (seen on some event pages). */
+                  className="h-[80%] w-full overflow-y-auto rounded-[40px] bg-white px-6 py-8 [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)] md:h-auto md:overflow-visible md:px-20 md:py-12"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="flex max-w-[800px] flex-col gap-6">
+                    {/* Top group: time row + title */}
+                    <div className="flex flex-col gap-8 md:gap-12">
+                      {selectedSession.time && (
+                        <div className="flex max-w-[240px] items-center gap-6 py-2">
+                          <div className="h-[10px] w-[5px] flex-shrink-0 rounded-[10px] bg-brand-green" />
+                          <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-lg">
+                            {startTime}
+                          </span>
+                          <div className="h-px flex-1 bg-[rgba(21,25,28,0.12)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.16)]" />
+                          <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-lg">
+                            {endTime}
+                          </span>
+                        </div>
+                      )}
+
+                      <h2 className="m-0 font-onest text-[32px] font-bold leading-[1.1] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-[48px] md:tracking-[-1.92px]">
+                        {selectedSession.title}
+                      </h2>
+                    </div>
+
+                    {/* Description */}
+                    <p className="m-0 font-onest text-base font-normal leading-[1.4] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-lg">
+                      Join us for this session at {title}.
+                    </p>
+
+                    {/* Speakers section */}
+                    {sessionSpeakers.length > 0 && (
+                      <div className="pt-8 md:pt-12">
+                        <div className="flex items-center gap-[27px]">
+                          <div className="h-6 w-[5px] flex-shrink-0 self-stretch rounded-[10px] bg-brand-green" />
+                          <div className="flex flex-1 flex-col gap-4">
+                            {sessionSpeakers.map((sp, idx) => (
+                              <div
+                                key={`${sp.name}-${idx}`}
+                                className="flex items-center gap-6"
+                              >
+                                <div className="flex flex-1 items-center gap-3">
+                                  {sp.photo ? (
+                                    <img
+                                      src={asset(sp.photo)}
+                                      alt={sp.name}
+                                      className="h-16 w-16 flex-shrink-0 rounded-bl-[8px] rounded-br-[32px] rounded-tl-[8px] rounded-tr-[32px] object-cover"
+                                    />
+                                  ) : (
+                                    <div className="h-16 w-16 flex-shrink-0 rounded-bl-[8px] rounded-br-[32px] rounded-tl-[8px] rounded-tr-[32px] bg-[#d9d9d9]" />
+                                  )}
+                                  <div className="flex min-w-0 flex-col gap-1">
+                                    <span className="font-onest text-base font-bold leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
+                                      {sp.name}
+                                    </span>
+                                    {sp.position && (
+                                      <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
+                                        {sp.position}
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                                <a
+                                  href={`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(sp.name)}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex h-12 w-12 flex-shrink-0 items-center justify-center text-[#15191c] [[data-theme=dark]_&]:text-white transition-colors hover:text-brand-green"
+                                  aria-label={`LinkedIn — ${sp.name}`}
+                                >
+                                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.852 3.37-1.852 3.601 0 4.267 2.37 4.267 5.455v6.288zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.063 2.063 0 0 1 2.063-2.065 2.062 2.062 0 0 1 2.062 2.065 2.062 2.062 0 0 1-2.062 2.065zm1.782 13.019H3.555V9h3.564v11.452z" />
+                                  </svg>
+                                </a>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* View slides button — inside card on desktop */}
+                    <div className="hidden pt-3 md:block">
+                      {selectedSession.slidesUrl ? (
+                        <a
+                          href={selectedSession.slidesUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex h-[64px] w-auto cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-lg font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none"
+                        >
+                          View slides
+                        </a>
+                      ) : (
+                        <button
+                          type="button"
+                          disabled
+                          aria-disabled="true"
+                          title="Slides not available"
+                          className="inline-flex h-[64px] w-auto cursor-not-allowed items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-[rgba(21,25,28,0.12)] px-6 py-1.5 font-onest text-lg font-bold tracking-oai text-[rgba(21,25,28,0.4)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.08)] [[data-theme=dark]_&]:text-[rgba(255,255,255,0.4)]"
+                        >
+                          View slides
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* View slides button — outside the card, sits at bottom of modal (mobile only) */}
+                <div
+                  className="mt-auto w-full px-4 pb-12 md:hidden"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {selectedSession.slidesUrl ? (
+                    <a
+                      href={selectedSession.slidesUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-[56px] w-full cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none"
+                    >
+                      View slides
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled
+                      aria-disabled="true"
+                      className="inline-flex h-[56px] w-full cursor-not-allowed items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-[rgba(21,25,28,0.12)] px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[rgba(21,25,28,0.4)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.08)] [[data-theme=dark]_&]:text-[rgba(255,255,255,0.4)]"
+                    >
+                      View slides
+                    </button>
+                  )}
+                </div>
+
+                {/* Timeline pills below the card — desktop only */}
+                {allSessions.length > 0 && selectedSession.time && (
+                  <div
+                    className="hidden w-full items-center justify-center overflow-x-auto pt-3 md:flex"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)] [[data-theme=dark]_&]:bg-[#1f2326]">
+                      {allSessions.map((session) => {
+                        const sessionTime = session.time?.split(/\s*[—-]\s*/)[0] || '';
+                        const isActive =
+                          sessionTime === selectedSession.time?.split(/\s*[—-]\s*/)[0];
+                        return (
+                          <button
+                            key={`${session.time}-${session.title}`}
+                            onClick={() => setSelectedSession(session)}
+                            className={`flex h-10 flex-shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-[20px] border-none px-5 py-2 font-onest text-base font-semibold tracking-oai transition-colors ${
+                              isActive
+                                ? 'bg-brand-green text-[#15191c]'
+                                : 'bg-transparent text-[rgba(21,25,28,0.64)] hover:text-[#15191c] [[data-theme=dark]_&]:text-white'
+                            }`}
+                          >
+                            {sessionTime}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })()}
+    </main>
+
+    {lightboxIndex !== null && (
+      <PhotoLightbox
+        photos={photos}
+        startIndex={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+      />
+    )}
+    </>
+  );
+}
