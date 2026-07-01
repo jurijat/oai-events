@@ -84,18 +84,20 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
           paddingTop: 'env(safe-area-inset-top)',
           height: `calc(${scrolled ? '3rem' : '4rem'} + env(safe-area-inset-top))`,
         }}
-        className={`fixed inset-x-0 top-0 z-30 flex items-center justify-between px-2 transition-[height,background-color,box-shadow] duration-200 ease-out md:px-10 ${
+        className={`fixed inset-x-0 top-0 z-30 flex items-center justify-center px-6 transition-[height,background-color,box-shadow] duration-200 ease-out ${
           scrolled
             ? 'bg-[color:var(--brand-bg)] shadow-[0_1px_0_var(--brand-separator)]'
             : 'bg-transparent shadow-none'
         }`}
       >
+        {/* Content column: full-width bar, inner content capped at 1360px. */}
+        <div className="flex h-full w-full max-w-[1360px] items-center justify-between">
         <div className="flex items-center gap-2">
           {!isHome && (
             <Link
               href="/"
               aria-label="Back to home"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] no-underline transition-colors hover:bg-black/5 hover:text-brand-green md:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] no-underline transition hover:bg-black/5 hover:text-brand-green active:scale-90 active:bg-black/10 md:hidden"
             >
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20 12H4" />
@@ -127,7 +129,7 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
           onClick={() => setMenuOpen((v) => !v)}
           aria-label="Open menu"
           aria-expanded={menuOpen}
-          className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] transition-colors hover:bg-black/5 hover:text-brand-green md:hidden"
+          className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] transition hover:bg-black/5 hover:text-brand-green active:scale-90 active:bg-black/10 md:hidden"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             {menuOpen ? (
@@ -140,6 +142,7 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
             )}
           </svg>
         </button>
+        </div>
       </nav>
 
       {/* The navbar offset is reserved by #scroll-root's padding-top
@@ -160,10 +163,11 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
                 setMenuOpen(false);
                 setSearchOpen(true);
               }}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-current transition-colors hover:text-brand-green"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-current transition hover:text-brand-green active:scale-90"
             >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M10 4a6 6 0 1 0 3.74 10.7l4.78 4.78a1 1 0 0 0 1.42-1.42l-4.78-4.78A6 6 0 0 0 10 4Zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z" />
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="16.5" y1="16.5" x2="21" y2="21" />
               </svg>
             </button>
             <button
@@ -173,19 +177,20 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
                 setMenuOpen(false);
                 handleShare();
               }}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-current transition-colors hover:text-brand-green"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-current transition hover:text-brand-green active:scale-90"
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="28"
-                height="28"
-                viewBox="0 0 40 40"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
                 fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                <path
-                  fill="currentColor"
-                  d="m33 19-9-9h-1v4l-1 1Q10 16 6 27v1h2q5-5 11-5h3l1 1v4h1zq1 0 0 0"
-                />
+                <path d="M4 17c1-6 5.5-9 12-9" />
+                <path d="M11 3l6 5-6 5" />
               </svg>
             </button>
             <MobileMenuThemeToggle />
@@ -194,7 +199,7 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
             type="button"
             aria-label="Close menu"
             onClick={() => setMenuOpen(false)}
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[#15191c] transition-colors hover:text-brand-green [[data-theme=dark]_&]:text-white"
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[#15191c] transition hover:text-brand-green active:scale-90 [[data-theme=dark]_&]:text-white"
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M18 6L6 18M6 6l12 12" />
@@ -233,7 +238,7 @@ function MobileMenuThemeToggle() {
       type="button"
       aria-label="Toggle color mode"
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-      className="navbar-theme-toggle"
+      className="navbar-theme-toggle transition-transform active:scale-90"
       style={{
         background: `url('${asset('/img/whitedarkbutton.svg')}') center/contain no-repeat`,
         border: 'none',
@@ -253,19 +258,20 @@ function ShareButton({ onClick, className = '' }: { onClick: () => void; classNa
       type="button"
       onClick={onClick}
       aria-label="Share this page"
-      className={`inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] transition-colors hover:bg-black/5 hover:text-brand-green ${className}`}
+      className={`inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] transition hover:bg-black/5 hover:text-brand-green active:scale-90 active:bg-black/10 ${className}`}
     >
       <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="28"
-        height="28"
-        viewBox="0 0 40 40"
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
         fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       >
-        <path
-          fill="currentColor"
-          d="m33 19-9-9h-1v4l-1 1Q10 16 6 27v1h2q5-5 11-5h3l1 1v4h1zq1 0 0 0"
-        />
+        <path d="M4 17c1-6 5.5-9 12-9" />
+        <path d="M11 3l6 5-6 5" />
       </svg>
     </button>
   );
@@ -277,16 +283,20 @@ function SearchButton({ onClick }: { onClick: () => void }) {
       type="button"
       onClick={onClick}
       aria-label="Search"
-      className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] transition-colors hover:bg-black/5 hover:text-brand-green"
+      className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] transition hover:bg-black/5 hover:text-brand-green active:scale-90 active:bg-black/10"
     >
       <svg
         width="22"
         height="22"
         viewBox="0 0 24 24"
-        fill="currentColor"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path d="M10 4a6 6 0 1 0 3.74 10.7l4.78 4.78a1 1 0 0 0 1.42-1.42l-4.78-4.78A6 6 0 0 0 10 4Zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z" />
+        <circle cx="11" cy="11" r="7" />
+        <line x1="16.5" y1="16.5" x2="21" y2="21" />
       </svg>
     </button>
   );
@@ -311,7 +321,7 @@ function ThemeToggle({ scrolled }: { scrolled: boolean }) {
       type="button"
       onClick={toggle}
       aria-label="Toggle color mode"
-      className="navbar-theme-toggle"
+      className="navbar-theme-toggle transition-transform active:scale-90"
       style={{
         background: `url('${asset('/img/whitedarkbutton.svg')}') center/contain no-repeat`,
         border: 'none',

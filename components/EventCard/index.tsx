@@ -47,17 +47,22 @@ export default function EventCard({
 }: EventCardProps) {
   const countdown = useCountdown(featured ? (startDate ?? '2026-05-19T09:00:00') : undefined);
   const pad = (n: number) => String(n).padStart(2, '0');
+  const finished = status === 'finished';
   const cardHeight = featured ? 'h-[402px] md:h-[600px]' : 'h-[402px] md:h-[375px]';
-  const greenWidth = featured ? 'w-full md:w-[65%]' : 'w-full md:w-[62%]';
+  // Block ≈ 3/4 (min 380px), image ≈ 1/4. On hover (desktop) the block narrows
+  // ~20px so ~20px more of the image is revealed.
+  const greenWidth = 'w-full md:w-3/4 md:min-w-[380px] md:group-hover:w-[calc(75%_-_20px)]';
+  // Past/finished events use a muted gray block instead of brand green.
+  const blockColor = finished ? 'bg-[#c4c8cc]' : 'bg-brand-green';
   const greenRadius = featured
     ? 'rounded-r-[200px] md:rounded-tr-[400px] md:rounded-br-[400px]'
     : 'rounded-r-[200px]';
   const greenPadding = featured
-    ? 'pl-6 pr-12 py-6 md:py-14 md:pl-16 md:pr-8'
+    ? 'pl-6 pr-12 py-6 md:py-20 md:pl-20 md:pr-8'
     : 'pl-6 pr-12 py-6 md:py-6 md:pl-6 md:pr-16';
   const titleSize = featured
     ? 'text-[32px] leading-[120%] md:text-[64px] md:leading-[100%]'
-    : 'text-[32px] leading-[120%] md:text-[36px]';
+    : 'text-[32px] leading-[120%] md:text-[36px] md:leading-[120%]';
   const dateSize = featured ? 'text-base md:text-[24px]' : 'text-base md:text-lg';
   const locationSize = featured ? 'text-base md:text-[24px]' : 'text-base md:text-lg';
   const typeSize = featured ? 'text-base md:text-lg' : 'text-base md:text-lg';
@@ -76,19 +81,24 @@ export default function EventCard({
 
       {/* Green info block — sits on top of image */}
       <div
-        className={`relative z-10 flex h-full flex-col items-start overflow-hidden ${greenPadding} ${greenWidth} ${greenRadius} justify-between gap-3 bg-brand-green md:gap-6`}
+        className={`relative z-10 flex h-full flex-col items-start overflow-hidden ${greenPadding} ${greenWidth} ${greenRadius} ${blockColor} justify-between gap-3 transition-[width] duration-300 ease-out md:gap-6`}
       >
         <div className="flex flex-1 flex-col items-start gap-2 md:gap-3">
           {/* Type badge */}
           <div className="flex flex-row items-center gap-2">
+            {/* Type/category tag icon (replaces the old sparkle "AI"-looking star) */}
             <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="flex-shrink-0 text-black"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinejoin="round"
+              className="mt-px flex-shrink-0 text-black"
             >
-              <path d="M10 0l2.39 7.36H20l-6.18 4.49L16.18 19 10 14.51 3.82 19l2.36-7.15L0 7.36h7.61L10 0z" />
+              <path d="M20.59 13.41 11 3.82A2 2 0 0 0 9.59 3.24H4a1 1 0 0 0-1 1v5.59a2 2 0 0 0 .59 1.41l9.59 9.59a2 2 0 0 0 2.82 0l4.59-4.59a2 2 0 0 0 0-2.83Z" />
+              <circle cx="7.5" cy="7.5" r="1.5" fill="currentColor" stroke="none" />
             </svg>
             <span
               className={`font-onest font-semibold ${typeSize} leading-[120%] tracking-oai text-black`}
@@ -120,7 +130,7 @@ export default function EventCard({
         {/* Get a free ticket (featured) or Free entry tag */}
         {featured ? (
           <div className="flex w-full flex-col items-stretch gap-4 md:flex-row md:items-center md:gap-8">
-            <button className="inline-flex h-[56px] cursor-pointer items-center justify-center self-start rounded-[20px] border-none bg-black px-6 py-1.5 font-onest text-base font-bold tracking-oai text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-black/80 hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] active:translate-y-0 active:bg-black active:shadow-none disabled:pointer-events-none disabled:opacity-50 md:h-[80px] md:px-8 md:py-6 md:text-2xl">
+            <button className="inline-flex h-[56px] cursor-pointer items-center justify-center self-start rounded-[20px] border-none bg-[#15191c] px-6 py-1.5 font-onest text-base font-bold tracking-oai text-white transition-colors duration-200 hover:bg-[#15191c]/85 active:bg-[#15191c]/95 disabled:pointer-events-none disabled:opacity-50 md:h-[80px] md:px-8 md:py-6 md:text-2xl">
               Get a free ticket
             </button>
             {countdown && (
@@ -137,7 +147,7 @@ export default function EventCard({
               </div>
             )}
           </div>
-        ) : (
+        ) : finished ? null : (
           <div className="inline-flex items-center justify-center rounded-[12px] border border-white px-3 py-1.5 text-white">
             <span className="font-onest text-lg font-bold leading-[120%] tracking-oai">
               Free entry
