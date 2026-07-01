@@ -159,11 +159,11 @@ article {
 }
 
 .speakers-marquee--left .speakers-marquee__track {
-  animation: marquee-left 40s linear infinite;
+  animation: marquee-left 80s linear infinite;
 }
 
 .speakers-marquee--right .speakers-marquee__track {
-  animation: marquee-right 40s linear infinite;
+  animation: marquee-right 80s linear infinite;
 }
 
 .speakers-marquee__item {
