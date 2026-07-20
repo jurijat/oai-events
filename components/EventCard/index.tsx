@@ -50,9 +50,9 @@ export default function EventCard({
   const pad = (n: number) => String(n).padStart(2, '0');
   const finished = status === 'finished';
   const cardHeight = featured ? 'h-[402px] md:h-[600px]' : 'h-[402px] md:h-[375px]';
-  // Block ≈ 3/4 (min 380px), image ≈ 1/4. On hover (desktop) the block narrows
-  // ~20px so ~20px more of the image is revealed.
-  const greenWidth = 'w-full md:w-3/4 md:min-w-[380px] md:group-hover:w-[calc(75%_-_20px)]';
+  // Content box ≈ 3/4 of the card (min 380px), image ≈ 1/4. This width is fixed:
+  // the hover animation lives on the block shape below, so the text never reflows.
+  const greenWidth = 'w-full md:w-3/4 md:min-w-[380px]';
   // Past/finished events use a muted gray block instead of brand green.
   const blockColor = finished ? 'bg-[#c4c8cc]' : 'bg-brand-green';
   const greenRadius = featured
@@ -82,8 +82,16 @@ export default function EventCard({
 
       {/* Green info block — sits on top of image */}
       <div
-        className={`relative z-10 flex h-full flex-col items-start overflow-hidden ${greenPadding} ${greenWidth} ${greenRadius} ${blockColor} justify-between gap-3 transition-[width] duration-300 ease-out md:gap-6`}
+        className={`relative z-10 flex h-full flex-col items-start overflow-hidden ${greenPadding} ${greenWidth} justify-between gap-3 md:gap-6`}
       >
+        {/* The block shape, animated independently of the content box. It rests
+            20px short of the 3/4 mark and grows out to the full 3/4 on hover.
+            Keeping it separate is what stops the text re-wrapping mid-animation. */}
+        <div
+          aria-hidden
+          className={`pointer-events-none absolute inset-y-0 left-0 right-0 -z-10 ${greenRadius} ${blockColor} transition-[right] duration-300 ease-out md:right-5 md:group-hover:right-0`}
+        />
+
         <div className="flex flex-1 flex-col items-start gap-2 md:gap-3">
           {/* Type badge */}
           <div className="flex flex-row items-center gap-2">

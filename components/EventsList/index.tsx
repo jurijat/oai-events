@@ -336,9 +336,17 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
                   key={i}
                   onClick={() => setLightboxIndex(i)}
                   aria-label={`Open photo ${i + 1}`}
-                  className={`tile-press flex-shrink-0 cursor-pointer border-none p-0 md:transition-transform md:duration-200 md:hover:scale-[1.03] ${widths[i] ?? 'w-[300px] md:w-[400px]'} ${rounded[i] ?? 'rounded-[40px]'} h-[260px] bg-brand-card-dark bg-cover bg-center md:h-[384px]`}
-                  style={{ backgroundImage: `url(${asset(src)})` }}
-                />
+                  className={`tile-press group relative flex-shrink-0 cursor-pointer overflow-hidden border-none p-0 ${widths[i] ?? 'w-[300px] md:w-[400px]'} ${rounded[i] ?? 'rounded-[40px]'} h-[260px] bg-brand-card-dark md:h-[384px]`}
+                >
+                  {/* Zoom the photo inside the tile instead of scaling the tile
+                      itself: this row is an overflow-x scroller, so anything
+                      growing past the tile's bounds is clipped vertically. */}
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 bg-cover bg-center md:transition-transform md:duration-200 md:group-hover:scale-[1.03]"
+                    style={{ backgroundImage: `url(${asset(src)})` }}
+                  />
+                </button>
               );
             })}
           </div>
