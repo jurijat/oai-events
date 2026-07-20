@@ -3,7 +3,7 @@ import yaml from 'js-yaml';
 // at build time (require.context below) — no runtime fs, since the Cloudflare
 // Workers runtime has none. events.order.yml (bundled as a raw string by the
 // webpack asset/source rule in next.config.ts) is the primary ordering source.
-import rawOrder from '../data/events.order.yml';
+import rawOrder from '../../data/events.order.yml';
 
 export interface Speaker {
   name: string;
@@ -98,7 +98,7 @@ const ctx = (
       re: RegExp,
     ): { keys(): string[]; (id: string): RawModule };
   }
-).context('../data', true, /^\.\/[^/]+\/event\.ya?ml$/);
+).context('../../data', true, /^\.\/[^/]+\/event\.ya?ml$/);
 
 const allEvents: EventItem[] = ctx.keys().map((key) => {
   const mod = ctx(key);
