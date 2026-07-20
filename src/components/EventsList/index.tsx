@@ -150,14 +150,32 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
                 />
               ))}
 
-              {/* "New events soon" placeholder */}
-              <div className="flex h-[340px] flex-col items-center justify-center rounded-[20px] bg-[rgba(21,25,28,0.08)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.08)] md:h-[375px]">
-                <span className="mb-2 text-2xl text-[#15191c]/[0.08] [[data-theme=dark]_&]:text-white/[0.16]">
-                  &#x2726;
-                </span>
-                <span className="text-center font-onest text-[36px] font-bold tracking-oai text-[#15191c]/[0.08] [[data-theme=dark]_&]:text-white/[0.16]">
-                  New events soon
-                </span>
+              {/* "New events soon" placeholder — radius matches the event cards
+                  (rounded-4xl). The calendar replaces a ✦ sparkle, which now
+                  reads as an AI glyph. -mt-2 offsets the cap-height gap above
+                  the label so the icon/text pair sits optically centred rather
+                  than sagging low. */}
+              <div className="flex h-[340px] flex-col items-center justify-center rounded-4xl bg-[rgba(21,25,28,0.08)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.08)] md:h-[375px]">
+                <div className="-mt-2 flex flex-col items-center text-[#15191c]/[0.08] [[data-theme=dark]_&]:text-white/[0.16]">
+                  <svg
+                    aria-hidden
+                    width="40"
+                    height="40"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="mb-4"
+                  >
+                    <rect x="3" y="5" width="18" height="16" rx="2" />
+                    <path d="M8 3v4M16 3v4M3 10h18" />
+                  </svg>
+                  <span className="text-center font-onest text-[36px] font-bold leading-[120%] tracking-oai">
+                    New events soon
+                  </span>
+                </div>
               </div>
             </div>
           )}

@@ -134,7 +134,7 @@ export default function EventDetail({
       {/* Agenda Section */}
       {agendaCategories.length > 0 && (
         <section className="relative z-10 mx-auto mb-12 max-w-[1360px] md:px-20">
-          <h2 className="m-0 mb-6 px-6 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:px-0 md:text-[48px]">
+          <h2 className="m-0 mb-10 px-6 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:mb-20 md:px-0 md:text-[48px]">
             Agenda
           </h2>
 
@@ -285,7 +285,7 @@ export default function EventDetail({
 
       {/* Photos Section */}
       <section id="photos" className="relative z-10 py-16 md:py-20">
-        <div className="mx-auto mb-10 max-w-[1360px] px-6 md:px-20">
+        <div className="mx-auto mb-10 max-w-[1360px] px-6 md:mb-20 md:px-20">
           <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
             From Past Events
           </h2>
@@ -321,7 +321,7 @@ export default function EventDetail({
           })}
         </div>
 
-        <div className="mx-auto mt-12 max-w-[1200px] px-6 md:px-20">
+        <div className="mx-auto mt-12 max-w-[1360px] px-6 md:mt-20 md:px-20">
           <button
             type="button"
             onClick={() => setLightboxIndex(0)}

@@ -17,7 +17,16 @@ export default function OaiFooter() {
   };
 
   return (
-    <footer className="px-6 pb-0" style={{ backgroundColor: 'var(--brand-footer-bg)' }}>
+    <footer
+      className="px-6 pb-0"
+      /* Same recipe as the speakers section: base colour + a 4% white overlay.
+         Without it the footer is indistinguishable from the page in dark mode,
+         where --brand-footer-bg and --brand-bg are both #15191c. */
+      style={{
+        background:
+          'linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), var(--brand-footer-bg)',
+      }}
+    >
       {/* Subscribe Section */}
       <section className="py-16 md:px-20 md:py-20">
         <div className="flex items-start">
