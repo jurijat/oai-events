@@ -366,7 +366,7 @@ export default function EventDetail({
                  a strip of page bleeding through at the bottom. inset-0 still
                  works on browsers without dvh support. */
               style={{ height: '100dvh' }}
-              className="fixed inset-0 z-50 flex flex-col items-stretch overflow-y-auto bg-[color:var(--brand-bg)] px-0 py-0 md:items-center md:px-12 md:py-6"
+              className="fixed inset-0 z-50 flex flex-col items-stretch overflow-y-auto bg-[color:var(--brand-bg)] px-0 py-0 md:items-center md:overflow-hidden md:px-12 md:py-6"
               onClick={() => setSelectedSession(null)}
               onTouchStart={(e) => {
                 touchStartX.current = e.changedTouches[0].clientX;
@@ -448,14 +448,18 @@ export default function EventDetail({
                 </svg>
               </button>
 
-              <div className="my-0 flex w-full max-w-[1360px] flex-1 flex-col items-stretch gap-3 md:my-0 md:mt-20 md:flex-none md:items-center">
+              <div className="my-0 flex w-full max-w-[1360px] flex-1 flex-col items-stretch gap-3 md:my-0 md:mt-20 md:min-h-0 md:items-center">
                 {/* White content card */}
                 <div
                   /* iOS: bg switches via CSS var (--brand-card-dark) so the
                      dark-mode color is applied at the same layer as the page
                      theme, avoiding cases where a Tailwind data-theme arbitrary
                      variant didn't match (seen on some event pages). */
-                  className="h-[80%] w-full overflow-y-auto rounded-[40px] bg-white px-6 py-8 [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)] md:h-auto md:overflow-visible md:px-20 md:py-12"
+                  /* Desktop: a fixed-height panel — it fills the space between
+                     the header offset and the pinned timeline, capped at
+                     1000px — and scrolls internally, so session length no
+                     longer changes the modal's shape. */
+                  className="h-[80%] w-full overflow-y-auto rounded-[40px] bg-white px-6 py-8 [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)] md:max-h-[1000px] md:min-h-0 md:flex-1 md:px-20 md:py-12"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="flex max-w-[800px] flex-col gap-6">
@@ -589,7 +593,9 @@ export default function EventDetail({
                 {/* Timeline pills below the card — desktop only */}
                 {allSessions.length > 0 && selectedSession.time && (
                   <div
-                    className="hidden w-full items-center justify-center overflow-x-auto pt-3 md:flex"
+                    /* mt-auto pins the timeline to the bottom of the modal, so
+                       it stays put while the card scrolls. */
+                    className="hidden w-full items-center justify-center overflow-x-auto pt-3 md:mt-auto md:flex"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)] [[data-theme=dark]_&]:bg-[#1f2326]">
