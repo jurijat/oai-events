@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import TalkDetail from '@/components/TalkDetail';
-import { getAllTalkSlugs, getTalk } from '@/data/talks';
+import { getAllTalkSlugs, getTalk } from '@/lib/talks';
 
 interface PageProps {
   params: Promise<{ slug: string }>;

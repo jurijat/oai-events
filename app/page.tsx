@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import EventsList from '@/components/EventsList';
-import { events } from '@/data/events';
+import { events } from '@/lib/events';
 
 export const metadata: Metadata = {
   title: 'OpenAPI Events',

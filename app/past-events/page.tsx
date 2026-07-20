@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import PastEventsList from '@/components/PastEventsList';
-import { pastEvents } from '@/data/pastEvents';
+import { pastEvents } from '@/lib/pastEvents';
 
 export const metadata: Metadata = {
   title: 'Past Events',

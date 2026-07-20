@@ -7,7 +7,7 @@ description: Add a new event (or speaker) to the OpenAPI events site by creating
 
 Each event is its own file: **`data/<event-slug>/event.yml`** (one event per
 file, discovered and bundled at build time, typed by `EventItem` in
-`data/events.ts`). Adding an event = creating that file **and** hosting its
+`lib/events.ts`). Adding an event = creating that file **and** hosting its
 images locally via the `convert-image` skill.
 
 ## Steps

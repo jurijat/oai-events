@@ -1,4 +1,4 @@
-import { events } from '@/data/events';
+import { events } from '@/lib/events';
 
 export interface SearchItem {
   title: string;

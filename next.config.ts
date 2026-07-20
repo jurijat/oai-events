@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
   images: { unoptimized: true },
   trailingSlash: true,
   webpack: (config) => {
-    // Inline YAML files as raw strings at build time (see data/events.ts). Works
+    // Inline YAML files as raw strings at build time (see lib/events.ts). Works
     // for both targets: the Workers runtime has no filesystem, and the static
     // export build has no Node runtime to read files at request time.
     config.module.rules.push({ test: /\.ya?ml$/, type: 'asset/source' });
