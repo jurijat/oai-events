@@ -114,7 +114,11 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
 
         {/* Upcoming Section */}
         <section className="relative z-10 mx-auto mb-12 max-w-[1360px]">
-          <h2 className="m-0 mb-10 px-6 font-onest text-[32px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:mb-20 md:px-20 md:text-[48px]">
+          {/* Section headings and standalone buttons sit on the inner content
+              line — the same left edge as the featured card's content and its
+              "Get a free ticket" button. That's the 80px column gap (md:px-20)
+              plus a second reusable 80px inset, so md:pl-40 = 160px total. */}
+          <h2 className="m-0 mb-10 px-6 font-onest text-[32px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:mb-20 md:pl-40 md:pr-20 md:text-[48px]">
             Upcoming
           </h2>
 
@@ -180,8 +184,8 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
             </div>
           )}
 
-          {/* Past events button — sits below the events grid, left-aligned with content */}
-          <div className="mt-6 px-6 md:mt-20 md:px-20">
+          {/* Past events button — sits below the events grid, on the inner content line */}
+          <div className="mt-6 px-6 md:mt-20 md:pl-40 md:pr-20">
             {/* Mobile: link to /past-events */}
             <Link
               href="/past-events"
@@ -244,7 +248,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
                   'linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), var(--brand-bg)',
               }}
             />
-            <div className="mx-auto mb-10 max-w-[1360px] px-6 md:mb-20 md:px-20">
+            <div className="mx-auto mb-10 max-w-[1360px] px-6 md:mb-20 md:pl-40 md:pr-20">
               <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
                 Featured Speakers
               </h2>
@@ -288,7 +292,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
             </div>
 
             {/* Become a Speaker link */}
-            <div className="mx-auto max-w-[1360px] px-6 md:px-20">
+            <div className="mx-auto max-w-[1360px] px-6 md:pl-40 md:pr-20">
               <a
                 href="#"
                 aria-label="Become a Speaker"
@@ -324,7 +328,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
 
         {/* Photos Section */}
         <section id="photos" className="relative z-10 py-16 md:py-20">
-          <div className="mx-auto mb-10 max-w-[1360px] px-6 md:mb-20 md:px-20">
+          <div className="mx-auto mb-10 max-w-[1360px] px-6 md:mb-20 md:pl-40 md:pr-20">
             <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
               Photos
             </h2>
@@ -370,7 +374,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
           </div>
 
           {/* View gallery button */}
-          <div className="mx-auto mt-12 max-w-[1360px] px-6 md:mt-20 md:px-20">
+          <div className="mx-auto mt-12 max-w-[1360px] px-6 md:mt-20 md:pl-40 md:pr-20">
             <button
               type="button"
               onClick={() => setLightboxIndex(0)}
