@@ -59,7 +59,7 @@ export default function PastEventsList({ items }: PastEventsListProps) {
       </section>
 
       {/* Events Grid Section */}
-      <section className="mx-auto mb-12 max-w-[1360px] md:px-20">
+      <section className="mx-auto mb-12 max-w-[1360px]">
         {displayedEvents.length > 0 && (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {displayedEvents.map((item) => (

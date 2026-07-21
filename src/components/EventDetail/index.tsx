@@ -95,7 +95,7 @@ export default function EventDetail({
     <main className="relative min-h-screen overflow-hidden bg-brand-bg">
       {/* Hero Section with Event Card */}
       <section className="relative overflow-hidden pb-1 pt-16 md:pb-1.5 md:pt-24">
-        <div className="mx-auto max-w-[1360px] md:px-20">
+        <div className="mx-auto max-w-[1360px]">
           <div className="mb-8">
             <EventCard
               title={title}
@@ -111,8 +111,8 @@ export default function EventDetail({
         </div>
       </section>
 
-      {/* Map Section (Placeholder) */}
-      <section className="relative z-10 mx-auto mb-12 max-w-[1360px] md:px-20">
+      {/* Map Section (Placeholder) — fills the 1360 column like the event card */}
+      <section className="relative z-10 mx-auto mb-12 max-w-[1360px]">
         <div className="flex h-[227px] w-full items-center justify-center rounded-[40px] bg-brand-card-dark md:h-[400px]">
           <div className="text-center">
             <span
@@ -134,11 +134,9 @@ export default function EventDetail({
       {/* Agenda Section */}
       {agendaCategories.length > 0 && (
         <section className="relative z-10 mx-auto mb-12 max-w-[1360px] md:px-20">
-          {/* lvl2 heading on the inner content line (+80px past the section's
-              md:px-20). Per the Figma note, section headings are offset 80px
-              while their content (session rows, filter pills) stays on the "0"
-              baseline — the same rule as the gallery sections. */}
-          <h2 className="m-0 mb-10 px-6 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:mb-20 md:pl-20 md:pr-0 md:text-[48px]">
+          {/* lvl2 heading at md:px-20 (the section already provides it), aligned
+              with the agenda's own content — pills, category headings, rows. */}
+          <h2 className="m-0 mb-10 px-6 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:mb-20 md:px-0 md:text-[48px]">
             Agenda
           </h2>
 
@@ -289,7 +287,7 @@ export default function EventDetail({
 
       {/* Photos Section */}
       <section id="photos" className="relative z-10 py-16 md:py-20">
-        <div className="mx-auto mb-10 max-w-[1360px] px-6 md:mb-20 md:pl-40 md:pr-20">
+        <div className="mx-auto mb-10 max-w-[1360px] px-6 md:mb-20 md:px-20">
           <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
             From Past Events
           </h2>
@@ -325,7 +323,7 @@ export default function EventDetail({
           })}
         </div>
 
-        <div className="mx-auto mt-12 max-w-[1360px] px-6 md:mt-20 md:pl-40 md:pr-20">
+        <div className="mx-auto mt-12 max-w-[1360px] px-6 md:mt-20 md:px-20">
           <button
             type="button"
             onClick={() => setLightboxIndex(0)}

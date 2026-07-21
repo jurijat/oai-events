@@ -99,7 +99,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
               />
               <div className="flex-1">
                 {/* Heading with entrance animation */}
-                <h1 className="animate-fade-in-up m-0 font-onest text-[40px] font-bold leading-[120%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[80px] md:leading-[96px]">
+                <h1 className="animate-fade-in-up m-0 font-onest text-[40px] font-bold leading-[120%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[80px] md:leading-[0.96]">
                   OpenAPI events
                 </h1>
                 {/* Subtitle with staggered entrance animation */}
@@ -114,17 +114,16 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
 
         {/* Upcoming Section */}
         <section className="relative z-10 mx-auto mb-12 max-w-[1360px]">
-          {/* Section headings and standalone buttons sit on the inner content
-              line — the same left edge as the featured card's content and its
-              "Get a free ticket" button. That's the 80px column gap (md:px-20)
-              plus a second reusable 80px inset, so md:pl-40 = 160px total. */}
-          <h2 className="m-0 mb-10 px-6 font-onest text-[32px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:mb-20 md:pl-40 md:pr-20 md:text-[48px]">
+          {/* Section headings and standalone buttons sit at md:px-20 (80px), the
+              same left edge as the featured card's content and its "Get a free
+              ticket" button, which are inset 80px inside the full-width card. */}
+          <h2 className="m-0 mb-10 px-6 font-onest text-[32px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:mb-20 md:px-20 md:text-[48px]">
             Upcoming
           </h2>
 
-          {/* Featured Event — edge-to-edge on mobile, padded on desktop */}
+          {/* Featured Event — fills the full 1360 content column */}
           {featured && (
-            <div className="mb-6 md:px-20">
+            <div className="mb-6">
               <EventCard
                 title={featured.title}
                 date={featured.date}
@@ -140,7 +139,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
 
           {/* Other Events Grid — edge-to-edge on mobile, padded on desktop */}
           {otherEvents.length > 0 && (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:px-20">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {otherEvents.map((item) => (
                 <EventCard
                   key={item.permalink}
@@ -184,12 +183,12 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
             </div>
           )}
 
-          {/* Past events button — sits below the events grid, on the inner content line */}
-          <div className="mt-6 px-6 md:mt-20 md:pl-40 md:pr-20">
+          {/* Past events button — sits below the events grid at md:px-20 */}
+          <div className="mt-6 px-6 md:mt-20 md:px-20">
             {/* Mobile: link to /past-events */}
             <Link
               href="/past-events"
-              className="inline-flex h-[56px] w-full items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green/90 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none md:hidden"
+              className="inline-flex h-[56px] w-full items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] bg-brand-green px-6 py-1.5 font-onest text-lg font-bold leading-[120%] tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green/90 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none md:hidden"
             >
               Past events
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
@@ -200,7 +199,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
             <button
               type="button"
               onClick={() => setShowPast((v) => !v)}
-              className="hidden h-[64px] w-[159px] cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green/90 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none md:inline-flex"
+              className="hidden h-[64px] w-[159px] cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-lg font-bold leading-[120%] tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green/90 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none md:inline-flex"
             >
               {showPast ? 'Hide past' : 'Past events'}
               <svg
@@ -219,7 +218,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
 
           {/* Inline past events — desktop only */}
           {showPast && pastItems.length > 0 && (
-            <div className="mt-10 hidden grid-cols-1 gap-6 md:grid md:grid-cols-2 md:px-20">
+            <div className="mt-10 hidden grid-cols-1 gap-6 md:grid md:grid-cols-2">
               {pastItems.map((item) => (
                 <EventCard
                   key={`past-${item.permalink}`}
@@ -248,7 +247,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
                   'linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), var(--brand-bg)',
               }}
             />
-            <div className="mx-auto mb-10 max-w-[1360px] px-6 md:mb-20 md:pl-40 md:pr-20">
+            <div className="mx-auto mb-10 max-w-[1360px] px-6 md:mb-20 md:px-20">
               <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
                 Featured Speakers
               </h2>
@@ -292,7 +291,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
             </div>
 
             {/* Become a Speaker link */}
-            <div className="mx-auto max-w-[1360px] px-6 md:pl-40 md:pr-20">
+            <div className="mx-auto max-w-[1360px] px-6 md:px-20">
               <a
                 href="#"
                 aria-label="Become a Speaker"
@@ -328,7 +327,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
 
         {/* Photos Section */}
         <section id="photos" className="relative z-10 py-16 md:py-20">
-          <div className="mx-auto mb-10 max-w-[1360px] px-6 md:mb-20 md:pl-40 md:pr-20">
+          <div className="mx-auto mb-10 max-w-[1360px] px-6 md:mb-20 md:px-20">
             <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
               Photos
             </h2>
@@ -374,7 +373,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
           </div>
 
           {/* View gallery button */}
-          <div className="mx-auto mt-12 max-w-[1360px] px-6 md:mt-20 md:pl-40 md:pr-20">
+          <div className="mx-auto mt-12 max-w-[1360px] px-6 md:mt-20 md:px-20">
             <button
               type="button"
               onClick={() => setLightboxIndex(0)}

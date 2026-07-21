@@ -64,8 +64,8 @@ export default function EventCard({
   const titleSize = featured
     ? 'text-[32px] leading-[120%] md:text-[64px] md:leading-[100%]'
     : 'text-[32px] leading-[120%] md:text-[36px] md:leading-[120%]';
-  const dateSize = featured ? 'text-base md:text-[24px]' : 'text-base md:text-lg';
-  const locationSize = featured ? 'text-base md:text-[24px]' : 'text-base md:text-lg';
+  const dateSize = featured ? 'text-base md:text-[32px]' : 'text-base md:text-lg';
+  const locationSize = featured ? 'text-base md:text-[32px]' : 'text-base md:text-lg';
   const typeSize = featured ? 'text-base md:text-lg' : 'text-base md:text-lg';
 
   const typeBadge = (
@@ -156,7 +156,7 @@ export default function EventCard({
         {/* Get a free ticket (featured) or Free entry tag */}
         {featured ? (
           <div className="flex w-full flex-col items-stretch gap-4 md:flex-row md:items-center md:gap-8">
-            <button className="inline-flex h-[56px] cursor-pointer items-center justify-center self-start rounded-[20px] border-none bg-[#15191c] px-6 py-1.5 font-onest text-base font-bold tracking-oai text-white transition-colors duration-200 hover:bg-[#15191c]/85 active:bg-[#15191c]/95 disabled:pointer-events-none disabled:opacity-50 md:h-[80px] md:px-8 md:py-6 md:text-2xl">
+            <button className="inline-flex h-[56px] cursor-pointer items-center justify-center self-start rounded-[20px] border-none bg-[#15191c] px-6 py-1.5 font-onest text-base font-bold leading-[110%] tracking-oai text-white transition-colors duration-200 hover:bg-[#15191c]/85 active:bg-[#15191c]/95 disabled:pointer-events-none disabled:opacity-50 md:h-[80px] md:px-8 md:py-6 md:text-2xl md:leading-[110%]">
               Get a free ticket
             </button>
             {countdown && (
