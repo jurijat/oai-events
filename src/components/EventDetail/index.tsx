@@ -133,23 +133,23 @@ export default function EventDetail({
 
       {/* Agenda Section */}
       {agendaCategories.length > 0 && (
-        <section className="relative z-10 mx-auto mb-12 max-w-[1360px] md:px-20">
-          {/* lvl2 heading at md:px-20 (the section already provides it), aligned
-              with the agenda's own content — pills, category headings, rows. */}
-          <h2 className="m-0 mb-10 px-6 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:mb-20 md:px-0 md:text-[48px]">
+        <section className="relative z-10 mx-auto mb-12 max-w-[1360px]">
+          {/* Headings and the date picker keep the 80px side inset (md:px-20);
+              the session cards below fill the full column width (no inset). */}
+          <h2 className="m-0 mb-10 px-6 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:mb-20 md:px-20 md:text-[80px] md:leading-[96px]">
             Agenda
           </h2>
 
           {/* Date Filter Buttons */}
           {agendaDates.length > 1 && (
-            <div className="mb-10 ml-6 inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)] p-0 [[data-theme=dark]_&]:bg-[#1f2326] md:ml-0">
+            <div className="mb-10 ml-6 inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)] p-0 [[data-theme=dark]_&]:bg-[#1f2326] md:ml-20">
               {agendaDates.map((agendaDate) => {
                 const isActive = selectedDate === agendaDate;
                 return (
                   <button
                     key={agendaDate}
                     onClick={() => setSelectedDate(agendaDate)}
-                    className={`flex h-[32px] cursor-pointer items-center justify-center rounded-[20px] border-none px-3 py-5 font-onest text-[12px] font-semibold tracking-[-0.48px] transition-colors ${
+                    className={`flex h-[32px] cursor-pointer items-center justify-center rounded-[20px] border-none px-5 py-5 font-onest text-[12px] font-semibold tracking-[-0.48px] transition-colors ${
                       isActive
                         ? 'bg-brand-green text-[#15191c]'
                         : 'bg-transparent text-[rgba(21,25,28,0.64)] hover:text-[#15191c] [[data-theme=dark]_&]:text-white [[data-theme=dark]_&]:hover:text-white'
@@ -165,7 +165,7 @@ export default function EventDetail({
           <div className="space-y-12 md:space-y-20">
             {agendaCategories.map((category) => (
               <div key={category}>
-                <h3 className="m-0 mb-6 px-6 font-onest text-[32px] font-bold leading-[1.1] tracking-oai text-[color:var(--ifm-font-color-base)] md:px-0 md:text-3xl">
+                <h3 className="m-0 mb-6 px-6 font-onest text-[32px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:mb-10 md:px-20 md:text-[48px]">
                   {category}
                 </h3>
                 <div className="space-y-2">
@@ -182,64 +182,65 @@ export default function EventDetail({
 
                     const sessionContent = (
                       <div className="flex flex-col gap-6">
-                        {/* Time row */}
-                        {session.time && (
-                          <div className="flex max-w-[240px] items-center gap-5">
-                            <div className="h-[10px] w-[5px] flex-shrink-0 rounded-[10px] bg-brand-green" />
-                            <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
-                              {startTime}
-                            </span>
-                            <div className="h-px flex-1 bg-[rgba(21,25,28,0.12)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.16)]" />
-                            <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
-                              {endTime}
-                            </span>
-                          </div>
-                        )}
-
-                        {/* Main */}
-                        <div className="flex max-w-[800px] flex-col gap-6">
-                          <h4 className="m-0 font-onest text-[24px] font-bold leading-[1.2] tracking-[-0.96px] text-[#15191c] [[data-theme=dark]_&]:text-white">
+                        {/* Title on the left, time on the right — same line,
+                            vertically centred on desktop; stacked on mobile. */}
+                        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-8">
+                          <h4 className="m-0 font-onest text-[24px] font-medium leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-[32px]">
                             {session.title}
                           </h4>
-
-                          {sessionSpeakers.length > 0 && (
-                            <div className="flex items-center gap-5">
-                              <div className="h-6 w-[5px] flex-shrink-0 self-stretch rounded-[10px] bg-brand-green" />
-                              <div className="flex flex-1 flex-col gap-2">
-                                {sessionSpeakers.map((sp, idx) => (
-                                  <div key={`${sp.name}-${idx}`} className="flex items-center gap-3">
-                                    {sp.photo ? (
-                                      <img
-                                        src={asset(sp.photo)}
-                                        alt={sp.name}
-                                        className="h-16 w-16 flex-shrink-0 rounded-bl-[8px] rounded-br-[32px] rounded-tl-[8px] rounded-tr-[32px] object-cover"
-                                      />
-                                    ) : (
-                                      <div className="h-16 w-16 flex-shrink-0 rounded-bl-[8px] rounded-br-[32px] rounded-tl-[8px] rounded-tr-[32px] bg-[#d9d9d9]" />
-                                    )}
-                                    <div className="min-w-0 flex-1">
-                                      <div className="flex items-center gap-1">
-                                        <span className="font-onest text-base font-bold leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
-                                          {sp.name}
-                                        </span>
-                                        {sp.tag && (
-                                          <span className="inline-flex items-center rounded-bl-[10px] rounded-br-[2px] rounded-tl-[10px] rounded-tr-[2px] bg-brand-green px-1 py-[2px] font-onest text-[11px] font-bold leading-[1.2] tracking-oai text-white">
-                                            {sp.tag}
-                                          </span>
-                                        )}
-                                      </div>
-                                      {sp.position && (
-                                        <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
-                                          {sp.position}
-                                        </span>
-                                      )}
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
+                          {session.time && (
+                            <div className="flex w-[180px] flex-shrink-0 items-center gap-5 md:w-[240px]">
+                              <div className="h-[10px] w-[5px] flex-shrink-0 rounded-[10px] bg-brand-green" />
+                              <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
+                                {startTime}
+                              </span>
+                              <div className="h-px flex-1 bg-[rgba(21,25,28,0.12)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.16)]" />
+                              <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
+                                {endTime}
+                              </span>
                             </div>
                           )}
                         </div>
+
+                        {/* Speakers — one green line per speaker, aligned to the
+                            speaker's photo. */}
+                        {sessionSpeakers.length > 0 && (
+                          <div className="flex flex-col gap-3">
+                            {sessionSpeakers.map((sp, idx) => (
+                              <div key={`${sp.name}-${idx}`} className="flex items-center gap-5">
+                                <div className="h-16 w-[5px] flex-shrink-0 rounded-[10px] bg-brand-green" />
+                                <div className="flex items-center gap-3">
+                                  {sp.photo ? (
+                                    <img
+                                      src={asset(sp.photo)}
+                                      alt={sp.name}
+                                      className="h-16 w-16 flex-shrink-0 rounded-bl-[8px] rounded-br-[32px] rounded-tl-[8px] rounded-tr-[32px] object-cover"
+                                    />
+                                  ) : (
+                                    <div className="h-16 w-16 flex-shrink-0 rounded-bl-[8px] rounded-br-[32px] rounded-tl-[8px] rounded-tr-[32px] bg-[#d9d9d9]" />
+                                  )}
+                                  <div className="min-w-0 flex-1">
+                                    <div className="flex items-center gap-1">
+                                      <span className="font-onest text-base font-bold leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
+                                        {sp.name}
+                                      </span>
+                                      {sp.tag && (
+                                        <span className="inline-flex items-center rounded-bl-[10px] rounded-br-[2px] rounded-tl-[10px] rounded-tr-[2px] bg-brand-green px-1 py-[2px] font-onest text-[11px] font-bold leading-[1.2] tracking-oai text-white">
+                                          {sp.tag}
+                                        </span>
+                                      )}
+                                    </div>
+                                    {sp.position && (
+                                      <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
+                                        {sp.position}
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     );
 

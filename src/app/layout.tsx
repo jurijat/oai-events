@@ -8,7 +8,7 @@ import './globals.css';
 
 const onest = Onest({
   subsets: ['latin'],
-  weight: ['400', '600', '700'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-onest',
   display: 'swap',
 });
