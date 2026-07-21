@@ -6,6 +6,7 @@ import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { asset } from '@/lib/basePath';
 import SearchModal from '@/components/SearchModal';
+import MaskIcon from '@/components/MaskIcon';
 import type { SearchItem } from '@/lib/searchIndex';
 
 export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[] }) {
@@ -165,10 +166,7 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
               }}
               className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-current transition hover:text-brand-green active:scale-90"
             >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <circle cx="11" cy="11" r="7" />
-                <line x1="16.5" y1="16.5" x2="21" y2="21" />
-              </svg>
+              <MaskIcon src="/img/search_icon.svg" size={22} />
             </button>
             <button
               type="button"
@@ -179,19 +177,7 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
               }}
               className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-current transition hover:text-brand-green active:scale-90"
             >
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M4 17c1-6 5.5-9 12-9" />
-                <path d="M11 3l6 5-6 5" />
-              </svg>
+              <MaskIcon src="/img/share_icon.svg" size={22} />
             </button>
             <MobileMenuThemeToggle />
           </div>
@@ -260,19 +246,7 @@ function ShareButton({ onClick, className = '' }: { onClick: () => void; classNa
       aria-label="Share this page"
       className={`inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] transition hover:bg-black/5 hover:text-brand-green active:scale-90 active:bg-black/10 ${className}`}
     >
-      <svg
-        width="22"
-        height="22"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M4 17c1-6 5.5-9 12-9" />
-        <path d="M11 3l6 5-6 5" />
-      </svg>
+      <MaskIcon src="/img/share_icon.svg" size={22} />
     </button>
   );
 }
@@ -285,19 +259,7 @@ function SearchButton({ onClick }: { onClick: () => void }) {
       aria-label="Search"
       className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] transition hover:bg-black/5 hover:text-brand-green active:scale-90 active:bg-black/10"
     >
-      <svg
-        width="22"
-        height="22"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <circle cx="11" cy="11" r="7" />
-        <line x1="16.5" y1="16.5" x2="21" y2="21" />
-      </svg>
+      <MaskIcon src="/img/search_icon.svg" size={22} />
     </button>
   );
 }

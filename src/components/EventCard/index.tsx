@@ -68,6 +68,47 @@ export default function EventCard({
   const locationSize = featured ? 'text-base md:text-[24px]' : 'text-base md:text-lg';
   const typeSize = featured ? 'text-base md:text-lg' : 'text-base md:text-lg';
 
+  const typeBadge = (
+    <div className="flex flex-row items-center gap-2">
+      {/* Type/category tag icon (replaces the old sparkle "AI"-looking star) */}
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+        className="mt-px flex-shrink-0 text-black"
+      >
+        <path d="M20.59 13.41 11 3.82A2 2 0 0 0 9.59 3.24H4a1 1 0 0 0-1 1v5.59a2 2 0 0 0 .59 1.41l9.59 9.59a2 2 0 0 0 2.82 0l4.59-4.59a2 2 0 0 0 0-2.83Z" />
+        <circle cx="7.5" cy="7.5" r="1.5" fill="currentColor" stroke="none" />
+      </svg>
+      <span
+        className={`font-onest font-semibold ${typeSize} leading-[120%] tracking-oai text-black`}
+      >
+        {type}
+      </span>
+    </div>
+  );
+
+  const titleH3 = (
+    <h3 className={`font-onest font-bold ${titleSize} m-0 tracking-oai text-black`}>{title}</h3>
+  );
+
+  const dateLocation = (
+    <div className="flex flex-col gap-1">
+      <span className={`font-onest font-bold ${dateSize} leading-[120%] tracking-oai text-black`}>
+        {date}
+      </span>
+      <span
+        className={`font-onest font-normal ${locationSize} leading-[120%] tracking-oai text-black`}
+      >
+        {location}
+      </span>
+    </div>
+  );
+
   const card = (
     <div
       className={`relative w-full ${cardHeight} group tile-press overflow-hidden rounded-4xl bg-brand-card-dark`}
@@ -92,49 +133,25 @@ export default function EventCard({
           className={`pointer-events-none absolute inset-y-0 left-0 right-0 -z-10 ${greenRadius} ${blockColor} transition-[right] duration-300 ease-out md:right-5 md:group-hover:right-0`}
         />
 
-        <div className="flex flex-1 flex-col items-start gap-2 md:gap-3">
-          {/* Type badge */}
-          <div className="flex flex-row items-center gap-2">
-            {/* Type/category tag icon (replaces the old sparkle "AI"-looking star) */}
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinejoin="round"
-              className="mt-px flex-shrink-0 text-black"
-            >
-              <path d="M20.59 13.41 11 3.82A2 2 0 0 0 9.59 3.24H4a1 1 0 0 0-1 1v5.59a2 2 0 0 0 .59 1.41l9.59 9.59a2 2 0 0 0 2.82 0l4.59-4.59a2 2 0 0 0 0-2.83Z" />
-              <circle cx="7.5" cy="7.5" r="1.5" fill="currentColor" stroke="none" />
-            </svg>
-            <span
-              className={`font-onest font-semibold ${typeSize} leading-[120%] tracking-oai text-black`}
-            >
-              {type}
-            </span>
+        {featured ? (
+          /* Featured: date + location sit directly beneath the title with a
+             24px gap; the button drops to the bottom via justify-between. */
+          <div className="flex flex-1 flex-col items-start">
+            <div className="flex flex-col items-start gap-2 md:gap-3">
+              {typeBadge}
+              {titleH3}
+            </div>
+            <div className="mt-6">{dateLocation}</div>
           </div>
-
-          {/* Title */}
-          <h3 className={`font-onest font-bold ${titleSize} m-0 tracking-oai text-black`}>
-            {title}
-          </h3>
-        </div>
-
-        {/* Date + Location */}
-        <div className="flex flex-col gap-1">
-          <span
-            className={`font-onest font-bold ${dateSize} leading-[120%] tracking-oai text-black`}
-          >
-            {date}
-          </span>
-          <span
-            className={`font-onest font-normal ${locationSize} leading-[120%] tracking-oai text-black`}
-          >
-            {location}
-          </span>
-        </div>
+        ) : (
+          <>
+            <div className="flex flex-1 flex-col items-start gap-2 md:gap-3">
+              {typeBadge}
+              {titleH3}
+            </div>
+            {dateLocation}
+          </>
+        )}
 
         {/* Get a free ticket (featured) or Free entry tag */}
         {featured ? (

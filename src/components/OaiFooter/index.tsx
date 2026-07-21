@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { asset } from '@/lib/basePath';
+import MaskIcon from '@/components/MaskIcon';
 
 export default function OaiFooter() {
   const [email, setEmail] = useState('');
@@ -18,17 +19,19 @@ export default function OaiFooter() {
 
   return (
     <footer
-      className="px-6 pb-0"
+      className="pb-0"
       /* Same recipe as the speakers section: base colour + a 4% white overlay.
          Without it the footer is indistinguishable from the page in dark mode,
-         where --brand-footer-bg and --brand-bg are both #15191c. */
+         where --brand-footer-bg and --brand-bg are both #15191c.
+         Full width with 80px horizontal padding on desktop — the footer has its
+         own layout and is not constrained by the 1360px content column. */
       style={{
         background:
           'linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), var(--brand-footer-bg)',
       }}
     >
       {/* Subscribe Section */}
-      <section className="py-16 md:px-20 md:py-20">
+      <section className="px-6 py-16 md:px-20 md:py-20">
         <div className="flex items-start">
           <div className="flex-1">
             {/* Email icon */}
@@ -75,7 +78,7 @@ export default function OaiFooter() {
       </section>
 
       {/* Follow updates on social media */}
-      <section className="py-16 md:px-20 md:py-20">
+      <section className="px-6 py-16 md:px-20 md:py-20">
         <div className="flex items-start">
           <div className="flex-1">
             {/* Heart icon */}
@@ -98,11 +101,9 @@ export default function OaiFooter() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-[color:var(--ifm-font-color-base)] text-[color:var(--brand-bg)] transition-colors hover:bg-brand-green hover:text-brand-bg"
+                className="flex h-10 w-10 items-center justify-center text-[color:var(--ifm-font-color-base)] transition-colors hover:text-brand-green"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.852 3.37-1.852 3.601 0 4.267 2.37 4.267 5.455v6.288zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z" />
-                </svg>
+                <MaskIcon src="/img/linkedin_icon.svg" size={40} />
               </a>
               {/* YouTube */}
               <a
@@ -110,11 +111,9 @@ export default function OaiFooter() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube"
-                className="flex h-10 w-10 items-center justify-center rounded-lg bg-[color:var(--ifm-font-color-base)] text-[color:var(--brand-bg)] transition-colors hover:bg-brand-green hover:text-brand-bg"
+                className="flex h-10 w-10 items-center justify-center text-[color:var(--ifm-font-color-base)] transition-colors hover:text-brand-green"
               >
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M10 15l5.19-3L10 9v6zm11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z" />
-                </svg>
+                <MaskIcon src="/img/youtube_icon.svg" size={40} />
               </a>
               {/* Bluesky */}
               <a
@@ -122,20 +121,18 @@ export default function OaiFooter() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Bluesky"
-                className="text-[color:var(--ifm-font-color-base)] transition-colors hover:text-brand-green"
+                className="flex h-10 w-10 items-center justify-center text-[color:var(--ifm-font-color-base)] transition-colors hover:text-brand-green"
               >
-                <svg width="28" height="28" viewBox="0 0 568 501" fill="currentColor">
-                  <path d="M123.121 33.664C188.241 82.553 258.281 181.68 284 234.873c25.719-53.192 95.759-152.32 160.879-201.21C491.866-1.611 568-28.906 568 57.947c0 17.346-9.945 145.713-15.778 166.555-20.275 72.453-94.155 90.933-159.875 79.748C507.222 323.8 536.444 388.56 473.333 453.32c-119.86 122.992-172.272-30.859-185.702-70.281-2.462-7.227-3.617-10.608-3.631-7.733-.014-2.875-1.169.506-3.631 7.733-13.43 39.422-65.842 193.273-185.702 70.281-63.111-64.76-33.89-129.52 81.986-149.071C110.931 315.433 37.051 296.953 16.776 224.5 10.944 203.658 1 75.291 1 57.946 1-28.907 77.133-1.612 124.121 33.664Z" />
-                </svg>
+                <MaskIcon src="/img/blueprint_icon.svg" size={34} />
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Bottom footer bar — full width, horizontal padding only, no divider */}
+      {/* Bottom footer bar — full width, 80px horizontal padding on desktop */}
       <div>
-        <div className="flex flex-col items-start justify-between gap-4 py-6 md:flex-row md:items-center md:px-20">
+        <div className="flex flex-col items-start justify-between gap-4 px-6 py-6 md:flex-row md:items-center md:px-20">
           <span className="font-onest text-base font-normal tracking-oai text-brand-muted md:text-lg">
             For any questions about the OAI Track, please contact{' '}
             <a
