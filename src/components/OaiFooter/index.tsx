@@ -23,15 +23,15 @@ export default function OaiFooter() {
       /* Same recipe as the speakers section: base colour + a 4% white overlay.
          Without it the footer is indistinguishable from the page in dark mode,
          where --brand-footer-bg and --brand-bg are both #15191c.
-         Full width with 80px horizontal padding on desktop — the footer has its
-         own layout and is not constrained by the 1360px content column. */
+         The overlay background spans full width; the content sits in the same
+         1360px container with 80px side padding as the rest of the page. */
       style={{
         background:
           'linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), var(--brand-footer-bg)',
       }}
     >
       {/* Subscribe Section */}
-      <section className="px-6 py-16 md:px-20 md:py-20">
+      <section className="mx-auto w-full max-w-[1360px] px-6 py-16 md:px-20 md:py-20">
         <div className="flex items-start">
           <div className="flex-1">
             {/* Email icon */}
@@ -78,7 +78,7 @@ export default function OaiFooter() {
       </section>
 
       {/* Follow updates on social media */}
-      <section className="px-6 py-16 md:px-20 md:py-20">
+      <section className="mx-auto w-full max-w-[1360px] px-6 py-16 md:px-20 md:py-20">
         <div className="flex items-start">
           <div className="flex-1">
             {/* Heart icon */}
@@ -130,9 +130,9 @@ export default function OaiFooter() {
         </div>
       </section>
 
-      {/* Bottom footer bar — full width, 80px horizontal padding on desktop */}
+      {/* Bottom footer bar — content in the 1360 container like the rest */}
       <div>
-        <div className="flex flex-col items-start justify-between gap-4 px-6 py-6 md:flex-row md:items-center md:px-20">
+        <div className="mx-auto flex w-full max-w-[1360px] flex-col items-start justify-between gap-4 px-6 py-6 md:flex-row md:items-center md:px-20">
           <span className="font-onest text-base font-normal tracking-oai text-brand-muted md:text-lg">
             For any questions about the OAI Track, please contact{' '}
             <a
