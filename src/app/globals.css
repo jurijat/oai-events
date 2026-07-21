@@ -104,13 +104,30 @@ article {
   filter: invert(1);
 }
 
-[data-theme='dark'] .navbar-theme-toggle {
-  -webkit-filter: invert(1);
-  filter: invert(1);
+/* Theme toggle: Day/Night state icons from __design/theme_change, swapped on
+   hover/press. Day vs Night is chosen off [data-theme] (the same attribute the
+   rest of the app themes from); the Night variants already suit dark mode, so
+   no invert. All six image URLs come from the component as CSS vars. */
+.navbar-theme-toggle {
+  background-image: var(--th-day-normal);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
-
 .navbar-theme-toggle:hover {
-  opacity: 0.7;
+  background-image: var(--th-day-hover);
+}
+.navbar-theme-toggle:active {
+  background-image: var(--th-day-active);
+}
+[data-theme='dark'] .navbar-theme-toggle {
+  background-image: var(--th-night-normal);
+}
+[data-theme='dark'] .navbar-theme-toggle:hover {
+  background-image: var(--th-night-hover);
+}
+[data-theme='dark'] .navbar-theme-toggle:active {
+  background-image: var(--th-night-active);
 }
 
 /* Mobile-only press effect for tile-like elements: shrink 4% + 12% darken.

@@ -214,6 +214,24 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
   );
 }
 
+// Theme-toggle icon states come from the __design/theme_change set: a Day
+// (light) and Night (dark) variant, each with Normal / Hovered / Clicked. All
+// six image URLs are exposed as CSS vars (asset() keeps the basePath prefix);
+// globals.css picks day vs night off [data-theme] and swaps state on
+// :hover / :active — so the choice tracks the same attribute as the rest of
+// the app's theming rather than a hydration-timed resolvedTheme.
+function themeToggleStyleVars(): React.CSSProperties {
+  const u = (name: string) => `url('${asset(`/img/theme/${name}.svg`)}')`;
+  return {
+    '--th-day-normal': u('day-normal'),
+    '--th-day-hover': u('day-hovered'),
+    '--th-day-active': u('day-clicked'),
+    '--th-night-normal': u('night-normal'),
+    '--th-night-hover': u('night-hovered'),
+    '--th-night-active': u('night-clicked'),
+  } as React.CSSProperties;
+}
+
 function MobileMenuThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -226,7 +244,7 @@ function MobileMenuThemeToggle() {
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
       className="navbar-theme-toggle transition-transform active:scale-90"
       style={{
-        background: `url('${asset('/img/whitedarkbutton.svg')}') center/contain no-repeat`,
+        ...themeToggleStyleVars(),
         border: 'none',
         cursor: 'pointer',
         width: 32,
@@ -285,7 +303,7 @@ function ThemeToggle({ scrolled }: { scrolled: boolean }) {
       aria-label="Toggle color mode"
       className="navbar-theme-toggle transition-transform active:scale-90"
       style={{
-        background: `url('${asset('/img/whitedarkbutton.svg')}') center/contain no-repeat`,
+        ...themeToggleStyleVars(),
         border: 'none',
         cursor: 'pointer',
         width: size,

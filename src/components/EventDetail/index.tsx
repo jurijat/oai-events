@@ -136,7 +136,7 @@ export default function EventDetail({
         <section className="relative z-10 mx-auto mb-12 max-w-[1360px]">
           {/* Headings and the date picker keep the 80px side inset (md:px-20);
               the session cards below fill the full column width (no inset). */}
-          <h2 className="m-0 mb-10 px-6 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:mb-20 md:px-20 md:text-[80px] md:leading-[96px]">
+          <h2 className="m-0 mb-6 px-6 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:px-20 md:text-[80px] md:leading-[96px]">
             Agenda
           </h2>
 
@@ -185,7 +185,7 @@ export default function EventDetail({
                         {/* Title on the left, time on the right — same line,
                             vertically centred on desktop; stacked on mobile. */}
                         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-8">
-                          <h4 className="m-0 font-onest text-[24px] font-medium leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-[32px]">
+                          <h4 className="m-0 font-onest text-[24px] font-bold leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-[32px]">
                             {session.title}
                           </h4>
                           {session.time && (
@@ -202,14 +202,15 @@ export default function EventDetail({
                           )}
                         </div>
 
-                        {/* Speakers — one green line per speaker, aligned to the
-                            speaker's photo. */}
+                        {/* Speakers — one 24px green line for the whole group,
+                            centred vertically (so it sits between the two photos
+                            when there are two speakers). */}
                         {sessionSpeakers.length > 0 && (
-                          <div className="flex flex-col gap-3">
-                            {sessionSpeakers.map((sp, idx) => (
-                              <div key={`${sp.name}-${idx}`} className="flex items-center gap-5">
-                                <div className="h-16 w-[5px] flex-shrink-0 rounded-[10px] bg-brand-green" />
-                                <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-5">
+                            <div className="h-6 w-[5px] flex-shrink-0 rounded-[10px] bg-brand-green" />
+                            <div className="flex flex-1 flex-col gap-2">
+                              {sessionSpeakers.map((sp, idx) => (
+                                <div key={`${sp.name}-${idx}`} className="flex items-center gap-3">
                                   {sp.photo ? (
                                     <img
                                       src={asset(sp.photo)}
@@ -237,8 +238,8 @@ export default function EventDetail({
                                     )}
                                   </div>
                                 </div>
-                              </div>
-                            ))}
+                              ))}
+                            </div>
                           </div>
                         )}
                       </div>
@@ -288,7 +289,7 @@ export default function EventDetail({
 
       {/* Photos Section */}
       <section id="photos" className="relative z-10 py-16 md:py-20">
-        <div className="mx-auto mb-10 max-w-[1360px] px-6 md:mb-20 md:px-20">
+        <div className="mx-auto mb-10 max-w-[1360px] px-6 md:px-20">
           <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
             From Past Events
           </h2>
@@ -324,7 +325,7 @@ export default function EventDetail({
           })}
         </div>
 
-        <div className="mx-auto mt-12 max-w-[1360px] px-6 md:mt-20 md:px-20">
+        <div className="mx-auto mt-10 max-w-[1360px] px-6 md:px-20">
           <button
             type="button"
             onClick={() => setLightboxIndex(0)}
@@ -465,7 +466,7 @@ export default function EventDetail({
                   className="h-[80%] w-full overflow-y-auto rounded-[40px] bg-white px-6 py-8 [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)] md:max-h-[1000px] md:min-h-0 md:flex-1 md:px-20 md:py-12"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="flex max-w-[800px] flex-col gap-6">
+                  <div className="mx-auto flex max-w-[800px] flex-col gap-6">
                     {/* Top group: time row + title */}
                     <div className="flex flex-col gap-8 md:gap-12">
                       {selectedSession.time && (
@@ -495,7 +496,7 @@ export default function EventDetail({
                     {sessionSpeakers.length > 0 && (
                       <div className="pt-8 md:pt-12">
                         <div className="flex items-center gap-[27px]">
-                          <div className="h-6 w-[5px] flex-shrink-0 self-stretch rounded-[10px] bg-brand-green" />
+                          <div className="h-6 w-[5px] flex-shrink-0 rounded-[10px] bg-brand-green" />
                           <div className="flex flex-1 flex-col gap-4">
                             {sessionSpeakers.map((sp, idx) => (
                               <div

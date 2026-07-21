@@ -54,7 +54,7 @@ export default function EventCard({
   // the hover animation lives on the block shape below, so the text never reflows.
   const greenWidth = 'w-full md:w-3/4 md:min-w-[380px]';
   // Past/finished events use a muted gray block instead of brand green.
-  const blockColor = finished ? 'bg-[#c4c8cc]' : 'bg-brand-green';
+  const blockColor = finished ? 'bg-[#d9d9da]' : 'bg-brand-green';
   const greenRadius = featured
     ? 'rounded-r-[200px] md:rounded-tr-[400px] md:rounded-br-[400px]'
     : 'rounded-r-[200px]';
