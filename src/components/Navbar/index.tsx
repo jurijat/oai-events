@@ -98,7 +98,7 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
             <Link
               href="/"
               aria-label="Back to home"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] no-underline transition hover:bg-black/5 hover:text-brand-green active:scale-90 active:bg-black/10 md:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] no-underline transition hover:text-brand-green active:scale-90 active:text-brand-green-pressed md:hidden"
             >
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20 12H4" />
@@ -130,7 +130,7 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
           onClick={() => setMenuOpen((v) => !v)}
           aria-label="Open menu"
           aria-expanded={menuOpen}
-          className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] transition hover:bg-black/5 hover:text-brand-green active:scale-90 active:bg-black/10 md:hidden"
+          className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] transition hover:text-brand-green active:scale-90 active:text-brand-green-pressed md:hidden"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             {menuOpen ? (
@@ -164,7 +164,7 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
                 setMenuOpen(false);
                 setSearchOpen(true);
               }}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-current transition hover:text-brand-green active:scale-90"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-current transition hover:text-brand-green active:scale-90 active:text-brand-green-pressed"
             >
               <MaskIcon src="/img/search_icon.svg" size={22} />
             </button>
@@ -175,7 +175,7 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
                 setMenuOpen(false);
                 handleShare();
               }}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-current transition hover:text-brand-green active:scale-90"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-current transition hover:text-brand-green active:scale-90 active:text-brand-green-pressed"
             >
               <MaskIcon src="/img/share_icon.svg" size={22} />
             </button>
@@ -185,7 +185,7 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
             type="button"
             aria-label="Close menu"
             onClick={() => setMenuOpen(false)}
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[#15191c] transition hover:text-brand-green active:scale-90 [[data-theme=dark]_&]:text-white"
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[#15191c] transition hover:text-brand-green active:scale-90 active:text-brand-green-pressed [[data-theme=dark]_&]:text-white"
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M18 6L6 18M6 6l12 12" />
@@ -244,7 +244,7 @@ function ShareButton({ onClick, className = '' }: { onClick: () => void; classNa
       type="button"
       onClick={onClick}
       aria-label="Share this page"
-      className={`inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] transition hover:bg-black/5 hover:text-brand-green active:scale-90 active:bg-black/10 ${className}`}
+      className={`inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] transition hover:text-brand-green active:scale-90 active:text-brand-green-pressed ${className}`}
     >
       <MaskIcon src="/img/share_icon.svg" size={22} />
     </button>
@@ -257,7 +257,7 @@ function SearchButton({ onClick }: { onClick: () => void }) {
       type="button"
       onClick={onClick}
       aria-label="Search"
-      className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] transition hover:bg-black/5 hover:text-brand-green active:scale-90 active:bg-black/10"
+      className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] transition hover:text-brand-green active:scale-90 active:text-brand-green-pressed"
     >
       <MaskIcon src="/img/search_icon.svg" size={22} />
     </button>

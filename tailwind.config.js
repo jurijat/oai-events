@@ -19,6 +19,7 @@ module.exports = {
           green: '#65D100',
           'green-dark': '#50BD00',
           'green-light': '#76DD2A',
+          'green-pressed': '#356D00',
           card: 'var(--brand-card)',
           separator: 'var(--brand-separator)',
           muted: 'var(--brand-muted)',

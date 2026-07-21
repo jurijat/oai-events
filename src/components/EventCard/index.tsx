@@ -181,12 +181,20 @@ export default function EventCard({
           </div>
         )}
       </div>
+
+      {/* Tap feedback: 12% black over the whole card while pressed. Driven by
+          the link's active state (group/press) so a tap anywhere on the card
+          darkens it, including the image quarter. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-20 bg-black opacity-0 transition-opacity duration-100 group-active/press:opacity-[0.12]"
+      />
     </div>
   );
 
   if (permalink) {
     return (
-      <Link href={permalink} className="block no-underline hover:no-underline">
+      <Link href={permalink} className="group/press block no-underline hover:no-underline">
         {card}
       </Link>
     );

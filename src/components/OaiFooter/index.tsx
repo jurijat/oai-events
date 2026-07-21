@@ -101,7 +101,7 @@ export default function OaiFooter() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="flex h-10 w-10 items-center justify-center text-[color:var(--ifm-font-color-base)] transition-colors hover:text-brand-green"
+                className="flex h-10 w-10 items-center justify-center text-[color:var(--ifm-font-color-base)] transition-colors hover:text-brand-green active:text-brand-green-pressed"
               >
                 <MaskIcon src="/img/linkedin_icon.svg" size={40} />
               </a>
@@ -111,7 +111,7 @@ export default function OaiFooter() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube"
-                className="flex h-10 w-10 items-center justify-center text-[color:var(--ifm-font-color-base)] transition-colors hover:text-brand-green"
+                className="flex h-10 w-10 items-center justify-center text-[color:var(--ifm-font-color-base)] transition-colors hover:text-brand-green active:text-brand-green-pressed"
               >
                 <MaskIcon src="/img/youtube_icon.svg" size={40} />
               </a>
@@ -121,7 +121,7 @@ export default function OaiFooter() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Bluesky"
-                className="flex h-10 w-10 items-center justify-center text-[color:var(--ifm-font-color-base)] transition-colors hover:text-brand-green"
+                className="flex h-10 w-10 items-center justify-center text-[color:var(--ifm-font-color-base)] transition-colors hover:text-brand-green active:text-brand-green-pressed"
               >
                 <MaskIcon src="/img/blueprint_icon.svg" size={34} />
               </a>
