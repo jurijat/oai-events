@@ -454,17 +454,14 @@ export default function EventDetail({
               </button>
 
               <div className="my-0 flex w-full max-w-[1360px] flex-1 flex-col items-stretch gap-3 md:my-0 md:mt-20 md:min-h-0 md:items-center">
-                {/* White content card */}
+                {/* Content card — white in light mode; in dark mode #15191C + 4%
+                    white = #1E2225, matching the agenda tiles and speaker cards. */}
                 <div
-                  /* iOS: bg switches via CSS var (--brand-card-dark) so the
-                     dark-mode color is applied at the same layer as the page
-                     theme, avoiding cases where a Tailwind data-theme arbitrary
-                     variant didn't match (seen on some event pages). */
                   /* Desktop: a fixed-height panel — it fills the space between
                      the header offset and the pinned timeline, capped at
                      1000px — and scrolls internally, so session length no
                      longer changes the modal's shape. */
-                  className="h-[80%] w-full overflow-y-auto rounded-[40px] bg-white px-6 pt-6 pb-8 [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)] md:max-h-[1000px] md:min-h-0 md:flex-1 md:px-20 md:py-12"
+                  className="h-[80%] w-full overflow-y-auto rounded-[40px] bg-white px-6 pt-6 pb-8 [[data-theme=dark]_&]:bg-[#1e2225] md:max-h-[1000px] md:min-h-0 md:flex-1 md:px-20 md:py-12"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="mx-auto flex max-w-[800px] flex-col gap-6">
