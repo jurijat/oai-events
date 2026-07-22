@@ -110,8 +110,10 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
             <img
               src={asset('/img/openlogo.svg')}
               alt="OpenAPI Initiative"
-              className={`navbar-logo-img w-auto transition-[height] duration-200 ease-out ${
-                scrolled ? 'h-9' : 'h-12'
+              /* Mobile: fixed 121px width (height follows the 228×68 ratio ≈ 36px).
+                 Desktop keeps the height-driven sizing that shrinks on scroll. */
+              className={`navbar-logo-img h-auto w-[121px] transition-[height] duration-200 ease-out md:w-auto ${
+                scrolled ? 'md:h-9' : 'md:h-12'
               }`}
             />
           </Link>

@@ -31,9 +31,11 @@ export default function OaiFooter() {
       }}
     >
       {/* Subscribe Section */}
-      <section className="mx-auto w-full max-w-[1360px] px-6 py-16 md:px-20 md:py-20">
+      <section className="mx-auto w-full max-w-[1408px] px-6 py-16 md:px-[104px] md:py-20">
         <div className="flex items-start">
-          <div className="flex-1">
+          {/* min-w-0 lets this column shrink to the container; without it the
+              non-shrinking Subscribe button pushes the row past the viewport. */}
+          <div className="min-w-0 flex-1">
             {/* Email icon */}
             <div className="mb-8 h-16 w-16">
               <img
@@ -57,18 +59,23 @@ export default function OaiFooter() {
                 e.preventDefault();
                 openSubscribe();
               }}
-              className="flex w-full max-w-[612px] flex-col items-start gap-2 sm:flex-row"
+              className="relative w-full max-w-[612px] md:flex md:flex-row md:items-center md:gap-2"
             >
               <input
                 type="email"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="placeholder:text-[color:var(--ifm-font-color-base)]/48 h-[56px] w-full rounded-[20px] border border-white/10 bg-brand-bg px-4 font-onest text-base font-normal tracking-oai text-[color:var(--ifm-font-color-base)] outline-none sm:w-[480px] md:h-[64px] md:px-6 md:text-lg"
+                /* Mobile: full-width with pr for the overlaid button. Desktop:
+                   flex-1 beside the button with normal padding. */
+                className="placeholder:text-[color:var(--ifm-font-color-base)]/48 h-[56px] w-full rounded-[20px] border border-white/10 bg-brand-bg pl-4 pr-[120px] font-onest text-base font-normal tracking-oai text-[color:var(--ifm-font-color-base)] outline-none md:h-[64px] md:min-w-0 md:flex-1 md:pl-6 md:pr-6 md:text-lg"
               />
+              {/* Mobile: button overlays the input's right end (input runs full-width
+                  behind it, per the Figma design). Desktop: sits beside the input
+                  with an 8px gap (md:gap-2 on the form). */}
               <button
                 type="submit"
-                className="h-[56px] w-[124px] flex-shrink-0 cursor-pointer rounded-[20px] border-none bg-brand-green font-onest text-base font-semibold tracking-oai text-black transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none disabled:pointer-events-none disabled:opacity-50 md:h-[64px] md:text-lg"
+                className="btn-green absolute inset-y-0 right-0 inline-flex cursor-pointer items-center justify-center rounded-[20px] border-none px-4 font-onest text-base font-semibold tracking-oai text-black transition-colors duration-200 md:static md:h-[64px] md:flex-shrink-0 md:px-6 md:text-lg"
               >
                 Subscribe
               </button>
@@ -78,7 +85,7 @@ export default function OaiFooter() {
       </section>
 
       {/* Follow updates on social media */}
-      <section className="mx-auto w-full max-w-[1360px] px-6 py-16 md:px-20 md:py-20">
+      <section className="mx-auto w-full max-w-[1408px] px-6 py-16 md:px-[104px] md:py-20">
         <div className="flex items-start">
           <div className="flex-1">
             {/* Heart icon */}
@@ -132,7 +139,7 @@ export default function OaiFooter() {
 
       {/* Bottom footer bar — content in the 1360 container like the rest */}
       <div>
-        <div className="mx-auto flex w-full max-w-[1360px] flex-col items-start justify-between gap-4 px-6 py-6 md:flex-row md:items-center md:px-20">
+        <div className="mx-auto flex w-full max-w-[1408px] flex-col items-start justify-between gap-4 px-6 py-6 md:flex-row md:items-center md:px-[104px]">
           <span className="font-onest text-base font-normal tracking-oai text-brand-muted md:text-lg">
             For any questions about the OAI Track, please contact{' '}
             <a

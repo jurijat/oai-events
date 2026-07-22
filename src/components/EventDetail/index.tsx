@@ -95,7 +95,7 @@ export default function EventDetail({
     <main className="relative min-h-screen overflow-hidden bg-brand-bg">
       {/* Hero Section with Event Card */}
       <section className="relative overflow-hidden pb-1 pt-16 md:pb-1.5 md:pt-24">
-        <div className="mx-auto max-w-[1360px]">
+        <div className="mx-auto max-w-[1408px] md:px-6">
           <div className="mb-8">
             <EventCard
               title={title}
@@ -112,7 +112,7 @@ export default function EventDetail({
       </section>
 
       {/* Map Section (Placeholder) — fills the 1360 column like the event card */}
-      <section className="relative z-10 mx-auto mb-12 max-w-[1360px]">
+      <section className="relative z-10 mx-auto mb-12 max-w-[1408px] md:px-6">
         <div className="flex h-[227px] w-full items-center justify-center rounded-[40px] bg-brand-card-dark md:h-[400px]">
           <div className="text-center">
             <span
@@ -133,10 +133,10 @@ export default function EventDetail({
 
       {/* Agenda Section */}
       {agendaCategories.length > 0 && (
-        <section className="relative z-10 mx-auto mb-12 max-w-[1360px]">
+        <section className="relative z-10 mx-auto mb-12 max-w-[1408px] md:px-6">
           {/* Headings and the date picker keep the 80px side inset (md:px-20);
               the session cards below fill the full column width (no inset). */}
-          <h2 className="m-0 mb-6 px-6 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:px-20 md:text-[80px] md:leading-[96px]">
+          <h2 className="m-0 mb-10 px-6 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:px-20 md:text-[80px] md:leading-[96px]">
             Agenda
           </h2>
 
@@ -165,7 +165,7 @@ export default function EventDetail({
           <div className="space-y-12 md:space-y-20">
             {agendaCategories.map((category) => (
               <div key={category}>
-                <h3 className="m-0 mb-6 px-6 font-onest text-[32px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:mb-10 md:px-20 md:text-[48px]">
+                <h3 className="m-0 mb-6 px-6 font-onest text-[32px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:px-20 md:text-[48px]">
                   {category}
                 </h3>
                 <div className="space-y-2">
@@ -289,7 +289,7 @@ export default function EventDetail({
 
       {/* Photos Section */}
       <section id="photos" className="relative z-10 py-16 md:py-20">
-        <div className="mx-auto mb-10 max-w-[1360px] px-6 md:px-20">
+        <div className="mx-auto mb-10 max-w-[1408px] px-6 md:px-[104px]">
           <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
             From Past Events
           </h2>
@@ -298,7 +298,10 @@ export default function EventDetail({
           </p>
         </div>
 
-        <div className="flex flex-row gap-0.5 overflow-x-auto pb-4 md:gap-6 md:pl-20">
+        {/* Left edge tracks the centered 1360 content column (= heading − 80px),
+            instead of the viewport edge, so it doesn't over-bleed on wide screens.
+            Still bleeds off the right. */}
+        <div className="flex flex-row gap-0.5 overflow-x-auto pb-4 md:gap-6 md:pl-[max(1.5rem,calc((100%_-_1360px)/2))]">
           {photos.map((src, i) => {
             const widths = [
               'w-screen md:w-[400px]',
@@ -325,11 +328,11 @@ export default function EventDetail({
           })}
         </div>
 
-        <div className="mx-auto mt-10 max-w-[1360px] px-6 md:px-20">
+        <div className="mx-auto mt-10 max-w-[1408px] px-6 md:px-[104px]">
           <button
             type="button"
             onClick={() => setLightboxIndex(0)}
-            className="inline-flex h-[56px] w-full cursor-pointer items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none disabled:pointer-events-none disabled:opacity-50 md:h-[64px] md:w-[164px] md:justify-center md:text-lg"
+            className="btn-green inline-flex h-[56px] w-full cursor-pointer items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-colors duration-200 md:h-[64px] md:w-[164px] md:justify-center md:text-lg"
           >
             View gallery
             <svg
@@ -463,14 +466,17 @@ export default function EventDetail({
                      the header offset and the pinned timeline, capped at
                      1000px — and scrolls internally, so session length no
                      longer changes the modal's shape. */
-                  className="h-[80%] w-full overflow-y-auto rounded-[40px] bg-white px-6 py-8 [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)] md:max-h-[1000px] md:min-h-0 md:flex-1 md:px-20 md:py-12"
+                  className="h-[80%] w-full overflow-y-auto rounded-[40px] bg-white px-6 pt-6 pb-8 [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)] md:max-h-[1000px] md:min-h-0 md:flex-1 md:px-20 md:py-12"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="mx-auto flex max-w-[800px] flex-col gap-6">
-                    {/* Top group: time row + title */}
-                    <div className="flex flex-col gap-8 md:gap-12">
+                    {/* Top group: time row + title. Mobile: the time row sits 24px
+                        below the card's top edge (card pt-6) and 24px above the
+                        title (gap-6), with no internal vertical padding on the row
+                        so the 24px is measured to the visible times themselves. */}
+                    <div className="flex flex-col gap-6 md:gap-12">
                       {selectedSession.time && (
-                        <div className="flex max-w-[240px] items-center gap-6 py-2">
+                        <div className="flex max-w-[240px] items-center gap-6 py-0 md:py-2">
                           <div className="h-[10px] w-[5px] flex-shrink-0 rounded-[10px] bg-brand-green" />
                           <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-lg">
                             {startTime}
@@ -549,7 +555,7 @@ export default function EventDetail({
                           href={selectedSession.slidesUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex h-[64px] w-auto cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-lg font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none"
+                          className="btn-green inline-flex h-[64px] w-auto cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-lg font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none"
                         >
                           View slides
                         </a>
@@ -578,7 +584,7 @@ export default function EventDetail({
                       href={selectedSession.slidesUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex h-[56px] w-full cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none"
+                      className="btn-green inline-flex h-[56px] w-full cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none"
                     >
                       View slides
                     </a>

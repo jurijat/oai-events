@@ -38,7 +38,7 @@ export default function TalkDetail({
   return (
     <main className="min-h-screen bg-brand-bg">
       <section className="relative pb-12 pt-16 md:pb-20 md:pt-24">
-        <div className="mx-auto max-w-[1360px] px-6 md:px-20">
+        <div className="mx-auto max-w-[1408px] px-6 md:px-[104px]">
           {/* White content card — matches the Figma "Description Layer" modal */}
           <div className="rounded-[40px] bg-white px-6 py-8 md:px-20 md:py-12">
             <div className="flex max-w-[800px] flex-col gap-6">
@@ -122,7 +122,7 @@ export default function TalkDetail({
               <div className="pt-3">
                 <button
                   type="button"
-                  className="inline-flex h-[56px] w-full cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none disabled:pointer-events-none disabled:opacity-50 md:h-[64px] md:w-auto md:px-6 md:text-lg"
+                  className="btn-green inline-flex h-[56px] w-full cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none md:h-[64px] md:w-auto md:px-6 md:text-lg"
                 >
                   View slides
                 </button>
@@ -135,7 +135,7 @@ export default function TalkDetail({
       {/* Timeline below the card — grouped pills, scrollable on mobile */}
       {schedule.length > 0 && (
         <section className="w-full overflow-x-auto pb-12">
-          <div className="mx-auto flex min-w-max max-w-[1360px] items-center justify-start gap-3 px-6 md:justify-center md:px-20">
+          <div className="mx-auto flex min-w-max max-w-[1408px] items-center justify-start gap-3 px-6 md:justify-center md:px-[104px]">
             <div className="inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)]">
               {schedule.map((slot) => {
                 const isCurrentTalk = slot.time === startTime;

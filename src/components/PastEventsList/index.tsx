@@ -39,7 +39,7 @@ export default function PastEventsList({ items }: PastEventsListProps) {
     <main className="min-h-screen bg-brand-bg">
       {/* Hero Section */}
       <section className="relative overflow-hidden pb-12 pt-16 md:pb-20 md:pt-24">
-        <div className="relative z-10 mx-auto max-w-[1360px] px-6 md:px-20">
+        <div className="relative z-10 mx-auto max-w-[1408px] px-6 md:px-[104px]">
           <div className="flex items-start gap-5">
             {/* Green vertical accent bar (hidden on mobile) */}
             <div
@@ -59,7 +59,7 @@ export default function PastEventsList({ items }: PastEventsListProps) {
       </section>
 
       {/* Events Grid Section */}
-      <section className="mx-auto mb-12 max-w-[1360px]">
+      <section className="mx-auto mb-12 max-w-[1408px] md:px-6">
         {displayedEvents.length > 0 && (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {displayedEvents.map((item) => (
@@ -82,16 +82,10 @@ export default function PastEventsList({ items }: PastEventsListProps) {
           <div className="mt-12 flex justify-center px-6 md:mt-20 md:px-0">
             <button
               onClick={handleLoadMore}
-              className="inline-flex cursor-pointer items-center rounded-[20px] border-2 border-none border-brand-green bg-transparent px-6 py-4 font-onest text-lg font-bold tracking-oai text-brand-green no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green hover:text-brand-bg hover:shadow-[0_8px_24px_rgba(101,209,0,0.35)] active:translate-y-0 active:border-brand-green-dark active:bg-brand-green-dark active:shadow-none disabled:pointer-events-none disabled:opacity-50"
-              style={{
-                background: 'transparent',
-                border: '2px solid #65D100',
-                color: '#65D100',
-              }}
+              className="btn-green inline-flex h-[56px] cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-colors duration-200 md:h-[64px] md:text-lg"
             >
               More
               <svg
-                className="ml-2"
                 width="16"
                 height="16"
                 viewBox="0 0 16 16"

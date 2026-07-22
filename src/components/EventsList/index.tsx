@@ -90,7 +90,9 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
       <main className="relative min-h-screen overflow-hidden bg-brand-bg">
         {/* Hero Section */}
         <section ref={heroRef} className="relative pb-12 pt-16 md:pb-20 md:pt-24">
-          <div className="relative z-10 mx-auto max-w-[1360px] pl-2 pr-6 md:px-20">
+          {/* Hero ignores the 80px text inset on the left — it sits at the 24px
+              column edge (like the cards), keeping the 104px inset on the right. */}
+          <div className="relative z-10 mx-auto max-w-[1408px] pl-2 pr-6 md:pl-6 md:pr-[104px]">
             {/* Frame 2147256185 — flex row, items-center, gap 75px, frame height 180px */}
             <div className="flex flex-row items-center gap-3 md:h-[180px] md:gap-[75px]">
               {/* Green vertical accent bar with entrance animation */}
@@ -112,12 +114,15 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
           </div>
         </section>
 
-        {/* Upcoming Section */}
-        <section className="relative z-10 mx-auto mb-12 max-w-[1360px]">
-          {/* Section headings and standalone buttons sit at md:px-20 (80px), the
-              same left edge as the featured card's content and its "Get a free
-              ticket" button, which are inset 80px inside the full-width card. */}
-          <h2 className="m-0 mb-10 px-6 font-onest text-[32px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:mb-20 md:px-20 md:text-[48px]">
+        {/* Upcoming Section — the 1360px content column. max-w-[1408px] + md:px-6
+            keeps the column 1360px wide while holding a 24px desktop safe-space
+            on both sides (1408 = 1360 + 2×24); it shrinks to preserve that gutter
+            on narrower desktops. */}
+        <section className="relative z-10 mx-auto mb-12 max-w-[1408px] md:px-6">
+          {/* Section headings and standalone buttons sit at md:px-20 (80px) inside
+              the column — the same left edge as the featured card's content and its
+              "Get a free ticket" button, which are inset 80px inside the card. */}
+          <h2 className="m-0 mb-10 px-6 font-onest text-[32px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:px-20 md:text-[48px]">
             Upcoming
           </h2>
 
@@ -136,6 +141,36 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
               />
             </div>
           )}
+
+          {/* Become a Speaker — MOBILE ONLY, directly under the featured card
+              (aligned with the card's content at 24px). On desktop it instead sits
+              below the Featured Speakers marquee. */}
+          <div className="mb-10 px-6 md:hidden">
+            <a
+              href="#"
+              aria-label="Become a Speaker"
+              className="inline-flex items-center gap-3 text-brand-green no-underline transition-colors hover:text-brand-green-dark"
+            >
+              <svg
+                aria-hidden
+                width="30"
+                height="28"
+                viewBox="0 0 61 56"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                className="flex-shrink-0"
+              >
+                <path d="M 15.4 10.0 A 22 22 0 0 1 40.6 10.0 L 35.5 17.0 A 14 14 0 0 0 20.5 17.0 Z" />
+                <path d="M 46.0 15.4 A 22 22 0 0 1 46.0 40.6 L 39.0 35.5 A 14 14 0 0 0 39.0 20.5 Z" />
+                <path d="M 40.6 46.0 A 22 22 0 0 1 15.4 46.0 L 20.5 39.0 A 14 14 0 0 0 35.5 39.0 Z" />
+                <path d="M 10.0 40.6 A 22 22 0 0 1 10.0 15.4 L 17.0 20.5 A 14 14 0 0 0 17.0 35.5 Z" />
+                <circle cx="52" cy="9" r="4.2" />
+              </svg>
+              <span className="font-onest text-[18px] font-bold leading-[1.2] tracking-oai">
+                Become a Speaker
+              </span>
+            </a>
+          </div>
 
           {/* Other Events Grid — edge-to-edge on mobile, padded on desktop */}
           {otherEvents.length > 0 && (
@@ -184,11 +219,11 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
           )}
 
           {/* Past events button — sits below the events grid at md:px-20 */}
-          <div className="mt-6 px-6 md:mt-20 md:px-20">
+          <div className="mt-10 px-6 md:mt-20 md:px-20">
             {/* Mobile: link to /past-events */}
             <Link
               href="/past-events"
-              className="inline-flex h-[56px] w-full items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] bg-brand-green px-6 py-1.5 font-onest text-lg font-bold leading-[120%] tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green/90 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none md:hidden"
+              className="btn-green inline-flex h-[56px] w-full items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] px-6 py-1.5 font-onest text-lg font-bold leading-[120%] tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none md:hidden"
             >
               Past events
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
@@ -199,7 +234,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
             <button
               type="button"
               onClick={() => setShowPast((v) => !v)}
-              className="hidden h-[64px] w-[159px] cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-lg font-bold leading-[120%] tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green/90 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none md:inline-flex"
+              className="btn-green hidden h-[64px] w-[159px] cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-lg font-bold leading-[120%] tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none md:inline-flex"
             >
               {showPast ? 'Hide past' : 'Past events'}
               <svg
@@ -238,16 +273,8 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
         {/* Featured Speakers Section */}
         {allSpeakers.length > 0 && (
           <section id="speakers" className="relative z-10 overflow-hidden py-16 md:py-20">
-            {/* Section background = base colour + a 4% white overlay (per design) */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 -z-10"
-              style={{
-                background:
-                  'linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), var(--brand-bg)',
-              }}
-            />
-            <div className="mx-auto mb-10 max-w-[1360px] px-6 md:mb-20 md:px-20">
+            {/* No section tint — the speakers band sits flush on the page bg. */}
+            <div className="mx-auto mb-10 max-w-[1408px] px-6 md:px-[104px]">
               <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
                 Featured Speakers
               </h2>
@@ -281,6 +308,35 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
               </div>
             </div>
 
+            {/* Become a Speaker — DESKTOP ONLY, sits 61px below the marquee. On
+                mobile its copy lives under the featured card instead. */}
+            <div className="mx-auto mt-[61px] hidden max-w-[1408px] px-6 md:block md:px-[104px]">
+              <a
+                href="#"
+                aria-label="Become a Speaker"
+                className="inline-flex items-center gap-3 text-brand-green no-underline transition-colors hover:text-brand-green-dark"
+              >
+                <svg
+                  aria-hidden
+                  width="30"
+                  height="28"
+                  viewBox="0 0 61 56"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="flex-shrink-0"
+                >
+                  <path d="M 15.4 10.0 A 22 22 0 0 1 40.6 10.0 L 35.5 17.0 A 14 14 0 0 0 20.5 17.0 Z" />
+                  <path d="M 46.0 15.4 A 22 22 0 0 1 46.0 40.6 L 39.0 35.5 A 14 14 0 0 0 39.0 20.5 Z" />
+                  <path d="M 40.6 46.0 A 22 22 0 0 1 15.4 46.0 L 20.5 39.0 A 14 14 0 0 0 35.5 39.0 Z" />
+                  <path d="M 10.0 40.6 A 22 22 0 0 1 10.0 15.4 L 17.0 20.5 A 14 14 0 0 0 17.0 35.5 Z" />
+                  <circle cx="52" cy="9" r="4.2" />
+                </svg>
+                <span className="font-onest text-[18px] font-bold leading-[1.2] tracking-oai">
+                  Become a Speaker
+                </span>
+              </a>
+            </div>
+
             {/* Mobile: Vertical speaker list */}
             <div className="mb-10 grid grid-cols-1 gap-2.5 md:hidden">
               {allSpeakers.map((s) => (
@@ -290,23 +346,6 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
               ))}
             </div>
 
-            {/* Become a Speaker link */}
-            <div className="mx-auto max-w-[1360px] px-6 md:px-20">
-              <a
-                href="#"
-                aria-label="Become a Speaker"
-                className="inline-flex h-[64px] items-center gap-[10px] rounded-[20px] bg-transparent pl-[20px] pr-[24px] py-[24px] no-underline transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 32 32" className="flex-shrink-0">
-                  <path fill="#65d100" d="m16 5 5 1 1 3-3 3-3-1a5 5 0 1 0 4 2l3-3 3 1 1 5a11 11 0 0 1-17 9l-5 2 2-5-2-6Q6 6 16 5"/>
-                  <circle cx="16" cy="16" r="3" fill="#65d100"/>
-                  <circle cx="26" cy="6" r="3" fill="#65d100"/>
-                </svg>
-                <span className="font-onest text-[18px] font-semibold leading-[1.2] tracking-oai text-[#65d100]">
-                  Become a Speaker
-                </span>
-              </a>
-            </div>
           </section>
         )}
 
@@ -327,7 +366,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
 
         {/* Photos Section */}
         <section id="photos" className="relative z-10 py-16 md:py-20">
-          <div className="mx-auto mb-10 max-w-[1360px] px-6 md:px-20">
+          <div className="mx-auto mb-10 max-w-[1408px] px-6 md:px-[104px]">
             <h2 className="m-0 font-onest text-[40px] font-bold leading-[110%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[48px]">
               Photos
             </h2>
@@ -336,8 +375,11 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
             </p>
           </div>
 
-          {/* Photo gallery — extends to right viewport edge */}
-          <div className="flex flex-row gap-0.5 overflow-x-auto pb-4 md:gap-6 md:pl-20">
+          {/* Photo gallery — left edge tracks the centered 1360 content column
+              (= heading − 80px, i.e. the column's left edge) rather than the
+              viewport edge, so it doesn't over-bleed on wide screens. Still
+              bleeds off the right viewport edge. */}
+          <div className="flex flex-row gap-0.5 overflow-x-auto pb-4 md:gap-6 md:pl-[max(1.5rem,calc((100%_-_1360px)/2))]">
             {photos.map((src, i) => {
               const widths = [
                 'w-screen md:w-[509.53px]',
@@ -373,11 +415,11 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
           </div>
 
           {/* View gallery button */}
-          <div className="mx-auto mt-10 max-w-[1360px] px-6 md:px-20">
+          <div className="mx-auto mt-10 max-w-[1408px] px-6 md:px-[104px]">
             <button
               type="button"
               onClick={() => setLightboxIndex(0)}
-              className="inline-flex h-[56px] w-full cursor-pointer items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-brand-green px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green-light hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:bg-brand-green-dark active:shadow-none disabled:pointer-events-none disabled:opacity-50 md:h-[64px] md:w-[164px] md:justify-center md:text-lg"
+              className="btn-green inline-flex h-[56px] w-full cursor-pointer items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-colors duration-200 md:h-[64px] md:w-[164px] md:justify-center md:text-lg"
             >
               View gallery
               <svg

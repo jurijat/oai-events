@@ -145,6 +145,53 @@ article {
   }
 }
 
+/* ---- Button fill variants -------------------------------------------------
+   Each button keeps its base colour at rest and shifts to a blended shade on
+   hover / press. The blend is the exact result of compositing the design's
+   translucent overlay over the opaque base, so it's a single solid colour that
+   transitions smoothly (via each button's own transition-* class):
+     green  #65D100  hover +8% white   → #71D514   press +24% black   → #4D9F00
+     black  #15191C  hover +4% white   → #1E2225   press +24% black   → #101315
+     white  #FFFFFF  hover +4% #15191C → #F6F6F6   press +24% #15191C → #C7C8C9
+   Disabled fades the whole control to 24% opacity. Buttons keep their own
+   sizing, text colour and motion; these classes set the fill only. */
+.btn-green {
+  background-color: #65d100;
+}
+.btn-green:hover {
+  background-color: #71d514;
+}
+.btn-green:active {
+  background-color: #4d9f00;
+}
+
+.btn-black {
+  background-color: #15191c;
+}
+.btn-black:hover {
+  background-color: #1e2225;
+}
+.btn-black:active {
+  background-color: #101315;
+}
+
+.btn-white {
+  background-color: #ffffff;
+}
+.btn-white:hover {
+  background-color: #f6f6f6;
+}
+.btn-white:active {
+  background-color: #c7c8c9;
+}
+
+.btn-green:disabled,
+.btn-black:disabled,
+.btn-white:disabled {
+  opacity: 0.24;
+  pointer-events: none;
+}
+
 /* Custom scrollbar for photo gallery */
 .overflow-x-auto::-webkit-scrollbar {
   height: 4px;
