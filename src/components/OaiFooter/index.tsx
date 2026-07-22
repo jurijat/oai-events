@@ -91,7 +91,7 @@ export default function OaiFooter() {
             {/* Heart icon */}
             <div className="mb-8 h-16 w-16">
               <img
-                src={asset('/img/heart.png')}
+                src={asset('/img/heart.svg')}
                 alt=""
                 width={64}
                 height={64}
