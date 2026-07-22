@@ -247,16 +247,14 @@ export default function EventDetail({
 
                     // Make clickable if it has a permalink (opens modal)
                     const Wrapper = 'button';
-                    /* iOS/dark-mode: use --brand-card-dark CSS var instead of a
-                       literal hex so all event pages render the agenda tile
-                       with the same dark-mode background regardless of which
-                       agenda data shape (custom vs fallback) renders the row.
-                       Every session tile opens the modal — permalink is no
-                       longer required for clickability. */
+                    /* Dark mode: #15191C base + 4% white overlay = #1E2225
+                       (blended solid), matching the speaker cards. Light mode
+                       keeps the white tile. Every session tile opens the modal —
+                       permalink is no longer required for clickability. */
                     const wrapperProps = {
                       onClick: () => setSelectedSession(session),
                       className:
-                        'tile-press block w-full text-left p-6 md:p-8 rounded-[40px] bg-white hover:bg-white/90 [[data-theme=dark]_&]:bg-[color:var(--brand-card-dark)] [[data-theme=dark]_&]:hover:bg-[color:var(--brand-card-dark)]/90 transition-colors cursor-pointer relative border-none',
+                        'tile-press block w-full text-left p-6 md:p-8 rounded-[40px] bg-white hover:bg-white/90 [[data-theme=dark]_&]:bg-[#1e2225] [[data-theme=dark]_&]:hover:bg-[#1e2225]/90 transition-colors cursor-pointer relative border-none',
                     };
 
                     return (

@@ -85,20 +85,20 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
           paddingTop: 'env(safe-area-inset-top)',
           height: `calc(${scrolled ? '3rem' : '4rem'} + env(safe-area-inset-top))`,
         }}
-        className={`fixed inset-x-0 top-0 z-30 flex items-center justify-center px-6 transition-[height,background-color,box-shadow] duration-200 ease-out ${
+        className={`fixed inset-x-0 top-0 z-30 flex items-center justify-center px-6 md:px-10 transition-[height,background-color,box-shadow] duration-200 ease-out ${
           scrolled
             ? 'bg-[color:var(--brand-bg)] shadow-[0_1px_0_var(--brand-separator)]'
             : 'bg-transparent shadow-none'
         }`}
       >
-        {/* Content column: full-width bar, inner content capped at 1360px. */}
-        <div className="flex h-full w-full max-w-[1360px] items-center justify-between">
+        {/* Full-width bar: 24px side padding on mobile, 40px on desktop (px-6 → md:px-10). */}
+        <div className="flex h-full w-full items-center justify-between">
         <div className="flex items-center gap-2">
           {!isHome && (
             <Link
               href="/"
               aria-label="Back to home"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] no-underline transition hover:text-brand-green active:text-brand-green-pressed md:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border-none bg-transparent text-[color:var(--ifm-font-color-base)] no-underline transition hover:text-brand-green active:text-brand-green-pressed"
             >
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20 12H4" />
