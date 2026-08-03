@@ -18,6 +18,12 @@ cloudflare-env.d.ts
 # WebP under public/img/ is committed)
 /source-images/
 
+# Speaker images published from data/ by `npm run speakers` (build artifacts —
+# the source of truth is data/speakers/image/ and data/**/speakers/image/).
+# Regenerated on predev/prebuild; never committed.
+/public/img/speakers/
+/public/img/events/*/speakers/
+
 # Misc
 .DS_Store
 .env.local
@@ -31,3 +37,5 @@ yarn-error.log*
 
 # Design reference exports (Figma), not part of the build
 __design/
+
+dev-assets/

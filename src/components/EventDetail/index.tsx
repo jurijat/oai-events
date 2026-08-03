@@ -28,6 +28,7 @@ interface AgendaSession {
   date?: string;
   permalink?: string;
   slidesUrl?: string;
+  videoUrl?: string;
 }
 
 interface EventDetailProps {
@@ -543,8 +544,8 @@ export default function EventDetail({
                       </div>
                     )}
 
-                    {/* View slides button — inside card on desktop */}
-                    <div className="hidden pt-3 md:block">
+                    {/* Slides / recording buttons — inside card on desktop */}
+                    <div className="hidden items-center gap-3 pt-3 md:flex">
                       {selectedSession.slidesUrl ? (
                         <a
                           href={selectedSession.slidesUrl}
@@ -555,23 +556,36 @@ export default function EventDetail({
                           View slides
                         </a>
                       ) : (
-                        <button
-                          type="button"
-                          disabled
-                          aria-disabled="true"
-                          title="Slides not available"
-                          className="inline-flex h-[64px] w-auto cursor-not-allowed items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-[rgba(21,25,28,0.12)] px-6 py-1.5 font-onest text-lg font-bold tracking-oai text-[rgba(21,25,28,0.4)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.08)] [[data-theme=dark]_&]:text-[rgba(255,255,255,0.4)]"
+                        !selectedSession.videoUrl && (
+                          <button
+                            type="button"
+                            disabled
+                            aria-disabled="true"
+                            title="Slides not available"
+                            className="inline-flex h-[64px] w-auto cursor-not-allowed items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-[rgba(21,25,28,0.12)] px-6 py-1.5 font-onest text-lg font-bold tracking-oai text-[rgba(21,25,28,0.4)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.08)] [[data-theme=dark]_&]:text-[rgba(255,255,255,0.4)]"
+                          >
+                            View slides
+                          </button>
+                        )
+                      )}
+                      {selectedSession.videoUrl && (
+                        <a
+                          href={selectedSession.videoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex h-[64px] w-auto cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-2 border-[#15191c] bg-transparent px-6 py-1.5 font-onest text-lg font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 [[data-theme=dark]_&]:border-white [[data-theme=dark]_&]:text-white"
                         >
-                          View slides
-                        </button>
+                          Watch recording
+                        </a>
                       )}
                     </div>
                   </div>
                 </div>
 
-                {/* View slides button — outside the card, sits at bottom of modal (mobile only) */}
+                {/* Slides / recording buttons — outside the card, at the bottom
+                    of the modal (mobile only) */}
                 <div
-                  className="mt-auto w-full px-4 pb-12 md:hidden"
+                  className="mt-auto flex w-full flex-col gap-3 px-4 pb-12 md:hidden"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {selectedSession.slidesUrl ? (
@@ -584,14 +598,26 @@ export default function EventDetail({
                       View slides
                     </a>
                   ) : (
-                    <button
-                      type="button"
-                      disabled
-                      aria-disabled="true"
-                      className="inline-flex h-[56px] w-full cursor-not-allowed items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-[rgba(21,25,28,0.12)] px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[rgba(21,25,28,0.4)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.08)] [[data-theme=dark]_&]:text-[rgba(255,255,255,0.4)]"
+                    !selectedSession.videoUrl && (
+                      <button
+                        type="button"
+                        disabled
+                        aria-disabled="true"
+                        className="inline-flex h-[56px] w-full cursor-not-allowed items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none bg-[rgba(21,25,28,0.12)] px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[rgba(21,25,28,0.4)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.08)] [[data-theme=dark]_&]:text-[rgba(255,255,255,0.4)]"
+                      >
+                        View slides
+                      </button>
+                    )
+                  )}
+                  {selectedSession.videoUrl && (
+                    <a
+                      href={selectedSession.videoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-[56px] w-full cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-2 border-[#15191c] bg-transparent px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 [[data-theme=dark]_&]:border-white [[data-theme=dark]_&]:text-white"
                     >
-                      View slides
-                    </button>
+                      Watch recording
+                    </a>
                   )}
                 </div>
 

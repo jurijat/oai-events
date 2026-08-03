@@ -51,6 +51,8 @@ export default async function TalkPage({ params }: PageProps) {
       eventTitle={talk.eventTitle}
       eventDate={talk.eventDate}
       schedule={talk.schedule}
+      slidesUrl={talk.slidesUrl}
+      videoUrl={talk.videoUrl}
     />
   );
 }

@@ -1,9 +1,11 @@
 import yaml from 'js-yaml';
-// Each event is its own data/<slug>/event.yml. They are discovered and bundled
-// at build time (require.context below) — no runtime fs, since the Cloudflare
-// Workers runtime has none. events.order.yml (bundled as a raw string by the
-// webpack asset/source rule in next.config.ts) is the primary ordering source.
+// Each event is its own data/<year>/<slug>/event.yaml. They are discovered and
+// bundled at build time (require.context below) — no runtime fs, since the
+// Cloudflare Workers runtime has none. events.order.yml (bundled as a raw string
+// by the webpack asset/source rule in next.config.ts) is the primary ordering
+// source. Speakers are referenced by slug and rehydrated by ./speakers.
 import rawOrder from '../../data/events.order.yml';
+import { resolveSpeaker, type RawSpeakerRef, type ResolvedSpeaker } from './speakers';
 
 export interface Speaker {
   name: string;
@@ -27,6 +29,7 @@ export interface AgendaSession {
   date?: string;
   permalink?: string;
   slidesUrl?: string;
+  videoUrl?: string;
 }
 
 export type AgendaByDate = {
@@ -61,6 +64,8 @@ export interface EventTalk {
   category?: string;
   speakers?: TalkSpeaker[];
   schedule?: ScheduleSlot[];
+  slidesUrl?: string;
+  videoUrl?: string;
   metaTitle?: string;
 }
 
@@ -72,8 +77,8 @@ export interface EventItem {
   type: string;
   status: 'active' | 'upcoming' | 'finished';
   image: string;
-  time_start: string;
-  time_end: string;
+  time_start?: string;
+  time_end?: string;
   description: string;
   permalink: string;
   speakers: Speaker[];
@@ -86,9 +91,82 @@ export interface EventItem {
   talks?: EventTalk[];
 }
 
-// webpack require.context — globs every data/<slug>/event.yml as a raw string
-// (asset/source rule) and bundles them, so it works for both the static export
-// and the Cloudflare Worker build.
+// --- Raw (pre-hydration) shapes, as parsed straight from event.yaml ----------
+// In the file, speakers are slug references (or {slug, tag}); the resolver turns
+// them into the Speaker/AgendaSpeaker/TalkSpeaker shapes the components expect.
+interface RawAgendaSession {
+  title: string;
+  speaker?: RawSpeakerRef; // single slug (legacy singular form)
+  speakers?: RawSpeakerRef[];
+  time?: string;
+  date?: string;
+  permalink?: string;
+  slidesUrl?: string;
+  videoUrl?: string;
+}
+type RawAgendaByDate = {
+  [date: string]: { [category: string]: RawAgendaSession[] };
+};
+type RawTalk = Omit<EventTalk, 'speakers'> & { speakers?: RawSpeakerRef[] };
+type RawEvent = Omit<EventItem, 'speakers' | 'agenda' | 'talks'> & {
+  speakers?: RawSpeakerRef[];
+  agenda?: RawAgendaByDate;
+  talks?: RawTalk[];
+};
+
+function toSpeaker(s: ResolvedSpeaker): Speaker {
+  return { name: s.name, position: s.position, photo: s.photo };
+}
+
+// Resolve every slug reference in an event into concrete speaker objects.
+function hydrateEvent(raw: RawEvent): EventItem {
+  const slug = raw.slug;
+
+  const speakers: Speaker[] = (raw.speakers ?? []).map((ref) =>
+    toSpeaker(resolveSpeaker(slug, ref)),
+  );
+
+  let agenda: AgendaByDate | undefined;
+  if (raw.agenda) {
+    agenda = {};
+    for (const [date, categories] of Object.entries(raw.agenda)) {
+      agenda[date] = {};
+      for (const [category, sessions] of Object.entries(categories)) {
+        agenda[date][category] = sessions.map((session) => {
+          const refs: RawSpeakerRef[] =
+            session.speakers ?? (session.speaker ? [session.speaker] : []);
+          const resolved = refs.map((ref) => resolveSpeaker(slug, ref));
+          return {
+            title: session.title,
+            time: session.time,
+            date: session.date,
+            permalink: session.permalink,
+            slidesUrl: session.slidesUrl,
+            videoUrl: session.videoUrl,
+            speakers: resolved.map((s) => ({
+              name: s.name,
+              position: s.position,
+              photo: s.photo,
+              ...(s.tag ? { tag: s.tag } : {}),
+            })),
+          };
+        });
+      }
+    }
+  }
+
+  const talks: EventTalk[] | undefined = raw.talks?.map((talk) => ({
+    ...talk,
+    speakers: (talk.speakers ?? []).map((ref) => toSpeaker(resolveSpeaker(slug, ref))),
+  }));
+
+  return { ...(raw as unknown as EventItem), speakers, agenda, talks };
+}
+
+// webpack require.context — globs every data/<year>/<slug>/event.yaml as a raw
+// string (asset/source rule) and bundles them, so it works for both the static
+// export and the Cloudflare Worker build. The two [^/]+ segments are the year
+// folder and the event folder.
 type RawModule = string | { default: string };
 const ctx = (
   require as unknown as {
@@ -98,11 +176,11 @@ const ctx = (
       re: RegExp,
     ): { keys(): string[]; (id: string): RawModule };
   }
-).context('../../data', true, /^\.\/[^/]+\/event\.ya?ml$/);
+).context('../../data', true, /^\.\/[^/]+\/[^/]+\/event\.ya?ml$/);
 
 const allEvents: EventItem[] = ctx.keys().map((key) => {
   const mod = ctx(key);
-  return yaml.load(typeof mod === 'string' ? mod : mod.default) as EventItem;
+  return hydrateEvent(yaml.load(typeof mod === 'string' ? mod : mod.default) as RawEvent);
 });
 
 // Parse "September 5 — 7, 2024" → sortable timestamp of the event's first day.

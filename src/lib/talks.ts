@@ -13,6 +13,8 @@ export interface TalkData {
   eventDate?: string;
   speakers?: TalkSpeaker[];
   schedule?: ScheduleSlot[];
+  slidesUrl?: string;
+  videoUrl?: string;
   metaTitle?: string;
 }
 
@@ -29,6 +31,8 @@ export function getTalk(slug: string): TalkData | undefined {
         eventDate: event.event_date,
         speakers: talk.speakers,
         schedule: talk.schedule,
+        slidesUrl: talk.slidesUrl,
+        videoUrl: talk.videoUrl,
         metaTitle: talk.metaTitle,
       };
     }
