@@ -68,6 +68,7 @@
 
 - slug: badr-nass-lahsen
   name: Badr Nass Lahsen
+  image: badr-nass-lahsen.webp
   company: CyberArk
 
 - slug: beppe-catanese
@@ -89,6 +90,7 @@
 
 - slug: chris-wood
   name: Chris Wood
+  image: chris-wood.webp
   company: Ozone API
 
 - slug: dakshitha-ratnayake
@@ -97,6 +99,7 @@
 
 - slug: dan-ciruli
   name: Dan Ciruli
+  image: dan-ciruli.webp
   company: Nutanix
 
 - slug: daniel-gutierrez-diez
@@ -129,6 +132,7 @@
 
 - slug: dimitri-van-hees
   name: Dimitri van Hees
+  image: dimitri-van-hees.webp
   company: Dutch Government
 
 - slug: edouard-lacourt
@@ -146,6 +150,7 @@
 
 - slug: emmanuel-paraskakis
   name: Emmanuel Paraskakis
+  image: emmanuel-paraskakis.webp
   company: Level 250
 
 - slug: erik-hansen
@@ -153,6 +158,7 @@
 
 - slug: erik-wilde
   name: Erik Wilde
+  image: erik-wilde.webp
   company: OpenAPI Initiative
 
 - slug: ewen-quimerch
@@ -176,6 +182,7 @@
 
 - slug: frank-kilcommins
   name: Frank Kilcommins
+  image: frank-kilcommins.webp
   company: Jentic
 
 - slug: gobe-hobona
@@ -227,6 +234,7 @@
 
 - slug: lorna-mitchell
   name: Lorna Mitchell
+  image: lorna-mitchell.webp
   company: TM Forum
 
 - slug: luiz-carneiro
@@ -257,6 +265,7 @@
 
 - slug: marjukka-niinioja
   name: Marjukka Niinioja
+  image: marjukka-niinioja.webp
   company: Osaango
 
 - slug: marty-pitt
@@ -268,6 +277,7 @@
 
 - slug: miguel-quintero
   name: Miguel Quintero
+  image: miguel-quintero.webp
   company: Postman
 
 - slug: mike-amundsen
@@ -283,6 +293,7 @@
 
 - slug: naresh-jain
   name: Naresh Jain
+  image: naresh-jain.webp
   company: Specmatic
 
 - slug: neelesh-pateriya
@@ -344,6 +355,7 @@
 
 - slug: rahul-de
   name: Rahul Dé
+  image: rahul-de.webp
   company: Citi
 
 - slug: ryan-day
@@ -364,6 +376,7 @@
 
 - slug: simon-harrer
   name: Simon Harrer
+  image: simon-harrer.webp
   company: Entropy Data
 
 - slug: simon-heimler
