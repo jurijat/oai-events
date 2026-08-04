@@ -365,6 +365,10 @@
   image: rahul-de.webp
   company: Citi
 
+- slug: raul-nogales
+  name: Raul Nogales
+  image: raul-nogales.webp
+
 - slug: ryan-day
   name: Ryan Day
   company: Conference of State Bank Supervisors

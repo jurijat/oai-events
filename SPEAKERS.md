@@ -407,6 +407,10 @@
 
 - [API Days London 2025](/events/api-days-london-2025) — September 22 – 24, 2025
 
+**Raul Nogales**
+
+- _No events yet._
+
 **Ryan Day** — Conference of State Bank Supervisors
 
 - [API Days New York 2025](/events/api-days-new-york-2025) — May 14 – 15, 2025
