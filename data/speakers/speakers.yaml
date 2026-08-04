@@ -26,10 +26,12 @@
 
 - slug: aditya-rohit
   name: Aditya Rohit
+  image: aditya-rohit.webp
   company: SwytchCode
 
 - slug: aditya-tangirala
   name: Aditya Tangirala
+  image: aditya-tangirala.webp
   company: Venmo
 
 - slug: adrian-machado
@@ -82,6 +84,7 @@
 
 - slug: budhaditya-bhattacharya
   name: Budhaditya Bhattacharya
+  image: budhaditya-bhattacharya.webp
   company: Tyk
 
 - slug: carles-arnal
@@ -194,6 +197,7 @@
 
 - slug: henry-andrews
   name: Henry Andrews
+  image: henry-andrews.webp
   company: OpenAPI Initiative
 
 - slug: ikenna-nwaiwu
@@ -230,6 +234,7 @@
 
 - slug: kuldeepak-angrish
   name: Kuldeepak Angrish
+  image: kuldeepak-angrish.webp
   company: Tyk
 
 - slug: lorna-mitchell
@@ -254,6 +259,7 @@
 
 - slug: manideep-galala
   name: Manideep Galala
+  image: manideep-galala.webp
   company: Microsoft
 
 - slug: manuel-ottlik
@@ -306,6 +312,7 @@
 
 - slug: nuwan-dias
   name: Nuwan Dias
+  image: nuwan-dias.webp
   company: WSO2
 
 - slug: ole-wendland
@@ -399,6 +406,7 @@
 
 - slug: sumit-amar
   name: Sumit Amar
+  image: sumit-amar.webp
   company: WEX
 
 - slug: thomas-bayer
