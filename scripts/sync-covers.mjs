@@ -41,7 +41,10 @@ for (const year of fs.readdirSync(DATA, { withFileTypes: true })) {
     const imagesDir = path.join(yearDir, event.name, 'images');
     if (!fs.existsSync(imagesDir)) continue;
 
-    const matches = fs.readdirSync(imagesDir).filter((f) => COVER_RE.test(f)).sort();
+    const matches = fs
+      .readdirSync(imagesDir)
+      .filter((f) => COVER_RE.test(f))
+      .sort();
     if (matches.length === 0) continue;
     if (matches.length > 1) {
       console.warn(
@@ -85,7 +88,9 @@ fs.writeFileSync(
     '# Run `npm run covers` to regenerate (also runs on predev/prebuild).\n' +
     '# Maps event slug -> served cover path, sourced from\n' +
     '# data/<year>/<slug>/images/cover*.\n' +
-    (Object.keys(manifest).length ? yaml.dump(manifest, { lineWidth: -1, quotingType: "'" }) : '{}\n'),
+    (Object.keys(manifest).length
+      ? yaml.dump(manifest, { lineWidth: -1, quotingType: "'" })
+      : '{}\n'),
 );
 
 console.log(`covers: ${Object.keys(manifest).length} published. Wrote data/covers.generated.yml.`);
