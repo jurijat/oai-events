@@ -150,9 +150,9 @@ article {
    hover / press. The blend is the exact result of compositing the design's
    translucent overlay over the opaque base, so it's a single solid colour that
    transitions smoothly (via each button's own transition-* class):
-     green  #65D100  hover +8% white   → #71D514   press +24% black   → #4D9F00
-     black  #15191C  hover +4% white   → #1E2225   press +24% black   → #101315
-     white  #FFFFFF  hover +4% #15191C → #F6F6F6   press +24% #15191C → #C7C8C9
+     green  #65D100  hover  +8% white   → #71D514  press +24% black   → #4D9F00
+     black  #15191C  hover +12% white   → #313537  press +24% black   → #101315
+     white  #FFFFFF  hover +12% #15191C → #E3E3E4  press +24% #15191C → #C7C8C9
    Disabled fades the whole control to 24% opacity. Buttons keep their own
    sizing, text colour and motion; these classes set the fill only. */
 .btn-green {
@@ -169,7 +169,7 @@ article {
   background-color: #15191c;
 }
 .btn-black:hover {
-  background-color: #1e2225;
+  background-color: #313537;
 }
 .btn-black:active {
   background-color: #101315;
@@ -179,7 +179,7 @@ article {
   background-color: #ffffff;
 }
 .btn-white:hover {
-  background-color: #f6f6f6;
+  background-color: #e3e3e4;
 }
 .btn-white:active {
   background-color: #c7c8c9;
@@ -205,6 +205,18 @@ article {
 .overflow-x-auto::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.12);
   border-radius: 2px;
+}
+
+/* Drag-to-scroll rows (see lib/useDragScroll): the row is dragged, so no bar is
+   shown. The .overflow-x-auto compound selector outranks the rule above, which
+   would otherwise keep painting the 4px track. */
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge */
+}
+.no-scrollbar::-webkit-scrollbar,
+.overflow-x-auto.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Speaker marquee */

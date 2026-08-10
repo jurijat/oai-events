@@ -24,6 +24,12 @@ cloudflare-env.d.ts
 /public/img/speakers/
 /public/img/events/*/speakers/
 
+# Event cover images published from data/ by `npm run covers` (build artifacts —
+# the source of truth is data/<year>/<slug>/images/cover*). The generated
+# manifest data/covers.generated.yml IS committed, so a fresh clone can
+# typecheck before any pre-hook has run.
+/public/img/events/*/cover.*
+
 # Misc
 .DS_Store
 .env.local

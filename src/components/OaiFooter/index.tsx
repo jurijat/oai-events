@@ -1,21 +1,23 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { asset } from '@/lib/basePath';
 import MaskIcon from '@/components/MaskIcon';
 
 export default function OaiFooter() {
-  const [email, setEmail] = useState('');
-
-  const openSubscribe = () => {
-    // Append the typed email as a query param so openapis.org can pick it up
-    // if their form reads it. The hash keeps the user scrolled to the footer
-    // form on arrival.
-    const url = email
-      ? `https://www.openapis.org/?email=${encodeURIComponent(email)}#footer-outer`
-      : 'https://www.openapis.org/#footer-outer';
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
+  // Subscribe form temporarily disabled — see the commented-out <section> below.
+  // Restore this state + handler when re-enabling.
+  // const [email, setEmail] = useState('');
+  //
+  // const openSubscribe = () => {
+  //   // Append the typed email as a query param so openapis.org can pick it up
+  //   // if their form reads it. The hash keeps the user scrolled to the footer
+  //   // form on arrival.
+  //   const url = email
+  //     ? `https://www.openapis.org/?email=${encodeURIComponent(email)}#footer-outer`
+  //     : 'https://www.openapis.org/#footer-outer';
+  //   window.open(url, '_blank', 'noopener,noreferrer');
+  // };
 
   return (
     <footer
@@ -30,13 +32,11 @@ export default function OaiFooter() {
           'linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)), var(--brand-footer-bg)',
       }}
     >
-      {/* Subscribe Section */}
+      {/* Subscribe Section — temporarily disabled. Uncomment (and restore the
+          email state + openSubscribe handler above) to bring it back.
       <section className="mx-auto w-full max-w-[1408px] px-6 py-16 md:px-[104px] md:py-20">
         <div className="flex items-start">
-          {/* min-w-0 lets this column shrink to the container; without it the
-              non-shrinking Subscribe button pushes the row past the viewport. */}
           <div className="min-w-0 flex-1">
-            {/* Email icon */}
             <div className="mb-8 h-16 w-16">
               <img
                 src={asset('/img/email.png')}
@@ -66,13 +66,8 @@ export default function OaiFooter() {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                /* Mobile: full-width with pr for the overlaid button. Desktop:
-                   flex-1 beside the button with normal padding. */
                 className="placeholder:text-[color:var(--ifm-font-color-base)]/48 h-[56px] w-full rounded-[20px] border border-white/10 bg-brand-bg pl-4 pr-[120px] font-onest text-base font-normal tracking-oai text-[color:var(--ifm-font-color-base)] outline-none md:h-[64px] md:min-w-0 md:flex-1 md:pl-6 md:pr-6 md:text-lg"
               />
-              {/* Mobile: button overlays the input's right end (input runs full-width
-                  behind it, per the Figma design). Desktop: sits beside the input
-                  with an 8px gap (md:gap-2 on the form). */}
               <button
                 type="submit"
                 className="btn-green absolute inset-y-0 right-0 inline-flex cursor-pointer items-center justify-center rounded-[20px] border-none px-4 font-onest text-base font-semibold tracking-oai text-black transition-colors duration-200 md:static md:h-[64px] md:flex-shrink-0 md:px-6 md:text-lg"
@@ -83,6 +78,7 @@ export default function OaiFooter() {
           </div>
         </div>
       </section>
+      */}
 
       {/* Follow updates on social media */}
       <section className="mx-auto w-full max-w-[1408px] px-6 py-16 md:px-[104px] md:py-20">

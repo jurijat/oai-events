@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import EventCard from '../EventCard';
 import OaiFooter from '../OaiFooter';
 import PhotoLightbox from '../PhotoLightbox';
+import SpeakerBadge from '../SpeakerBadge';
+import { galleryPhotos, galleryPhotoSrcs, tileWidth } from '@/lib/galleryPhotos';
 import { asset } from '@/lib/basePath';
 import { lockScroll } from '@/lib/scrollLock';
 
@@ -17,6 +19,7 @@ interface AgendaSpeaker {
   name: string;
   position?: string;
   photo?: string;
+  badges?: string[];
   tag?: string;
 }
 
@@ -85,12 +88,6 @@ export default function EventDetail({
   const [selectedDate, setSelectedDate] = useState(agendaDates[0] || '');
   const currentAgenda = agenda[selectedDate] || {};
   const agendaCategories = Object.keys(currentAgenda);
-  const photos = [
-    'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600',
-    'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1600',
-    'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=1600',
-    'https://images.unsplash.com/photo-1528901166007-3784c7dd3653?w=1600',
-  ];
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [selectedSession, setSelectedSession] = useState<AgendaSession | null>(null);
 
@@ -267,11 +264,9 @@ export default function EventDetail({
                                       <span className="font-onest text-base font-bold leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
                                         {sp.name}
                                       </span>
-                                      {sp.tag && (
-                                        <span className="inline-flex items-center rounded-bl-[10px] rounded-br-[2px] rounded-tl-[10px] rounded-tr-[2px] bg-brand-green px-1 py-[2px] font-onest text-[11px] font-bold leading-[1.2] tracking-oai text-white">
-                                          {sp.tag}
-                                        </span>
-                                      )}
+                                      {(sp.badges ?? []).map((b) => (
+                                        <SpeakerBadge key={b} label={b} />
+                                      ))}
                                     </div>
                                     {sp.position && (
                                       <span className="font-onest text-base font-normal leading-[1.2] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white">
@@ -342,30 +337,21 @@ export default function EventDetail({
             instead of the viewport edge, so it doesn't over-bleed on wide screens.
             Still bleeds off the right. */}
         <div className="flex flex-row gap-0.5 overflow-x-auto pb-4 md:gap-6 md:pl-[max(1.5rem,calc((100%_-_1360px)/2))]">
-          {photos.map((src, i) => {
-            const widths = [
-              'w-screen md:w-[400px]',
-              'w-screen md:w-[400px]',
-              'w-screen md:w-[400px]',
-              'w-screen md:w-[400px]',
-            ];
-            const rounded = [
-              'rounded-[40px]',
-              'rounded-[40px]',
-              'rounded-[20px] md:rounded-[40px]',
-              'rounded-[20px] md:rounded-[40px]',
-            ];
-            return (
-              <button
-                type="button"
-                key={i}
-                onClick={() => setLightboxIndex(i)}
-                aria-label={`Open photo ${i + 1}`}
-                className={`tile-press flex-shrink-0 cursor-pointer border-none p-0 ${widths[i] ?? 'w-[280px] md:w-[400px]'} ${rounded[i] ?? 'rounded-[40px]'} h-[260px] bg-brand-card-dark bg-cover bg-center md:h-[384px]`}
-                style={{ backgroundImage: `url(${asset(src)})` }}
-              />
-            );
-          })}
+          {galleryPhotos.map((photo, i) => (
+            <button
+              type="button"
+              key={photo.src}
+              onClick={() => setLightboxIndex(i)}
+              aria-label={`Open photo ${i + 1}`}
+              className="tile-press h-[260px] w-screen flex-shrink-0 cursor-pointer rounded-[20px] border-none bg-brand-card-dark bg-cover bg-center p-0 md:h-[384px] md:w-[var(--tile-w)] md:rounded-[40px]"
+              style={
+                {
+                  backgroundImage: `url(${asset(photo.src)})`,
+                  '--tile-w': `${tileWidth(photo)}px`,
+                } as React.CSSProperties
+              }
+            />
+          ))}
         </div>
 
         <div className="mx-auto mt-10 max-w-[1408px] px-6 md:px-[104px]">
@@ -375,16 +361,7 @@ export default function EventDetail({
             className="btn-green inline-flex h-[56px] w-full cursor-pointer items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-colors duration-200 md:h-[64px] md:w-[164px] md:justify-center md:text-lg"
           >
             View gallery
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="#15191C"
-              strokeWidth="2"
-            >
-              <path d="M6 3l5 5-5 5" />
-            </svg>
+            <img src={asset('/img/shevron_icon.svg')} alt="" aria-hidden className="h-4 w-auto" />
           </button>
         </div>
       </section>
@@ -411,7 +388,9 @@ export default function EventDetail({
                  a strip of page bleeding through at the bottom. inset-0 still
                  works on browsers without dvh support. */
               style={{ height: '100dvh' }}
-              className="fixed inset-0 z-50 flex flex-col items-stretch overflow-y-auto bg-[color:var(--brand-bg)] px-0 py-0 md:items-center md:overflow-hidden md:px-12 md:py-6"
+              /* overflow-hidden on both breakpoints: only the description scrolls
+                 (see the card below), never the modal as a whole. */
+              className="fixed inset-0 z-50 flex flex-col items-stretch overflow-hidden bg-[color:var(--brand-bg)] px-0 py-0 md:items-center md:px-12 md:py-6"
               onClick={() => setSelectedSession(null)}
               onTouchStart={(e) => {
                 touchStartX.current = e.changedTouches[0].clientX;
@@ -500,23 +479,28 @@ export default function EventDetail({
                 </svg>
               </button>
 
-              <div className="my-0 flex w-full max-w-[1360px] flex-1 flex-col items-stretch gap-3 md:my-0 md:mt-20 md:min-h-0 md:items-center">
+              {/* min-h-0 must apply at every breakpoint: a flex child defaults to
+                  min-height:auto and would refuse to shrink below its content,
+                  pushing the card past the modal instead of letting the
+                  description scroll (that was the mobile-only overflow). */}
+              <div className="my-0 flex min-h-0 w-full max-w-[1360px] flex-1 flex-col items-stretch gap-3 md:my-0 md:mt-20 md:items-center">
                 {/* Content card — white in light mode; in dark mode #15191C + 4%
                     white = #1E2225, matching the agenda tiles and speaker cards. */}
                 <div
-                  /* Desktop: a fixed-height panel — it fills the space between
-                     the header offset and the pinned timeline, capped at
-                     1000px — and scrolls internally, so session length no
-                     longer changes the modal's shape. */
-                  className="h-[80%] w-full overflow-y-auto rounded-[40px] bg-white px-6 pt-6 pb-8 [[data-theme=dark]_&]:bg-[#1e2225] md:max-h-[1000px] md:min-h-0 md:flex-1 md:px-20 md:py-12"
+                  /* A fixed-size panel on both breakpoints that clips its own
+                     content: flex-1 + min-h-0 makes it take exactly the space
+                     left by the top bar and the buttons/timeline, so session
+                     length never changes the modal's shape. The only scroller
+                     inside is the description block. */
+                  className="flex w-full min-h-0 flex-1 flex-col overflow-hidden rounded-[40px] bg-white px-6 pt-6 pb-8 [[data-theme=dark]_&]:bg-[#1e2225] md:max-h-[1000px] md:px-20 md:py-12"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="mx-auto flex max-w-[800px] flex-col gap-6">
+                  <div className="mx-auto flex min-h-0 w-full max-w-[800px] flex-1 flex-col gap-6">
                     {/* Top group: time row + title. Mobile: the time row sits 24px
                         below the card's top edge (card pt-6) and 24px above the
                         title (gap-6), with no internal vertical padding on the row
                         so the 24px is measured to the visible times themselves. */}
-                    <div className="flex flex-col gap-6 md:gap-12">
+                    <div className="flex flex-shrink-0 flex-col gap-6 md:gap-12">
                       {selectedSession.time && (
                         <div className="flex max-w-[240px] items-center gap-6 py-0 md:py-2">
                           <div className="h-[10px] w-[5px] flex-shrink-0 rounded-[10px] bg-brand-green" />
@@ -536,14 +520,19 @@ export default function EventDetail({
                     </div>
 
                     {/* Description — the talk's real abstract, falling back to a
-                        generic line only when the session has none. */}
-                    <p className="m-0 whitespace-pre-line font-onest text-base font-normal leading-[1.4] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-lg">
-                      {selectedSession.description ?? `Join us for this session at ${title}.`}
-                    </p>
+                        generic line only when the session has none. This is the
+                        modal's only scroll region: flex-1 + min-h-0 lets it take
+                        the leftover height and scroll on overflow, so the time,
+                        title, speakers and buttons stay put. */}
+                    <div className="min-h-0 flex-1 overflow-y-auto">
+                      <p className="m-0 whitespace-pre-line font-onest text-base font-normal leading-[1.4] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-lg">
+                        {selectedSession.description ?? `Join us for this session at ${title}.`}
+                      </p>
+                    </div>
 
                     {/* Speakers section */}
                     {sessionSpeakers.length > 0 && (
-                      <div className="pt-8 md:pt-12">
+                      <div className="flex-shrink-0 pt-8 md:pt-12">
                         <div className="flex items-center gap-[27px]">
                           <div className="h-6 w-[5px] flex-shrink-0 rounded-[10px] bg-brand-green" />
                           <div className="flex flex-1 flex-col gap-4">
@@ -592,7 +581,7 @@ export default function EventDetail({
                     )}
 
                     {/* Slides / recording buttons — inside card on desktop */}
-                    <div className="hidden items-center gap-3 pt-3 md:flex">
+                    <div className="hidden flex-shrink-0 items-center gap-3 pt-3 md:flex">
                       {selectedSession.slidesUrl ? (
                         <a
                           href={selectedSession.slidesUrl}
@@ -717,7 +706,7 @@ export default function EventDetail({
 
     {lightboxIndex !== null && (
       <PhotoLightbox
-        photos={photos}
+        photos={galleryPhotoSrcs}
         startIndex={lightboxIndex}
         onClose={() => setLightboxIndex(null)}
       />

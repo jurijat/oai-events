@@ -12,6 +12,12 @@
 # affiliations for any given talk are snapshotted per event via
 # data/<year>/<slug>/speakers/speakers.yaml overrides.
 #
+# `badges` is an optional list of membership pills shown after the speaker's name,
+# e.g. `badges: [TSC, OAI]` (TSC = Technical Steering Committee, OAI = OpenAPI
+# Initiative member). Codes are uppercased on render; unknown codes still show,
+# they just get no tooltip. Like every other field it merges per-event, so an
+# event override can pin the badges a speaker held at that event.
+#
 # `image` is either a bare filename (-> data/speakers/image/<file>, copied to
 # public/img/speakers/<slug>.webp by `npm run speakers`) or a full URL / absolute
 # /path (used as-is). Speakers with no image yet resolve to the neutral committed
@@ -163,6 +169,7 @@
   name: Erik Wilde
   image: erik-wilde.webp
   company: OpenAPI Initiative
+  badges: [OAI]
 
 - slug: ewen-quimerch
   name: Ewen Quimerc'h
@@ -187,6 +194,7 @@
   name: Frank Kilcommins
   image: frank-kilcommins.webp
   company: Jentic
+  badges: [TSC, OAI]
 
 - slug: gobe-hobona
   name: Gobe Hobona
@@ -199,6 +207,7 @@
   name: Henry Andrews
   image: henry-andrews.webp
   company: OpenAPI Initiative
+  badges: [OAI]
 
 - slug: ikenna-nwaiwu
   name: Ikenna Nwaiwu

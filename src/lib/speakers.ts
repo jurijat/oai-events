@@ -25,6 +25,10 @@ interface SpeakerDef {
   company?: string;
   image?: string;
   description?: string;
+  // Membership badges shown after the name, e.g. [TSC, OAI]. Merged per-field
+  // like everything else, so a per-event speakers.yaml can override the whole
+  // list (useful once an event is finished and membership later changes).
+  badges?: string[];
 }
 
 export interface ResolvedSpeaker {
@@ -35,6 +39,9 @@ export interface ResolvedSpeaker {
   role?: string;
   company?: string;
   description?: string;
+  // The speaker's own badges plus the optional session-level `tag`, so callers
+  // render one list instead of handling two separate badge mechanisms.
+  badges: string[];
   tag?: string;
 }
 
@@ -114,6 +121,10 @@ export function resolveSpeaker(eventSlug: string, ref: RawSpeakerRef): ResolvedS
     }
   }
 
+  // Speaker-level badges first, then the session-level tag if it adds anything.
+  const badges = (merged.badges ?? []).map((b) => String(b).toUpperCase());
+  if (tag && !badges.includes(tag.toUpperCase())) badges.push(tag.toUpperCase());
+
   return {
     slug,
     name: merged.name ?? slug,
@@ -122,6 +133,7 @@ export function resolveSpeaker(eventSlug: string, ref: RawSpeakerRef): ResolvedS
     role: role || undefined,
     company: company || undefined,
     description: merged.description,
+    badges,
     ...(tag ? { tag } : {}),
   };
 }

@@ -7,11 +7,13 @@ import { asset } from '@/lib/basePath';
 import SpeakerCard from '../SpeakerCard';
 import OaiFooter from '../OaiFooter';
 import PhotoLightbox from '../PhotoLightbox';
+import { galleryPhotos, galleryPhotoSrcs, tileWidth } from '@/lib/galleryPhotos';
 
 interface Speaker {
   name: string;
   position: string;
   photo: string;
+  badges?: string[];
 }
 
 interface EventItem {
@@ -48,13 +50,21 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
     return acc;
   }, []);
 
-  // Sample photos for the gallery
-  const photos = [
-    'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600',
-    'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1600',
-    'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=1600',
-    'https://images.unsplash.com/photo-1528901166007-3784c7dd3653?w=1600',
-  ];
+  // The two marquee rows draw from disjoint halves, so the same person is never
+  // on screen twice. Each row then repeats its own half up to MARQUEE_MIN cards
+  // (one copy must stay wider than the viewport or the loop shows a gap) and is
+  // tripled, because the marquee keyframes translate by exactly -33.333%.
+  const MARQUEE_MIN = 8;
+  const marqueeTrack = (row: Speaker[]): Speaker[] => {
+    if (row.length === 0) return [];
+    const copies = Math.ceil(MARQUEE_MIN / row.length);
+    const base = Array.from({ length: copies }, () => row).flat();
+    return [...base, ...base, ...base];
+  };
+  const splitAt = Math.ceil(allSpeakers.length / 2);
+  const speakersRow1 = marqueeTrack(allSpeakers.slice(0, splitAt));
+  const speakersRow2 = marqueeTrack(allSpeakers.slice(splitAt));
+
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   // Scroll-driven hero expansion
@@ -90,16 +100,14 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
     <>
       <main className="relative min-h-screen overflow-hidden bg-brand-bg">
         {/* Hero Section */}
-        <section ref={heroRef} className="relative pb-12 pt-16 md:pb-20 md:pt-24">
+        <section ref={heroRef} className="relative pb-12 pt-16 md:pb-20 md:pt-[140px]">
           {/* Hero ignores the 80px text inset on the left — it sits at the 24px
               column edge (like the cards), keeping the 104px inset on the right. */}
           <div className="relative z-10 mx-auto max-w-[1408px] pl-2 pr-6 md:pl-6 md:pr-[104px]">
             {/* Frame 2147256185 — flex row, items-center, gap 75px, frame height 180px */}
             <div className="flex flex-row items-center gap-3 md:h-[180px] md:gap-[75px]">
               {/* Green vertical accent bar with entrance animation */}
-              <div
-                className="animate-slide-down block h-[80px] w-[4px] flex-shrink-0 rounded-[10px] bg-brand-green md:w-[5px]"
-              />
+              <div className="animate-slide-down block h-[80px] w-[4px] flex-shrink-0 rounded-[10px] bg-brand-green md:w-[5px]" />
               <div className="flex-1">
                 {/* Heading with entrance animation */}
                 <h1 className="animate-fade-in-up m-0 font-onest text-[40px] font-bold leading-[120%] tracking-oai text-[color:var(--ifm-font-color-base)] md:text-[80px] md:leading-[0.96]">
@@ -195,7 +203,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
                   reads as an AI glyph. -mt-2 offsets the cap-height gap above
                   the label so the icon/text pair sits optically centred rather
                   than sagging low. */}
-              <div className="flex h-[340px] flex-col items-center justify-center rounded-4xl bg-[rgba(21,25,28,0.08)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.08)] md:h-[375px]">
+              <div className="flex h-[340px] flex-col items-center justify-center rounded-4xl bg-[rgba(21,25,28,0.08)] md:h-[375px] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.08)]">
                 <div className="-mt-2 flex flex-col items-center text-[#15191c]/[0.08] [[data-theme=dark]_&]:text-white/[0.16]">
                   <svg
                     aria-hidden
@@ -228,9 +236,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
               className="btn-green inline-flex h-[56px] w-full items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] px-6 py-1.5 font-onest text-lg font-bold leading-[120%] tracking-oai text-[#15191c] no-underline transition-colors duration-200 md:hidden"
             >
               Past events
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M6 3l5 5-5 5" />
-              </svg>
+              <img src={asset('/img/shevron_icon.svg')} alt="" aria-hidden className="h-4 w-auto" />
             </Link>
             {/* Desktop: toggle inline */}
             <button
@@ -239,17 +245,12 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
               className="btn-green hidden h-[64px] w-[159px] cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-lg font-bold leading-[120%] tracking-oai text-[#15191c] transition-colors duration-200 md:inline-flex"
             >
               {showPast ? 'Hide past' : 'Past events'}
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className={`transition-transform ${showPast ? 'rotate-90' : ''}`}
-              >
-                <path d="M6 3l5 5-5 5" />
-              </svg>
+              <img
+                src={asset('/img/shevron_icon.svg')}
+                alt=""
+                aria-hidden
+                className={`h-4 w-auto transition-transform ${showPast ? 'rotate-90' : ''}`}
+              />
             </button>
           </div>
 
@@ -290,7 +291,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
               {/* Marquee row 1 — scrolls left */}
               <div className="speakers-marquee speakers-marquee--left mb-6">
                 <div className="speakers-marquee__track">
-                  {[...allSpeakers, ...allSpeakers, ...allSpeakers].map((s, i) => (
+                  {speakersRow1.map((s, i) => (
                     <div key={`r1-${i}`} className="speakers-marquee__item">
                       <SpeakerCard variant="dark" {...s} />
                     </div>
@@ -301,7 +302,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
               {/* Marquee row 2 — scrolls right */}
               <div className="speakers-marquee speakers-marquee--right mb-10">
                 <div className="speakers-marquee__track">
-                  {[...allSpeakers, ...allSpeakers, ...allSpeakers].map((s, i) => (
+                  {speakersRow2.map((s, i) => (
                     <div key={`r2-${i}`} className="speakers-marquee__item">
                       <SpeakerCard variant="dark" {...s} />
                     </div>
@@ -347,24 +348,25 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
                 </div>
               ))}
             </div>
-
           </section>
         )}
 
-        {/* Sponsor Section — uses background2.svg which contains concentric rings,
-            "Sponsored by" label, boomi wordmark, and "Powering the Data Economy" tagline.
-            Crop the square SVG to a 765px-tall band per Figma spec. */}
+        {/* Sponsor Section — temporarily disabled. Uncomment to bring the Boomi
+            band back (the .boomi-bg dark-mode rule in globals.css is kept for it).
+            Uses background2.svg, which contains the concentric rings, "Sponsored by"
+            label, boomi wordmark and "Powering the Data Economy" tagline; the square
+            SVG is cropped to a 765px-tall band per Figma spec.
         <section className="relative isolate flex h-[300px] items-center justify-center md:h-[765px]">
           <img
             src={asset('/img/background2.svg')}
             alt="Sponsored by Boomi — Powering the Data Economy"
             className="boomi-bg pointer-events-none absolute left-1/2 top-1/2 block h-auto w-full min-w-[1280px] max-w-[1728px] -translate-x-1/2 -translate-y-[59.3%] select-none"
           />
-          {/* Orange dot overlay — not affected by dark-mode invert */}
           <svg aria-hidden viewBox="0 0 1728 1728" className="pointer-events-none absolute left-1/2 top-1/2 block h-auto w-full min-w-[1280px] max-w-[1728px] -translate-x-1/2 -translate-y-[59.3%] select-none">
             <circle cx="978.403" cy="1016.8" r="5.43" fill="#ff7c66" />
           </svg>
         </section>
+        */}
 
         {/* Photos Section */}
         <section id="photos" className="relative z-10 py-16 md:py-20">
@@ -382,38 +384,25 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
               viewport edge, so it doesn't over-bleed on wide screens. Still
               bleeds off the right viewport edge. */}
           <div className="flex flex-row gap-0.5 overflow-x-auto pb-4 md:gap-6 md:pl-[max(1.5rem,calc((100%_-_1360px)/2))]">
-            {photos.map((src, i) => {
-              const widths = [
-                'w-screen md:w-[509.53px]',
-                'w-screen md:w-[518px]',
-                'w-screen md:w-[283.64px]',
-                'w-screen md:w-[647px]',
-              ];
-              const rounded = [
-                'rounded-[40px]',
-                'rounded-[40px]',
-                'rounded-[20px] md:rounded-[40px]',
-                'rounded-[20px] md:rounded-[40px]',
-              ];
-              return (
-                <button
-                  type="button"
-                  key={i}
-                  onClick={() => setLightboxIndex(i)}
-                  aria-label={`Open photo ${i + 1}`}
-                  className={`tile-press group relative flex-shrink-0 cursor-pointer overflow-hidden border-none p-0 ${widths[i] ?? 'w-[300px] md:w-[400px]'} ${rounded[i] ?? 'rounded-[40px]'} h-[260px] bg-brand-card-dark md:h-[384px]`}
-                >
-                  {/* Zoom the photo inside the tile instead of scaling the tile
-                      itself: this row is an overflow-x scroller, so anything
-                      growing past the tile's bounds is clipped vertically. */}
-                  <span
-                    aria-hidden
-                    className="absolute inset-0 bg-cover bg-center md:transition-transform md:duration-200 md:group-hover:scale-[1.03]"
-                    style={{ backgroundImage: `url(${asset(src)})` }}
-                  />
-                </button>
-              );
-            })}
+            {galleryPhotos.map((photo, i) => (
+              <button
+                type="button"
+                key={photo.src}
+                onClick={() => setLightboxIndex(i)}
+                aria-label={`Open photo ${i + 1}`}
+                style={{ '--tile-w': `${tileWidth(photo)}px` } as React.CSSProperties}
+                className="tile-press group relative h-[260px] w-screen flex-shrink-0 cursor-pointer overflow-hidden rounded-[20px] border-none bg-brand-card-dark p-0 md:h-[384px] md:w-[var(--tile-w)] md:rounded-[40px]"
+              >
+                {/* Zoom the photo inside the tile instead of scaling the tile
+                    itself: this row is an overflow-x scroller, so anything
+                    growing past the tile's bounds is clipped vertically. */}
+                <span
+                  aria-hidden
+                  className="absolute inset-0 bg-cover bg-center md:transition-transform md:duration-200 md:group-hover:scale-[1.03]"
+                  style={{ backgroundImage: `url(${asset(photo.src)})` }}
+                />
+              </button>
+            ))}
           </div>
 
           {/* View gallery button */}
@@ -433,7 +422,11 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
         <OaiFooter />
 
         {lightboxIndex !== null && (
-          <PhotoLightbox photos={photos} startIndex={lightboxIndex} onClose={() => setLightboxIndex(null)} />
+          <PhotoLightbox
+            photos={galleryPhotoSrcs}
+            startIndex={lightboxIndex}
+            onClose={() => setLightboxIndex(null)}
+          />
         )}
       </main>
     </>

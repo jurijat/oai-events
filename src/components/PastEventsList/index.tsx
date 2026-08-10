@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import EventCard from '../EventCard';
 import OaiFooter from '../OaiFooter';
+import { asset } from '@/lib/basePath';
 
 interface Speaker {
   name: string;
@@ -85,16 +86,7 @@ export default function PastEventsList({ items }: PastEventsListProps) {
               className="btn-green inline-flex h-[56px] cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-colors duration-200 md:h-[64px] md:text-lg"
             >
               More
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M6 3l5 5-5 5" />
-              </svg>
+              <img src={asset('/img/shevron_icon.svg')} alt="" aria-hidden className="h-4 w-auto" />
             </button>
           </div>
         )}

@@ -1,15 +1,16 @@
 import React from 'react';
 import { asset } from '@/lib/basePath';
+import SpeakerBadge from '../SpeakerBadge';
 
 interface SpeakerCardProps {
   name: string;
   position: string;
   photo: string;
   variant?: 'dark' | 'light';
-  tags?: string[];
+  badges?: string[];
 }
 
-export default function SpeakerCard({ name, position, photo, tags = [] }: SpeakerCardProps) {
+export default function SpeakerCard({ name, position, photo, badges = [] }: SpeakerCardProps) {
   // Dark mode: #15191C base + 4% white overlay = #1E2225 (blended solid).
   return (
     <div className="tile-press flex h-[180px] w-full flex-row items-center overflow-hidden rounded-[40px] bg-white [[data-theme=dark]_&]:bg-[#1e2225] md:w-[428px]">
@@ -20,13 +21,8 @@ export default function SpeakerCard({ name, position, photo, tags = [] }: Speake
           <span className="font-onest text-base font-bold leading-[120%] tracking-oai text-[#15191C] [[data-theme=dark]_&]:text-white">
             {name}
           </span>
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="inline-flex items-center rounded-[10px_2px_2px_10px] bg-brand-green px-1 py-[2px] font-onest text-[11px] font-bold leading-[120%] tracking-oai text-white"
-            >
-              {tag}
-            </span>
+          {badges.map((b) => (
+            <SpeakerBadge key={b} label={b} />
           ))}
         </div>
         {/* Position — Onest 400 16px, line-height 140% */}
