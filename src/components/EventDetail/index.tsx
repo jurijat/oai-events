@@ -598,7 +598,7 @@ export default function EventDetail({
                           href={selectedSession.slidesUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="btn-green inline-flex h-[64px] w-auto cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-lg font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none"
+                          className="btn-green inline-flex h-[64px] w-auto cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-lg font-bold tracking-oai text-[#15191c] no-underline transition-colors duration-200"
                         >
                           View slides
                         </a>
@@ -620,7 +620,7 @@ export default function EventDetail({
                           href={selectedSession.videoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex h-[64px] w-auto cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-2 border-[#15191c] bg-transparent px-6 py-1.5 font-onest text-lg font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 [[data-theme=dark]_&]:border-white [[data-theme=dark]_&]:text-white"
+                          className="inline-flex h-[64px] w-auto cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-2 border-[#15191c] bg-transparent px-6 py-1.5 font-onest text-lg font-bold tracking-oai text-[#15191c] no-underline transition-colors duration-200 [[data-theme=dark]_&]:border-white [[data-theme=dark]_&]:text-white"
                         >
                           Watch recording
                         </a>
@@ -640,7 +640,7 @@ export default function EventDetail({
                       href={selectedSession.slidesUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="btn-green inline-flex h-[56px] w-full cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none"
+                      className="btn-green inline-flex h-[56px] w-full cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] no-underline transition-colors duration-200"
                     >
                       View slides
                     </a>
@@ -661,7 +661,7 @@ export default function EventDetail({
                       href={selectedSession.videoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex h-[56px] w-full cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-2 border-[#15191c] bg-transparent px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 [[data-theme=dark]_&]:border-white [[data-theme=dark]_&]:text-white"
+                      className="inline-flex h-[56px] w-full cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-2 border-[#15191c] bg-transparent px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] no-underline transition-colors duration-200 [[data-theme=dark]_&]:border-white [[data-theme=dark]_&]:text-white"
                     >
                       Watch recording
                     </a>
