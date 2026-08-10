@@ -16,6 +16,7 @@ export default function Home() {
     type: event.type,
     status: event.status,
     image: event.image,
+    startDate: event.startDate,
     speakers: event.speakers,
   });
 

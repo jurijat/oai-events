@@ -30,6 +30,9 @@ export interface AgendaSession {
   permalink?: string;
   slidesUrl?: string;
   videoUrl?: string;
+  // Resolved from the matching talk (by permalink → talk slug) at hydration, so
+  // the session modal can show the real abstract instead of a generic line.
+  description?: string;
 }
 
 export type AgendaByDate = {
@@ -79,6 +82,9 @@ export interface EventItem {
   image: string;
   time_start?: string;
   time_end?: string;
+  // ISO datetime of the event's first day, derived from event_date (+ time_start
+  // when present). Drives the countdown on the featured card.
+  startDate?: string;
   description: string;
   permalink: string;
   speakers: Speaker[];
@@ -114,6 +120,43 @@ type RawEvent = Omit<EventItem, 'speakers' | 'agenda' | 'talks'> & {
   talks?: RawTalk[];
 };
 
+const MONTHS = [
+  'january',
+  'february',
+  'march',
+  'april',
+  'may',
+  'june',
+  'july',
+  'august',
+  'september',
+  'october',
+  'november',
+  'december',
+];
+
+// Parse the first day out of a display date like "December 1 – 3, 2026" or
+// "September 30 – October 1, 2026" and return a local ISO datetime string
+// (YYYY-MM-DDTHH:MM:SS). time_start (e.g. "09:00") sets the clock; default 09:00.
+// Returns undefined when the date can't be parsed, so callers can skip the
+// countdown rather than render a bogus target.
+function isoStartDate(event_date?: string, time_start?: string): string | undefined {
+  if (!event_date) return undefined;
+  const m = /([A-Za-z]+)\s+(\d+).*?(\d{4})/.exec(event_date);
+  if (!m) return undefined;
+  const month = MONTHS.indexOf(m[1].toLowerCase());
+  if (month < 0) return undefined;
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const day = Number(m[2]);
+  const year = Number(m[3]);
+  const time = /^\d{1,2}:\d{2}(:\d{2})?$/.test(time_start ?? '')
+    ? (time_start as string).length === 5
+      ? `${time_start}:00`
+      : (time_start as string)
+    : '09:00:00';
+  return `${year}-${pad(month + 1)}-${pad(day)}T${time}`;
+}
+
 function toSpeaker(s: ResolvedSpeaker): Speaker {
   return { name: s.name, position: s.position, photo: s.photo };
 }
@@ -126,6 +169,15 @@ function hydrateEvent(raw: RawEvent): EventItem {
     toSpeaker(resolveSpeaker(slug, ref)),
   );
 
+  // A session references its full talk by permalink (/events/talks/<talk-slug>);
+  // pull the talk's description across so the agenda modal shows the real abstract.
+  const talkDescBySlug = new Map<string, string>();
+  for (const talk of raw.talks ?? []) {
+    if (talk.slug && talk.description) talkDescBySlug.set(talk.slug, talk.description);
+  }
+  const talkSlugOf = (permalink?: string) =>
+    permalink ? permalink.split('/').filter(Boolean).pop() : undefined;
+
   let agenda: AgendaByDate | undefined;
   if (raw.agenda) {
     agenda = {};
@@ -136,6 +188,7 @@ function hydrateEvent(raw: RawEvent): EventItem {
           const refs: RawSpeakerRef[] =
             session.speakers ?? (session.speaker ? [session.speaker] : []);
           const resolved = refs.map((ref) => resolveSpeaker(slug, ref));
+          const talkSlug = talkSlugOf(session.permalink);
           return {
             title: session.title,
             time: session.time,
@@ -143,6 +196,7 @@ function hydrateEvent(raw: RawEvent): EventItem {
             permalink: session.permalink,
             slidesUrl: session.slidesUrl,
             videoUrl: session.videoUrl,
+            description: talkSlug ? talkDescBySlug.get(talkSlug) : undefined,
             speakers: resolved.map((s) => ({
               name: s.name,
               position: s.position,
@@ -160,7 +214,9 @@ function hydrateEvent(raw: RawEvent): EventItem {
     speakers: (talk.speakers ?? []).map((ref) => toSpeaker(resolveSpeaker(slug, ref))),
   }));
 
-  return { ...(raw as unknown as EventItem), speakers, agenda, talks };
+  const startDate = raw.startDate ?? isoStartDate(raw.event_date, raw.time_start);
+
+  return { ...(raw as unknown as EventItem), startDate, speakers, agenda, talks };
 }
 
 // webpack require.context — globs every data/<year>/<slug>/event.yaml as a raw
@@ -184,20 +240,6 @@ const allEvents: EventItem[] = ctx.keys().map((key) => {
 });
 
 // Parse "September 5 — 7, 2024" → sortable timestamp of the event's first day.
-const MONTHS = [
-  'january',
-  'february',
-  'march',
-  'april',
-  'may',
-  'june',
-  'july',
-  'august',
-  'september',
-  'october',
-  'november',
-  'december',
-];
 function dateValue(e: EventItem): number {
   const m = /([A-Za-z]+)\s+(\d+).*?(\d{4})/.exec(e.event_date);
   if (!m) return 0;

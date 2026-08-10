@@ -29,6 +29,7 @@ interface AgendaSession {
   permalink?: string;
   slidesUrl?: string;
   videoUrl?: string;
+  description?: string;
 }
 
 interface EventDetailProps {
@@ -46,6 +47,26 @@ interface EventDetailProps {
   };
   speakers?: Speaker[];
   sponsors?: { name: string; logo?: string }[];
+}
+
+// Split a time range like "9:15am–9:40am" into ["9:15am", "9:40am"], tolerating
+// en-dash (–), em-dash (—) or hyphen (-) as the separator. The data uses an
+// en-dash, which an earlier "[—-]" class missed — so ranges never split and
+// every pill showed the full range instead of a start time.
+function splitTimeRange(time?: string): [string, string] {
+  const parts = (time ?? '').split(/\s*[–—-]\s*/);
+  return [parts[0] ?? '', parts[1] ?? ''];
+}
+
+// Parse a clock label ("9:15am", "2:00pm") to minutes since midnight, or null.
+function timeToMinutes(label: string): number | null {
+  const m = /^(\d{1,2}):(\d{2})\s*(am|pm)?$/i.exec(label.trim());
+  if (!m) return null;
+  let h = Number(m[1]);
+  const ap = m[3]?.toLowerCase();
+  if (ap === 'pm' && h !== 12) h += 12;
+  if (ap === 'am' && h === 12) h = 0;
+  return h * 60 + Number(m[2]);
 }
 
 export default function EventDetail({
@@ -82,14 +103,36 @@ export default function EventDetail({
 
   const touchStartX = useRef<number | null>(null);
 
-  // Get current-day sessions for timeline navigation, deduped by start time.
+  // Current-day sessions for the timeline: deduped by start time and ordered
+  // chronologically, so the timeline always begins at the first session.
   const currentDaySessions = Object.values(agenda[selectedDate] || {})
     .flat()
     .filter((s) => s.time);
-  const allSessions = currentDaySessions.filter(
-    (s, i, arr) =>
-      i === arr.findIndex((x) => (x.time?.split(/\s*[—-]\s*/)[0] || '') === (s.time?.split(/\s*[—-]\s*/)[0] || ''))
-  );
+  const allSessions = currentDaySessions
+    .filter(
+      (s, i, arr) =>
+        i === arr.findIndex((x) => splitTimeRange(x.time)[0] === splitTimeRange(s.time)[0]),
+    )
+    .sort(
+      (a, b) =>
+        (timeToMinutes(splitTimeRange(a.time)[0]) ?? 0) -
+        (timeToMinutes(splitTimeRange(b.time)[0]) ?? 0),
+    );
+
+  // Group the ordered sessions into blocks: a gap of more than 5 minutes between
+  // one session's end and the next session's start starts a new block, matching
+  // the segmented Figma timeline (each block is a separate rounded pill group).
+  const timeBlocks: AgendaSession[][] = [];
+  let prevBlockEnd: number | null = null;
+  for (const s of allSessions) {
+    const [start, end] = splitTimeRange(s.time);
+    const startMin = timeToMinutes(start);
+    const endMin = timeToMinutes(end) ?? startMin;
+    const gap = prevBlockEnd != null && startMin != null ? startMin - prevBlockEnd : 0;
+    if (timeBlocks.length === 0 || gap > 5) timeBlocks.push([s]);
+    else timeBlocks[timeBlocks.length - 1].push(s);
+    prevBlockEnd = endMin ?? prevBlockEnd;
+  }
 
   return (
     <>
@@ -177,9 +220,7 @@ export default function EventDetail({
                         : session.speaker
                           ? [{ name: session.speaker }]
                           : [];
-                    const [startTime, endTime] = session.time
-                      ? session.time.split(/\s*[—-]\s*/)
-                      : ['', ''];
+                    const [startTime, endTime] = splitTimeRange(session.time);
 
                     const sessionContent = (
                       <div className="flex flex-col gap-6">
@@ -355,9 +396,7 @@ export default function EventDetail({
       {/* Talk Detail Modal — matches Figma desktop "Description Layer" (568:23259) */}
       {selectedSession &&
         (() => {
-          const [startTime, endTime] = selectedSession.time
-            ? selectedSession.time.split(/\s*[—-]\s*/)
-            : ['', ''];
+          const [startTime, endTime] = splitTimeRange(selectedSession.time);
           const sessionSpeakers =
             selectedSession.speakers && selectedSession.speakers.length > 0
               ? selectedSession.speakers
@@ -400,25 +439,32 @@ export default function EventDetail({
               >
                 {allSessions.length > 0 && selectedSession.time ? (
                   <div className="flex-1 overflow-x-auto">
-                    <div className="inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)] [[data-theme=dark]_&]:bg-[#1f2326]">
-                      {allSessions.map((session) => {
-                        const sessionTime = session.time?.split(/\s*[—-]\s*/)[0] || '';
-                        const isActive =
-                          sessionTime === selectedSession.time?.split(/\s*[—-]\s*/)[0];
-                        return (
-                          <button
-                            key={`m-${session.time}-${session.title}`}
-                            onClick={() => setSelectedSession(session)}
-                            className={`flex h-9 flex-shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-[20px] border-none px-4 font-onest text-sm font-semibold tracking-oai transition-colors ${
-                              isActive
-                                ? 'bg-brand-green text-[#15191c]'
-                                : 'bg-transparent text-[rgba(21,25,28,0.64)] [[data-theme=dark]_&]:text-white'
-                            }`}
-                          >
-                            {sessionTime}
-                          </button>
-                        );
-                      })}
+                    <div className="inline-flex items-center gap-2">
+                      {timeBlocks.map((block, bi) => (
+                        <div
+                          key={`mb-${bi}`}
+                          className="inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)] [[data-theme=dark]_&]:bg-[#1f2326]"
+                        >
+                          {block.map((session) => {
+                            const sessionTime = splitTimeRange(session.time)[0];
+                            const isActive =
+                              sessionTime === splitTimeRange(selectedSession.time)[0];
+                            return (
+                              <button
+                                key={`m-${session.time}-${session.title}`}
+                                onClick={() => setSelectedSession(session)}
+                                className={`flex h-9 flex-shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-[20px] border-none px-4 font-onest text-sm font-semibold tracking-oai transition-colors ${
+                                  isActive
+                                    ? 'bg-brand-green text-[#15191c]'
+                                    : 'bg-transparent text-[rgba(21,25,28,0.64)] [[data-theme=dark]_&]:text-white'
+                                }`}
+                              >
+                                {sessionTime}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ) : (
@@ -489,9 +535,10 @@ export default function EventDetail({
                       </h2>
                     </div>
 
-                    {/* Description */}
-                    <p className="m-0 font-onest text-base font-normal leading-[1.4] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-lg">
-                      Join us for this session at {title}.
+                    {/* Description — the talk's real abstract, falling back to a
+                        generic line only when the session has none. */}
+                    <p className="m-0 whitespace-pre-line font-onest text-base font-normal leading-[1.4] tracking-oai text-[#15191c] [[data-theme=dark]_&]:text-white md:text-lg">
+                      {selectedSession.description ?? `Join us for this session at ${title}.`}
                     </p>
 
                     {/* Speakers section */}
@@ -626,28 +673,39 @@ export default function EventDetail({
                   <div
                     /* mt-auto pins the timeline to the bottom of the modal, so
                        it stays put while the card scrolls. */
-                    className="hidden w-full items-center justify-center overflow-x-auto pt-3 md:mt-auto md:flex"
+                    className="hidden w-full items-center overflow-x-auto pt-3 md:mt-auto md:flex"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <div className="inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)] [[data-theme=dark]_&]:bg-[#1f2326]">
-                      {allSessions.map((session) => {
-                        const sessionTime = session.time?.split(/\s*[—-]\s*/)[0] || '';
-                        const isActive =
-                          sessionTime === selectedSession.time?.split(/\s*[—-]\s*/)[0];
-                        return (
-                          <button
-                            key={`${session.time}-${session.title}`}
-                            onClick={() => setSelectedSession(session)}
-                            className={`flex h-10 flex-shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-[20px] border-none px-5 py-2 font-onest text-base font-semibold tracking-oai transition-colors ${
-                              isActive
-                                ? 'bg-brand-green text-[#15191c]'
-                                : 'bg-transparent text-[rgba(21,25,28,0.64)] hover:text-[#15191c] [[data-theme=dark]_&]:text-white'
-                            }`}
-                          >
-                            {sessionTime}
-                          </button>
-                        );
-                      })}
+                    {/* mx-auto (not justify-center on the scroll parent) so the
+                        track centers when it fits but collapses to left-aligned
+                        when it overflows — otherwise justify-center clips the
+                        first block's rounded corner into a hard edge. */}
+                    <div className="mx-auto inline-flex items-center gap-2">
+                      {timeBlocks.map((block, bi) => (
+                        <div
+                          key={`db-${bi}`}
+                          className="inline-flex items-center rounded-[20px] bg-[rgba(21,25,28,0.08)] [[data-theme=dark]_&]:bg-[#1f2326]"
+                        >
+                          {block.map((session) => {
+                            const sessionTime = splitTimeRange(session.time)[0];
+                            const isActive =
+                              sessionTime === splitTimeRange(selectedSession.time)[0];
+                            return (
+                              <button
+                                key={`${session.time}-${session.title}`}
+                                onClick={() => setSelectedSession(session)}
+                                className={`flex h-10 flex-shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-[20px] border-none px-5 py-2 font-onest text-base font-semibold tracking-oai transition-colors ${
+                                  isActive
+                                    ? 'bg-brand-green text-[#15191c]'
+                                    : 'bg-transparent text-[rgba(21,25,28,0.64)] hover:text-[#15191c] [[data-theme=dark]_&]:text-white'
+                                }`}
+                              >
+                                {sessionTime}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}

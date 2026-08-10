@@ -47,8 +47,10 @@ export default function EventCard({
   startDate,
 }: EventCardProps) {
   // Past events have no ticket sale, so no countdown (and the CTA is disabled).
+  // Without a real startDate there's nothing to count down to, so it's omitted
+  // rather than shown as a bogus 0d 00:00:00.
   const countdown = useCountdown(
-    featured && status !== 'finished' ? (startDate ?? '2026-05-19T09:00:00') : undefined,
+    featured && status !== 'finished' ? startDate : undefined,
   );
   const pad = (n: number) => String(n).padStart(2, '0');
   const finished = status === 'finished';

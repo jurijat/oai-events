@@ -22,6 +22,7 @@ interface EventItem {
   type: string;
   status: string;
   image: string;
+  startDate?: string;
   speakers: Speaker[];
 }
 
@@ -137,6 +138,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
                 type={featured.type}
                 permalink={featured.permalink}
                 status={featured.status as 'active' | 'upcoming' | 'finished'}
+                startDate={featured.startDate}
                 featured
               />
             </div>
@@ -223,7 +225,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
             {/* Mobile: link to /past-events */}
             <Link
               href="/past-events"
-              className="btn-green inline-flex h-[56px] w-full items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] px-6 py-1.5 font-onest text-lg font-bold leading-[120%] tracking-oai text-[#15191c] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none md:hidden"
+              className="btn-green inline-flex h-[56px] w-full items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] px-6 py-1.5 font-onest text-lg font-bold leading-[120%] tracking-oai text-[#15191c] no-underline transition-colors duration-200 md:hidden"
             >
               Past events
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
@@ -234,7 +236,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
             <button
               type="button"
               onClick={() => setShowPast((v) => !v)}
-              className="btn-green hidden h-[64px] w-[159px] cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-lg font-bold leading-[120%] tracking-oai text-[#15191c] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(101,209,0,0.4)] active:translate-y-0 active:shadow-none md:inline-flex"
+              className="btn-green hidden h-[64px] w-[159px] cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-lg font-bold leading-[120%] tracking-oai text-[#15191c] transition-colors duration-200 md:inline-flex"
             >
               {showPast ? 'Hide past' : 'Past events'}
               <svg
@@ -422,16 +424,7 @@ export default function EventsList({ items, pastItems = [] }: EventsListProps) {
               className="btn-green inline-flex h-[56px] w-full cursor-pointer items-center justify-between gap-2.5 whitespace-nowrap rounded-[20px] border-none px-6 py-1.5 font-onest text-base font-bold tracking-oai text-[#15191c] transition-colors duration-200 md:h-[64px] md:w-[164px] md:justify-center md:text-lg"
             >
               View gallery
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="#15191C"
-                strokeWidth="2"
-              >
-                <path d="M6 3l5 5-5 5" />
-              </svg>
+              <img src={asset('/img/shevron_icon.svg')} alt="" aria-hidden className="h-4 w-auto" />
             </button>
           </div>
         </section>
