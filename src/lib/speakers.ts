@@ -3,8 +3,8 @@ import yaml from 'js-yaml';
 // Speaker resolution. Speakers have one canonical definition in the global
 // registry (data/speakers/speakers.yaml); events reference them by slug and may
 // override any field via their own data/<year>/<slug>/speakers/speakers.yaml.
-// This module bundles every speakers.yaml at build time (webpack require.context
-// + the asset/source raw-string rule in next.config.ts — no runtime fs, same as
+// This module bundles every speakers.yaml at build time (require.context + the
+// raw-string Turbopack rule in next.config.ts — no runtime fs, same as
 // events.ts) and exposes resolveSpeaker(), which rehydrates a slug reference into
 // the { name, position, photo } shape the UI already consumes.
 

@@ -1,5 +1,9 @@
+import path from 'node:path';
 import type { NextConfig } from 'next';
 import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
+
+// Turbopack resolves loader paths from the project root, so pass an absolute one.
+const yamlRawLoader = path.join(process.cwd(), 'scripts/yaml-raw-loader.cjs');
 
 // This config serves two deploy targets from one codebase:
 //   - GitHub Pages (default): static export (`output: 'export'`) under the repo
@@ -12,12 +16,19 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 const nextConfig: NextConfig = {
   images: { unoptimized: true },
   trailingSlash: true,
-  webpack: (config) => {
+  turbopack: {
     // Inline YAML files as raw strings at build time (see lib/events.ts). Works
     // for both targets: the Workers runtime has no filesystem, and the static
     // export build has no Node runtime to read files at request time.
-    config.module.rules.push({ test: /\.ya?ml$/, type: 'asset/source' });
-    return config;
+    // Turbopack's built-in `type: 'raw'` is not enough here: it emits a
+    // non-ECMAScript asset that require.context can't place in an ESM chunk,
+    // so we use a tiny local loader that emits a real JS module instead. A
+    // `webpack` config here would fail the build outright, since Next 16
+    // builds with Turbopack.
+    rules: {
+      '*.yml': { loaders: [yamlRawLoader], as: '*.js' },
+      '*.yaml': { loaders: [yamlRawLoader], as: '*.js' },
+    },
   },
   // GitHub Pages only: emit static HTML under the repo subpath.
   ...(isCloudflare
