@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { SESSION_PARAM, sessionHref, sessionKey } from '@/lib/sessionKey';
 import EventCard from '../EventCard';
 import OaiFooter from '../OaiFooter';
 import PhotoLightbox from '../PhotoLightbox';
@@ -90,6 +91,74 @@ export default function EventDetail({
   const agendaCategories = Object.keys(currentAgenda);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [selectedSession, setSelectedSession] = useState<AgendaSession | null>(null);
+
+  // --- Deep-linking the session modal ---------------------------------------
+  // The open session is mirrored into ?session=<key>, so a session can be linked
+  // to directly (search results do exactly that) and so Back closes the modal.
+  //
+  // This drives the URL through window.history rather than useSearchParams:
+  // reading search params during render opts the page out of static rendering,
+  // and this site is a static export, so the prerendered HTML must keep its
+  // content. window.history.pushState/replaceState is supported by the App
+  // Router for exactly this kind of same-page URL update.
+  const sessionsByKey = useMemo(() => {
+    const map = new Map<string, { session: AgendaSession; date: string }>();
+    for (const [date, categories] of Object.entries(agenda)) {
+      for (const list of Object.values(categories ?? {})) {
+        for (const session of list ?? []) {
+          const key = sessionKey(session);
+          // First occurrence wins; keys are unique per event across all days.
+          if (!map.has(key)) map.set(key, { session, date });
+        }
+      }
+    }
+    return map;
+  }, [agenda]);
+
+  // Single source of truth: whatever ?session= currently says.
+  const syncFromUrl = useCallback(() => {
+    const key = new URLSearchParams(window.location.search).get(SESSION_PARAM);
+    const hit = key ? sessionsByKey.get(key) : undefined;
+    if (!hit) {
+      setSelectedSession(null);
+      return;
+    }
+    // The session may live on a day other than the one currently tabbed.
+    setSelectedDate(hit.date);
+    setSelectedSession(hit.session);
+  }, [sessionsByKey]);
+
+  // Run on mount (handles arriving from search) and on Back/Forward.
+  useEffect(() => {
+    syncFromUrl();
+    window.addEventListener('popstate', syncFromUrl);
+    return () => window.removeEventListener('popstate', syncFromUrl);
+  }, [syncFromUrl]);
+
+  // Opening from the agenda adds a history entry, so Back closes the modal.
+  const openSession = useCallback((session: AgendaSession) => {
+    setSelectedSession(session);
+    window.history.pushState(null, '', sessionHref(window.location.pathname, sessionKey(session)));
+  }, []);
+
+  // Stepping between sessions inside the modal (swipe, time pills) replaces the
+  // entry instead, so paging through ten talks doesn't bury the page the user
+  // came from under ten Back presses.
+  const showSession = useCallback((session: AgendaSession) => {
+    setSelectedSession(session);
+    window.history.replaceState(
+      null,
+      '',
+      sessionHref(window.location.pathname, sessionKey(session)),
+    );
+  }, []);
+
+  const closeSession = useCallback(() => {
+    setSelectedSession(null);
+    // replaceState, not back(): the modal may have been opened directly from a
+    // search result, in which case there is no in-page entry to return to.
+    window.history.replaceState(null, '', window.location.pathname);
+  }, []);
 
   // Lock background scrolling while the session modal is open.
   useEffect(() => {
@@ -289,7 +358,7 @@ export default function EventDetail({
                        keeps the white tile. Every session tile opens the modal —
                        permalink is no longer required for clickability. */
                     const wrapperProps = {
-                      onClick: () => setSelectedSession(session),
+                      onClick: () => openSession(session),
                       className:
                         'tile-press block w-full text-left p-6 md:p-8 rounded-[40px] bg-white hover:bg-white/90 [[data-theme=dark]_&]:bg-[#1e2225] [[data-theme=dark]_&]:hover:bg-[#1e2225]/90 transition-colors cursor-pointer relative border-none',
                     };
@@ -391,7 +460,7 @@ export default function EventDetail({
               /* overflow-hidden on both breakpoints: only the description scrolls
                  (see the card below), never the modal as a whole. */
               className="fixed inset-0 z-50 flex flex-col items-stretch overflow-hidden bg-[color:var(--brand-bg)] px-0 py-0 md:items-center md:px-12 md:py-6"
-              onClick={() => setSelectedSession(null)}
+              onClick={closeSession}
               onTouchStart={(e) => {
                 touchStartX.current = e.changedTouches[0].clientX;
               }}
@@ -402,9 +471,9 @@ export default function EventDetail({
                 if (Math.abs(delta) < 50) return;
                 const idx = allSessions.findIndex((s) => s === selectedSession);
                 if (idx === -1) return;
-                if (delta > 0 && idx > 0) setSelectedSession(allSessions[idx - 1]);
+                if (delta > 0 && idx > 0) showSession(allSessions[idx - 1]);
                 else if (delta < 0 && idx < allSessions.length - 1)
-                  setSelectedSession(allSessions[idx + 1]);
+                  showSession(allSessions[idx + 1]);
               }}
             >
               {/* Mobile top bar: pills + X */}
@@ -431,7 +500,7 @@ export default function EventDetail({
                             return (
                               <button
                                 key={`m-${session.time}-${session.title}`}
-                                onClick={() => setSelectedSession(session)}
+                                onClick={() => showSession(session)}
                                 className={`flex h-9 flex-shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-[20px] border-none px-4 font-onest text-sm font-semibold tracking-oai transition-colors ${
                                   isActive
                                     ? 'bg-brand-green text-[#15191c]'
@@ -450,7 +519,7 @@ export default function EventDetail({
                   <div className="flex-1" />
                 )}
                 <button
-                  onClick={() => setSelectedSession(null)}
+                  onClick={closeSession}
                   aria-label="Close"
                   className="flex h-9 w-9 flex-shrink-0 cursor-pointer items-center justify-center rounded-full border-none bg-[rgba(21,25,28,0.08)] text-[#15191c] transition-colors hover:bg-black/10 [[data-theme=dark]_&]:bg-[#1f2326] [[data-theme=dark]_&]:text-white"
                 >
@@ -462,7 +531,7 @@ export default function EventDetail({
 
               {/* Desktop close button */}
               <button
-                onClick={() => setSelectedSession(null)}
+                onClick={closeSession}
                 className="absolute right-6 top-6 z-10 hidden h-9 w-9 cursor-pointer items-center justify-center rounded-full border-none bg-[#15191c] text-white transition-colors hover:bg-[#15191c]/80 [[data-theme=dark]_&]:bg-white [[data-theme=dark]_&]:text-[#15191c] [[data-theme=dark]_&]:hover:bg-white/80 md:flex"
                 aria-label="Close"
               >
@@ -682,7 +751,7 @@ export default function EventDetail({
                             return (
                               <button
                                 key={`${session.time}-${session.title}`}
-                                onClick={() => setSelectedSession(session)}
+                                onClick={() => showSession(session)}
                                 className={`flex h-10 flex-shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-[20px] border-none px-5 py-2 font-onest text-base font-semibold tracking-oai transition-colors ${
                                   isActive
                                     ? 'bg-brand-green text-[#15191c]'

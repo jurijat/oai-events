@@ -11,6 +11,9 @@ export interface TalkData {
   category?: string;
   eventTitle?: string;
   eventDate?: string;
+  // Parent event permalink (`/events/<slug>`). The talk pages redirect here,
+  // to the same session opened as a modal in its event context.
+  eventPermalink?: string;
   speakers?: TalkSpeaker[];
   schedule?: ScheduleSlot[];
   slidesUrl?: string;
@@ -29,6 +32,7 @@ export function getTalk(slug: string): TalkData | undefined {
         category: talk.category,
         eventTitle: event.title,
         eventDate: event.event_date,
+        eventPermalink: event.permalink,
         speakers: talk.speakers,
         schedule: talk.schedule,
         slidesUrl: talk.slidesUrl,

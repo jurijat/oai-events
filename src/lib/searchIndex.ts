@@ -1,4 +1,5 @@
 import { events } from '@/lib/events';
+import { sessionHref } from '@/lib/sessionKey';
 
 export interface SearchItem {
   title: string;
@@ -30,12 +31,15 @@ export function buildSearchIndex(): SearchItem[] {
     }
   }
 
+  // Talks open as a session modal on their own event page rather than on the
+  // standalone /events/talks/<slug> page, which showed the talk stripped of its
+  // event context. A session's key is its talk slug, so the link is direct.
   for (const event of events) {
     for (const talk of event.talks ?? []) {
       items.push({
         title: talk.title,
         description: `${event.title}${talk.time ? ' · ' + talk.time : ''}`,
-        permalink: `/events/talks/${talk.slug}`,
+        permalink: sessionHref(event.permalink, talk.slug),
         type: 'talk',
       });
     }
