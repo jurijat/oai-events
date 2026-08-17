@@ -49,3 +49,6 @@ yarn-error.log*
 __design/
 
 dev-assets/
+# Flat cover export produced by `npm run covers:export` (a handoff artifact;
+# the source of truth stays in data/<year>/<slug>/images/).
+/covers-export/

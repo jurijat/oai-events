@@ -25,7 +25,8 @@
     "preview:iphone": "playwright open --device=\"iPhone 14 Pro\" http://localhost:3000",
     "preview:iphone17": "playwright open --browser=webkit --viewport-size=440,956 --user-agent=\"Mozilla/5.0 (iPhone; CPU iPhone OS 26_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Mobile/15E148 Safari/604.1\" http://localhost:3000",
     "preview:ipad": "playwright open --device=\"iPad Pro 11\" http://localhost:3000",
-    "img": "node scripts/convert-image.mjs"
+    "img": "node scripts/convert-image.mjs",
+    "covers:export": "node scripts/export-covers.mjs"
   },
   "dependencies": {
     "clsx": "^2.0.0",

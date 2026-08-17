@@ -54,28 +54,64 @@ body {
   overflow: hidden;
 }
 
+/* Fixed-navbar height, read both by the bar itself (components/Navbar) and by
+   the space #scroll-root reserves for it below, so the two can never drift.
+   The bar shrinks to --navbar-h-scrolled once the page is scrolled; only the
+   resting height is reserved, since by then the content has moved up anyway. */
+:root {
+  --navbar-h: 4rem;
+  --navbar-h-scrolled: 3rem;
+}
+
+/* Desktop (Tailwind md) rests taller, to hold the full-size logo. 112px is the
+   one number the design's two margins agree on: everything in the bar is
+   vertically centred, so the 227x68 logo lands 22px from the top and the 40x40
+   action icons land 36px from it. Change this and both move together.
+   Mobile keeps its own smaller 121x36 logo and 4rem bar. */
+@media (min-width: 1024px) {
+  :root {
+    --navbar-h: 7rem;
+    /* Same idea once scrolled: 64px holds the 40px logo with 12px clear above
+       and below, and centres the 40x40 action icons on the same 12px. */
+    --navbar-h-scrolled: 4rem;
+  }
+}
+
 #scroll-root {
   position: absolute;
   inset: 0;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  /* Clear the fixed navbar (matches its calc(4rem + safe-area) height). */
-  padding-top: calc(4rem + env(safe-area-inset-top));
 }
 
-/* Top-left concentric arcs decoration. Painted on <body>, scrolls with the
-   page (so you scroll past it), single instance at top — no repeat. */
 body {
   background-color: var(--brand-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Top-left concentric arcs decoration: one instance anchored to the top of the
+   page, scrolled past, leaving flat --brand-bg for the rest of the page.
+   It has to hang off the scrolled content, not <body>: the body never scrolls
+   (see above), so a background there is pinned to the viewport and follows you
+   down the whole page. Painting it on #scroll-root itself has the same problem —
+   a scroll container's own background doesn't move with its contents — and the
+   one value that would fix that, background-attachment: local, is unreliable
+   under -webkit-overflow-scrolling: touch, which is exactly the iOS case
+   #scroll-root exists for. An ordinary in-flow block scrolls because the element
+   scrolls, with no such caveats. */
+#page {
   background-image: var(--bg1-url, url('/img/background1.svg'));
   background-size: 1728px 1830px;
   background-repeat: no-repeat;
   background-position: top left;
-  background-attachment: scroll;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  /* Clear the fixed navbar. The offset lives here rather than on #scroll-root so
+     that #page still starts at the very top of the scroller: backgrounds paint
+     under padding, so the arcs run up behind the transparent resting navbar the
+     way they did when this was a <body> background. */
+  padding-top: calc(var(--navbar-h) + env(safe-area-inset-top));
 }
 
 [data-theme='dark'] body {

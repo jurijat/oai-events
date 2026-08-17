@@ -80,10 +80,13 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
         style={{
           // Height includes the safe-area inset so the bar's border-box grows to
           // clear the notch / Dynamic Island. paddingTop reserves that inset at
-          // the top, leaving exactly the bar height (3rem/4rem) for the logo —
-          // so the padding never overflows a clamped height (the iOS 26 bug).
+          // the top, leaving exactly the bar height for the logo — so the
+          // padding never overflows a clamped height (the iOS 26 bug).
+          // The heights come from globals.css so #scroll-root can reserve the
+          // matching offset from the same source; --navbar-h is taller on
+          // desktop, where the resting logo is full-size.
           paddingTop: 'env(safe-area-inset-top)',
-          height: `calc(${scrolled ? '3rem' : '4rem'} + env(safe-area-inset-top))`,
+          height: `calc(${scrolled ? 'var(--navbar-h-scrolled)' : 'var(--navbar-h)'} + env(safe-area-inset-top))`,
         }}
         className={`fixed inset-x-0 top-0 z-30 flex items-center justify-center px-6 md:px-10 transition-[height,background-color,box-shadow] duration-200 ease-out ${
           scrolled
@@ -111,9 +114,14 @@ export default function Navbar({ searchItems = [] }: { searchItems?: SearchItem[
               src={asset('/img/openlogo.svg')}
               alt="OpenAPI Initiative"
               /* Mobile: fixed 121px width (height follows the 228×68 ratio ≈ 36px).
-                 Desktop keeps the height-driven sizing that shrinks on scroll. */
-              className={`navbar-logo-img h-auto w-[121px] transition-[height] duration-200 ease-out md:w-auto ${
-                scrolled ? 'md:h-9' : 'md:h-12'
+                 Desktop rests at the design's full 227×68. The 227 is the
+                 design's box; the SVG is 228×68, so pinning the width shaves a
+                 sub-pixel rather than distorting anything visibly. Scrolled
+                 drops to 40px tall and goes back to w-auto so the width tracks
+                 the animating height rather than snapping to a second fixed
+                 number. */
+              className={`navbar-logo-img h-auto w-[121px] transition-[height] duration-200 ease-out ${
+                scrolled ? 'md:h-10 md:w-auto' : 'md:h-[68px] md:w-[227px]'
               }`}
             />
           </Link>

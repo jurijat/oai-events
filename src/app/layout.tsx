@@ -65,8 +65,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navbar searchItems={searchItems} />
           {/* Page scrolls inside this container, not the document body, so the
               fixed navbar stays pinned in iOS in-app browsers (see globals.css
-              and lib/scrollLock.ts). */}
-          <div id="scroll-root">{children}</div>
+              and lib/scrollLock.ts). #page is the scrolled content itself, and
+              carries the top-of-page arcs decoration so it scrolls away — see
+              globals.css for why that can't live on #scroll-root or <body>. */}
+          <div id="scroll-root">
+            <div id="page">{children}</div>
+          </div>
         </Providers>
       </body>
     </html>
